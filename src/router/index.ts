@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from "vue-router"
 
-import Landing from "@/pages/landing/Landing.vue"
+
 import Start from "@/pages/landing/Start.vue"
 
 import IllustratorLayout from "@/layouts/IllustratorLayout.vue"
@@ -12,8 +12,7 @@ import Contact from "@/pages/app/Contact.vue"
 export const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: "/", name: "landing", component: Landing },
-    { path: "/start", name: "start", component: Start },
+    { path: "/", name: "start", component: Start },
 
     {
       path: "/app",
