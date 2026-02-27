@@ -8,11 +8,13 @@ import Projects from "@/pages/app/Projects.vue"
 import ProjectDetail from "@/pages/app/ProjectDetail.vue"
 import About from "@/pages/app/About.vue"
 import Contact from "@/pages/app/Contact.vue"
+import ExitConfirm from "@/pages/landing/ExitConfirm.vue"
 
 export const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     { path: "/", name: "start", component: Start },
+    { path: "/exit", name: "exit", component: ExitConfirm },
 
     {
       path: "/app",
