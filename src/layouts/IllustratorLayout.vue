@@ -26,11 +26,11 @@ function goToStart() {
     </header>
 
     <main class="relative mx-auto max-w-6xl px-4 py-6">
-      <div class="rounded-xl border bg-muted/30 p-4">
-        <div class="rounded-lg bg-background p-6 min-h-[60vh]">
-          <RouterView />
-        </div>
-      </div>
-    </main>
+  <div class="rounded-xl border bg-muted/30 p-4">
+    <div class="rounded-lg bg-background p-6 h-[calc(100svh-140px)] overflow-y-auto">
+      <RouterView />
+    </div>
+  </div>
+</main>
   </div>
 </template>

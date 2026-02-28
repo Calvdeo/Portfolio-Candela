@@ -26,6 +26,18 @@ export const router = createRouter({
         { path: "contact", name: "contact", component: Contact },
       ],
     },
+    {
+  path: "/app",
+  component: IllustratorLayout,
+  children: [
+    { path: "projects", redirect: "/app/projects/design" },
+    { path: "projects/design", component: Projects },
+    { path: "projects/illustration", component: Projects },
+    { path: "projects/:slug", component: ProjectDetail },
+
+    // ...tus otras rutas (about/contact)
+  ],
+},
 
     { path: "/:patchMatch(.*)", redirect: "/" },
   ],
