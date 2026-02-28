@@ -7,7 +7,7 @@ export type Project = {
   year?: string
   tags: string[]
   description: string
-  cover?: string
+  cover?: string // 👈 portada
 }
 
 export const projects: Project[] = [
@@ -18,6 +18,7 @@ export const projects: Project[] = [
     year: "2025",
     tags: ["branding", "identidad", "logo"],
     description: "Identidad visual y sistema gráfico para proyecto personal.",
+    cover: "/projects/branding-yonosoyessa.jpg",
   },
   {
     slug: "cartel-festival",
@@ -26,6 +27,7 @@ export const projects: Project[] = [
     year: "2024",
     tags: ["cartel", "tipografía"],
     description: "Cartel promocional con enfoque tipográfico y composición.",
+    cover: "/projects/cartel-festival.jpg",
   },
   {
     slug: "ilustracion-editorial",
@@ -34,6 +36,7 @@ export const projects: Project[] = [
     year: "2025",
     tags: ["editorial", "color"],
     description: "Serie de ilustraciones para pieza editorial.",
+    cover: "/projects/ilustracion-editorial.jpg",
   },
   {
     slug: "personajes-procreate",
@@ -42,37 +45,6 @@ export const projects: Project[] = [
     year: "2024",
     tags: ["personajes", "procreate"],
     description: "Exploración de personajes y estilo con Procreate.",
+    cover: "/projects/personajes-procreate.jpg",
   },
-  {
-  slug: "packaging-cafe",
-  title: "Packaging · Café",
-  category: "diseño",
-  year: "2024",
-  tags: ["packaging", "mockup"],
-  description: "Diseño de packaging y aplicación en mockups.",
-},
-{
-  slug: "sistema-editorial",
-  title: "Sistema · Editorial",
-  category: "diseño",
-  year: "2025",
-  tags: ["retícula", "editorial"],
-  description: "Sistema editorial con retícula y jerarquías.",
-},
-{
-  slug: "ilustracion-poster",
-  title: "Ilustración · Póster",
-  category: "ilustración",
-  year: "2024",
-  tags: ["poster", "color"],
-  description: "Ilustración para póster con enfoque narrativo.",
-},
-{
-  slug: "ilustracion-story",
-  title: "Ilustración · Story",
-  category: "ilustración",
-  year: "2025",
-  tags: ["rrss", "personajes"],
-  description: "Ilustraciones para piezas de redes sociales.",
-},
 ]
