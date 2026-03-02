@@ -1,14 +1,13 @@
 import { createRouter, createWebHashHistory } from "vue-router"
 
-
 import Start from "@/pages/landing/Start.vue"
+import ExitConfirm from "@/pages/landing/Exitconfirm.vue" // 👈 ojo al nombre real
 
 import IllustratorLayout from "@/layouts/IllustratorLayout.vue"
 import Projects from "@/pages/app/Projects.vue"
 import ProjectDetail from "@/pages/app/ProjectDetail.vue"
 import About from "@/pages/app/About.vue"
 import Contact from "@/pages/app/Contact.vue"
-import ExitConfirm from "@/pages/landing/ExitConfirm.vue"
 
 export const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -20,25 +19,16 @@ export const router = createRouter({
       path: "/app",
       component: IllustratorLayout,
       children: [
-        { path: "projects", name: "projects", component: Projects },
+        { path: "", redirect: "/app/projects/design" }, // 👈 opcional pero útil
+        { path: "projects", redirect: "/app/projects/design" },
+        { path: "projects/design", name: "projects-design", component: Projects },
+        { path: "projects/illustration", name: "projects-illustration", component: Projects },
         { path: "projects/:slug", name: "project-detail", component: ProjectDetail },
         { path: "about", name: "about", component: About },
         { path: "contact", name: "contact", component: Contact },
       ],
     },
-    {
-  path: "/app",
-  component: IllustratorLayout,
-  children: [
-    { path: "projects", redirect: "/app/projects/design" },
-    { path: "projects/design", component: Projects },
-    { path: "projects/illustration", component: Projects },
-    { path: "projects/:slug", component: ProjectDetail },
 
-    // ...tus otras rutas (about/contact)
-  ],
-},
-
-    { path: "/:patchMatch(.*)", redirect: "/" },
+    { path: "/:pathMatch(.*)*", redirect: "/" }, // 👈 catch-all correcto
   ],
 })
