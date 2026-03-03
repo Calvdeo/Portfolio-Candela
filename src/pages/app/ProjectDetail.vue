@@ -38,8 +38,17 @@ const project = computed(() => {
 
       <p class="text-muted-foreground">{{ project.description }}</p>
 
-      <div class="rounded-lg border p-4 text-sm text-muted-foreground">
-        Aquí luego ponemos imágenes, proceso, mockups y lo que quieras.
+      <div class="rounded-xl border overflow-hidden bg-muted/20">
+        <img
+          v-if="project.cover"
+          :src="project.cover"
+          :alt="`Portada de ${project.title}`"
+          class="w-full h-64 sm:h-72 object-cover"
+          loading="lazy"
+        />
+        <div v-else class="h-40 flex items-center justify-center text-sm text-muted-foreground">
+          Sin portada
+        </div>
       </div>
     </div>
 

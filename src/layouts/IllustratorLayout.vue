@@ -102,7 +102,7 @@ onBeforeUnmount(() => {
     class="min-h-[100svh] bg-[#3d3d3d] text-white overflow-hidden [&_*]:cursor-inherit"
   >
     <!-- Barra superior app -->
-    <header class="h-9 bg-[#2a2a2a] border-b border-white/10 flex items-center px-3">
+    <header class="h-12 bg-[#2a2a2a] border-b border-white/10 flex items-center px-4">
       <div class="flex items-center gap-3">
         <div
           class="h-6 w-6 rounded bg-[#1f1f1f] border border-white/10 flex items-center justify-center text-[11px] font-semibold"
@@ -110,22 +110,41 @@ onBeforeUnmount(() => {
           Ai
         </div>
 
-        <nav class="flex items-center gap-4 text-[12px] text-white/80">
-          <RouterLink class="hover:text-white cursor-inherit" to="/app/about">Skills</RouterLink>
-          <RouterLink class="hover:text-white cursor-inherit" to="/app/contact">Contacto</RouterLink>
+        <nav class="flex items-center gap-2 text-[12px] text-white/80">
+          <RouterLink
+            class="h-8 px-3 rounded-md border border-white/15 bg-white/5 hover:bg-white/15 hover:text-white transition-colors cursor-inherit flex items-center"
+            to="/app/about"
+          >
+            Skills
+          </RouterLink>
+          <RouterLink
+            class="h-8 px-3 rounded-md border border-white/15 bg-white/10 hover:bg-white/20 hover:text-white transition-colors cursor-inherit flex items-center"
+            to="/app/projects/design"
+          >
+            Proyectos
+          </RouterLink>
+          <RouterLink
+            class="h-8 px-3 rounded-md border border-white/15 bg-white/5 hover:bg-white/15 hover:text-white transition-colors cursor-inherit flex items-center"
+            to="/app/contact"
+          >
+            Contacto
+          </RouterLink>
         </nav>
       </div>
 
       <div class="ml-auto flex items-center gap-3 text-[12px]">
-        <RouterLink class="text-white/70 hover:text-white cursor-inherit" to="/app/projects/design">
-          Proyectos
+        <RouterLink
+          class="h-8 px-3 rounded-md border border-white/15 bg-white/5 hover:bg-white/15 hover:text-white transition-colors cursor-inherit text-white/80 flex items-center"
+          to="/"
+        >
+          Volver al inicio
         </RouterLink>
       </div>
     </header>
 
-    <div class="flex h-[calc(100svh-36px)]">
+    <div class="flex h-[calc(100svh-48px)]">
       <!-- Barra herramientas -->
-      <aside class="w-[92px] bg-[#2b2b2b] border-r border-black/30 flex flex-col overflow-hidden">
+      <aside class="w-23 bg-[#2b2b2b] border-r border-black/30 flex flex-col overflow-hidden">
         <!-- HEADER (como tu imagen) -->
         <div class="h-10 bg-[#3a3a3a] border-b border-black/30 flex items-center px-2">
           <div class="text-white/80 text-xs select-none">≪</div>
@@ -151,10 +170,15 @@ onBeforeUnmount(() => {
             </button>
           </div>
 
-          <!-- Tool 34: SOLO imagen, grande, NO botón -->
-          <div class="mt-2 bg-transparent flex items-center justify-center">
-            <img :src="tool34Icon" alt="Tool 34" class="w-full h-auto" draggable="false" />
-          </div>
+          <!-- Tool 34:  -->
+<div class="mt-3 flex items-center justify-center">
+  <img
+    :src="tool34Icon"
+    alt="Tool 34"
+    class="w-[130px] h-auto"
+    draggable="false"
+  />
+</div>
         </div>
       </aside>
 
