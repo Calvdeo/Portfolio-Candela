@@ -33,7 +33,7 @@ const previewImg = "/images/Portada_essa.png"
 
 /** Proyectos (panel derecho) */
 const projects = ref([
-  { slug: "branding-yonosoyessa", title: "Branding · YoNoSoyEssa" },
+  { slug: "branding-yonosoyessa", title: "36 days of type" },
   { slug: "cartel-festival", title: "Cartel · Festival" },
   { slug: "ilustracion-editorial", title: "Ilustración · Editorial" },
   { slug: "personajes-procreate", title: "Personajes · Procreate" },

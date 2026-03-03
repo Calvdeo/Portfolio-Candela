@@ -15,9 +15,7 @@ const activeTab = computed<"design" | "illustration">(() => {
 const title = computed(() => (activeTab.value === "design" ? "Diseño" : "Ilustración"))
 
 const filteredProjects = computed(() =>
-  projects.filter((p) =>
-    activeTab.value === "design" ? p.category === "diseño" : p.category === "ilustración"
-  )
+  projects.filter((p) => (activeTab.value === "design" ? p.category === "diseño" : p.category === "ilustración"))
 )
 
 const projectsHeroImg = computed(
