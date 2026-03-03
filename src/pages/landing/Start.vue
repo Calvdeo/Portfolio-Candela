@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
+import { Search, Folder } from "lucide-vue-next"
 
 const router = useRouter()
 
@@ -81,18 +82,10 @@ const landscapeIconOn = "/orientation/landscape_azul.png"
 </script>
 
 <template>
-  <!-- Fondo: ocupa toda la pantalla SIEMPRE (aunque se deforme) -->
-  <div
-    class="w-full min-h-[100svh] overflow-hidden bg-no-repeat"
-    style="
-      background-image: url('/images/fondo.png');
-      background-size: 100% 100%;
-      background-position: center;
-    "
-  >
-    <!-- Contenedor: centrado y responsive, sin offsets raros -->
-    <div class="w-full min-h-[100svh] flex items-center justify-center p-3 sm:p-6 lg:p-10">
-      <!-- Ventana / pestaña -->
+  <!-- Escritorio sin imagen de fondo -->
+  <div class="w-full min-h-[100svh] bg-[#e8e1d6] overflow-hidden relative">
+    <!-- Ventana centrada (responsive) -->
+    <div class="w-full min-h-[100svh] flex items-center justify-center p-3 sm:p-6 lg:p-10 pb-24">
       <div
         class="w-[92vw] max-w-[1400px] h-[86svh] sm:h-[88svh] lg:h-[82svh] bg-[#2f2f2f] text-white rounded-xl shadow-2xl overflow-hidden border border-black/10"
       >
@@ -117,13 +110,14 @@ const landscapeIconOn = "/orientation/landscape_azul.png"
           <button class="text-white/60 hover:text-white/90" type="button">✕</button>
         </div>
 
-        <!-- Contenido: en móvil apila, en escritorio 2 columnas -->
+        <!-- Contenido: móvil apila, escritorio 2 columnas -->
         <div
           class="flex flex-col lg:flex-row h-[calc(86svh-40px)] sm:h-[calc(88svh-40px)] lg:h-[calc(82svh-40px)] overflow-hidden"
         >
           <!-- panel izquierdo -->
-          <div class="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
-            <div class="rounded-md bg-[#242424] border border-white/10 p-6 relative">
+          <div class="flex-1 p-4 sm:p-6 lg:p-8 overflow-hidden lg:overflow-y-auto">
+            <!-- ESTE BLOQUE SE OCULTA EN MÓVIL -->
+            <div class="hidden lg:block rounded-md bg-[#242424] border border-white/10 p-6 relative">
               <button
                 class="absolute right-3 top-3 text-white/50 hover:text-white/80"
                 type="button"
@@ -137,22 +131,27 @@ const landscapeIconOn = "/orientation/landscape_azul.png"
             </div>
 
             <div class="mt-6 sm:mt-8">
-              <div class="flex items-center justify-between">
+              <!-- ESTE TITULO SE OCULTA EN MÓVIL -->
+              <div class="hidden lg:flex items-center justify-between">
                 <p class="text-sm font-semibold text-white/80">TUS ELEMENTOS RECIENTES</p>
                 <p class="text-xs text-white/50">(5)</p>
               </div>
 
-              <div class="mt-3 rounded-md bg-[#2b2b2b] border border-white/10 p-4">
+              <!-- Contenedor de imagen: en móvil tiene alto fijo para que NO genere scroll -->
+              <div
+                class="mt-3 rounded-md bg-[#2b2b2b] border border-white/10 p-2 sm:p-4 h-[55svh] lg:h-auto flex items-center justify-center"
+              >
                 <img
                   :src="previewImg"
                   alt="Preview"
-                  class="w-full h-auto object-contain"
+                  class="max-h-full w-full h-full object-contain"
                   draggable="false"
                 />
               </div>
             </div>
 
-            <div class="mt-6 rounded-md bg-[#2a2a2a] border border-white/10 h-12"></div>
+            <!-- ESTA CAJA SE OCULTA EN MÓVIL -->
+            <div class="hidden lg:block mt-6 rounded-md bg-[#2a2a2a] border border-white/10 h-12"></div>
           </div>
 
           <!-- panel derecho -->
@@ -348,6 +347,36 @@ const landscapeIconOn = "/orientation/landscape_azul.png"
               Cerrar
             </button>
           </aside>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dock / barra inferior -->
+    <div class="absolute bottom-0 left-0 w-full">
+      <div class="h-16 bg-black/80 backdrop-blur border-t border-white/10 flex items-center px-4">
+        <div class="mx-auto flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-white/80"></div>
+
+          <div class="h-10 w-[220px] sm:w-[320px] rounded-full bg-white/80 flex items-center px-4 gap-2">
+            <Search class="w-5 h-5 text-black/70" />
+            <div class="text-sm text-black/60 select-none">Buscar</div>
+          </div>
+
+          <button
+            type="button"
+            class="w-10 h-10 rounded-lg bg-white/80 flex items-center justify-center hover:bg-white"
+            title="Archivos"
+          >
+            <Folder class="w-5 h-5 text-black/80" />
+          </button>
+
+          <button
+            type="button"
+            class="w-10 h-10 rounded-lg bg-white/80 flex items-center justify-center font-semibold text-black/80 hover:bg-white"
+            title="Illustrator"
+          >
+            Ai
+          </button>
         </div>
       </div>
     </div>
