@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue"
+import { computed, onBeforeUnmount, ref } from "vue"
 import { RouterLink, useRoute } from "vue-router"
 import { projects } from "@/data/projects"
 
@@ -18,22 +18,48 @@ const filteredProjects = computed(() =>
   projects.filter((p) => (activeTab.value === "design" ? p.category === "diseño" : p.category === "ilustración"))
 )
 
-const projectsHeroImg = computed(
-  () => filteredProjects.value.find((p) => p.cover)?.cover ?? "/images/Portada_essa.png"
-)
+const fruitCycleImages = ["/images/manzana-roja.png", "/images/manzana-verde.png", "/images/naranja.png"]
+const fruitCycleIndex = ref(0)
+let fruitCycleTimer: ReturnType<typeof setInterval> | null = null
+
+function is36DaysProject(slug: string) {
+  return slug === "branding-yonosoyessa"
+}
+
+function getProjectCardImage(slug: string, cover?: string) {
+  if (is36DaysProject(slug)) return fruitCycleImages[fruitCycleIndex.value]
+  return cover ?? ""
+}
+
+function getProjectCardImageClass(slug: string) {
+  return is36DaysProject(slug)
+    ? "w-full h-full object-contain scale-[1.2]"
+    : "w-full h-full object-cover"
+}
+
+function startFruitCycle(slug: string) {
+  if (!is36DaysProject(slug) || fruitCycleTimer) return
+  fruitCycleTimer = setInterval(() => {
+    fruitCycleIndex.value = (fruitCycleIndex.value + 1) % fruitCycleImages.length
+  }, 450)
+}
+
+function stopFruitCycle(slug: string) {
+  if (!is36DaysProject(slug)) return
+  if (fruitCycleTimer) {
+    clearInterval(fruitCycleTimer)
+    fruitCycleTimer = null
+  }
+  fruitCycleIndex.value = 0
+}
+
+onBeforeUnmount(() => {
+  if (fruitCycleTimer) clearInterval(fruitCycleTimer)
+})
 </script>
 
 <template>
   <div class="space-y-6">
-    <div class="border overflow-hidden bg-muted/30">
-      <img
-        :src="projectsHeroImg"
-        alt="Portada de proyectos"
-        class="w-full h-52 sm:h-64 md:h-72 object-cover"
-        loading="lazy"
-      />
-    </div>
-
     <div class="flex items-end gap-2">
       <RouterLink
         to="/app/projects/design"
@@ -60,32 +86,34 @@ const projectsHeroImg = computed(
       </div>
     </div>
 
-    <section class="border bg-background overflow-hidden">
+    <section class="border bg-white overflow-hidden">
       <div class="border-b px-6 py-5">
         <h3 class="text-5xl font-bold tracking-tight">{{ title }}</h3>
         <p class="text-sm text-muted-foreground mt-2">Haz click en un proyecto para ver su detalle.</p>
       </div>
 
-      <div class="h-[70vh] overflow-y-auto px-6 py-6 bg-[#ecefce]">
+      <div class="h-[70vh] overflow-y-auto px-6 py-6 bg-white">
         <div class="grid gap-10 md:grid-cols-2">
           <RouterLink
             v-for="(p, index) in filteredProjects"
             :key="p.slug"
             :to="`/app/projects/${p.slug}`"
             class="block group py-2"
+            @mouseenter="startFruitCycle(p.slug)"
+            @mouseleave="stopFruitCycle(p.slug)"
           >
             <Card
-              class="mx-auto w-[94%] overflow-hidden border-black/20 bg-[#f3f5d6] text-black shadow-[0_14px_28px_rgba(0,0,0,0.2)] transition-transform duration-300"
+              class="mx-auto w-[94%] overflow-visible border-0 bg-transparent text-black shadow-none transition-transform duration-300"
               :class="index % 2 === 0
                 ? 'rotate-[-2.6deg] group-hover:rotate-[-1.2deg]'
                 : 'rotate-[2.6deg] group-hover:rotate-[1.2deg]'"
             >
-              <div class="w-full aspect-[4/3] bg-[#d9ddc4]">
+              <div class="w-full aspect-[4/3] overflow-hidden">
                 <img
-                  v-if="p.cover"
-                  :src="p.cover"
+                  v-if="p.cover || is36DaysProject(p.slug)"
+                  :src="getProjectCardImage(p.slug, p.cover)"
                   :alt="`Portada de ${p.title}`"
-                  class="w-full h-full object-cover"
+                  :class="getProjectCardImageClass(p.slug)"
                   loading="lazy"
                 />
                 <div v-else class="w-full h-full flex items-center justify-center text-sm text-black/60">
@@ -93,7 +121,7 @@ const projectsHeroImg = computed(
                 </div>
               </div>
 
-              <div class="px-5 py-5 text-center space-y-3 border-t border-black/10">
+              <div class="px-5 pt-4 pb-2 text-center space-y-3">
                 <p class="text-[1.02rem] font-semibold uppercase tracking-[0.03em] line-clamp-1">
                   {{ p.title }}
                 </p>

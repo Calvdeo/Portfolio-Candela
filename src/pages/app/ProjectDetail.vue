@@ -21,20 +21,20 @@ const activeFruit = ref<FruitKey>("apple-red")
 
 const fruitInfo: Record<FruitKey, { title: string; text: string; photo: string; photoAlt: string }> = {
   "apple-red": {
-    title: "Manzana roja - Concepto visual",
-    text: "Esta parte explora la idea principal del sistema grafico: contraste alto, composicion directa y simbolos faciles de reconocer.",
+    title: "I",
+    text: "La pegatinas de la fruta siempre han sido un ejemplo de microdiseño en nuestro día a día",
     photo: "/images/i.png",
     photoAlt: "Foto i - manzana roja",
   },
   "apple-green": {
-    title: "Manzana verde - Construccion tipografica",
-    text: "Aqui se trabaja el ritmo de las letras, pesos y proporciones para mantener coherencia en toda la serie de 36 piezas.",
+    title: "T",
+    text: "En homenaje a ellas formulé la idea de este reto, cada una está diseñada con un trasfondo tipográfico así se puede ver que en algunas aparecen las grandes categorías tipográficas y algunas de sus características.",
     photo: "/images/t.png",
     photoAlt: "Foto t - manzana verde",
   },
   orange: {
-    title: "Naranja - Aplicacion final",
-    text: "En esta fase se prueban variantes finales, jerarquia visual y acabado editorial para cerrar la coleccion completa.",
+    title: "C",
+    text: "Para llevar a cabo el proyecto, se imprimieron y se hizo un reportaje fotográfico junto con frutas reales y este ha sido el resultado",
     photo: "/images/c.png",
     photoAlt: "Foto c - naranja",
   },
@@ -54,17 +54,35 @@ type StickerPos = {
   hintClass: string
 }
 
+type DecorSticker = {
+  id: number
+  className: string
+}
+
 const stickerPositions: StickerPos[] = [
-  { id: 3, wrapperClass: "left-[8%] top-[8%] rotate-[-8deg]", sizeClass: "w-32 sm:w-40 md:w-48", hint: "Futura Bold Condensed. Sans serif geometrica. Trazos rectos y formas basadas en circulos. 1927.", hintClass: "-left-14 sm:-left-20 top-full mt-2" },
-  { id: 4, wrapperClass: "left-[20%] top-[22%] rotate-[12deg]", sizeClass: "w-28 sm:w-36 md:w-44", hint: "Caligraficas. Tipografia caligrafica. Imitan la escritura hecha a mano con trazos fluidos. Origen historico, usadas desde la Edad Media.", hintClass: "left-1/2 -top-14 sm:-top-16 -translate-x-1/2" },
-  { id: 5, wrapperClass: "left-[32%] top-[9%] rotate-[-10deg]", sizeClass: "w-32 sm:w-40 md:w-48", hint: "Romana con serifa. Serif clasica. Serifas marcadas inspiradas en la caligrafia antigua. 1924.", hintClass: "left-1/2 top-full mt-2 -translate-x-1/2" },
-  { id: 6, wrapperClass: "right-[28%] top-[8%] rotate-[7deg]", sizeClass: "w-28 sm:w-36 md:w-44", hint: "Futura. Sans serif geometrica. Letras simples con construccion geometrica. 1927.", hintClass: "right-0 -top-5 text-right" },
-  { id: 7, wrapperClass: "right-[11%] top-[18%] rotate-[-9deg]", sizeClass: "w-32 sm:w-40 md:w-48", hint: "Incisas. Serif incisa. Serifas en forma de cuna inspiradas en inscripciones en piedra. 1958.", hintClass: "left-1/2 -top-5 -translate-x-1/2" },
-  { id: 8, wrapperClass: "left-[12%] bottom-[20%] rotate-[10deg]", sizeClass: "w-32 sm:w-40 md:w-48", hint: "Hutang. Estilo oriental decorativo. Inspirado en la caligrafia china tradicional. 1673.", hintClass: "left-1 top-full mt-2" },
-  { id: 9, wrapperClass: "left-[36%] bottom-[11%] rotate-[-12deg]", sizeClass: "w-28 sm:w-36 md:w-44", hint: "Rayuela. Tipografia posmoderna. Formas expresivas y experimentales. 2001.", hintClass: "left-1/2 top-full mt-2 -translate-x-1/2" },
-  { id: 10, wrapperClass: "right-[18%] bottom-[8%] rotate-[6deg]", sizeClass: "w-32 sm:w-40 md:w-48", hint: "Display. Tipografia decorativa. Disenada para titulares y tamanos grandes. Siglo XX.", hintClass: "right-full top-1/2 mr-2 -translate-y-1/2 text-right" },
-  { id: 11, wrapperClass: "left-[47%] top-[30%] rotate-[14deg]", sizeClass: "w-28 sm:w-36 md:w-44", hint: "Semiserif (Rotis Semi Serif). Semi-serif. Mezcla rasgos de serif y sans serif, eje vertical. 1988.", hintClass: "left-1/2 -top-14 sm:-top-16 -translate-x-1/2 text-center" },
-  { id: 12, wrapperClass: "right-[5%] bottom-[30%] rotate-[-14deg]", sizeClass: "w-28 sm:w-36 md:w-44", hint: "Sans serif grotesca. Sans serif grotesca. Apertura pequena y trazos rectos no geometricos. 1958.", hintClass: "right-0 top-full mt-2 text-right" },
+  { id: 3, wrapperClass: "left-[8%] top-[8%] rotate-[-8deg]", sizeClass: "w-32 sm:w-40 md:w-48", hint: "Sans serif geometrica.Trazos rectos y formas basadas en circulos, 1927. Ejemplo: Futura Bold Condensed.", hintClass: "-left-14 sm:-left-20 top-full mt-2" },
+  { id: 4, wrapperClass: "left-[20%] top-[22%] rotate-[12deg]", sizeClass: "w-28 sm:w-36 md:w-44", hint: "Caligraficas. Imitan la escritura hecha a mano con trazos fluidos. Origen historico.", hintClass: "left-1/2 -top-14 sm:-top-16 -translate-x-1/2" },
+  { id: 5, wrapperClass: "left-[32%] top-[9%] rotate-[-10deg]", sizeClass: "w-32 sm:w-40 md:w-48", hint: "Romana con serifa. Serifas marcadas inspiradas en la caligrafia antigua, 1924.", hintClass: "left-1/2 top-full mt-2 -translate-x-1/2" },
+  { id: 6, wrapperClass: "right-[28%] top-[8%] rotate-[7deg]", sizeClass: "w-28 sm:w-36 md:w-44", hint: "Sans serif geometrica. Letras simples con construccion geometrica, 1927.Ejemplo:Futura.", hintClass: "right-0 -top-5 text-right" },
+  { id: 7, wrapperClass: "right-[11%] top-[18%] rotate-[-9deg]", sizeClass: "w-32 sm:w-40 md:w-48", hint: "Serif incisa. Serifas en forma de cuna inspiradas en inscripciones en piedra, 1958.", hintClass: "left-1/2 -top-5 -translate-x-1/2" },
+  { id: 8, wrapperClass: "left-[12%] bottom-[20%] rotate-[10deg]", sizeClass: "w-32 sm:w-40 md:w-48", hint: "Hutang. Estilo oriental decorativo. Inspirado en la caligrafia china tradicional, 1673.", hintClass: "left-1 top-full mt-2" },
+  { id: 9, wrapperClass: "left-[36%] bottom-[11%] rotate-[-12deg]", sizeClass: "w-28 sm:w-36 md:w-44", hint: "Tipografia posmoderna. Formas expresivas y experimentales. 2001. Ejemplo: Rayuela", hintClass: "left-1/2 top-full mt-2 -translate-x-1/2" },
+  { id: 10, wrapperClass: "right-[18%] bottom-[8%] rotate-[6deg]", sizeClass: "w-32 sm:w-40 md:w-48", hint: "Display. Tipografia decorativa, disenada para titulares y tamanos grandes, siglo XX.", hintClass: "right-full top-1/2 mr-2 -translate-y-1/2 text-right" },
+  { id: 11, wrapperClass: "left-[47%] top-[30%] rotate-[14deg]", sizeClass: "w-28 sm:w-36 md:w-44", hint: "Semi-serif. Mezcla rasgos de serif y sans serif, eje vertical, 1988. Ejemplo: Rotis Semi Serif.", hintClass: "left-1/2 -top-14 sm:-top-16 -translate-x-1/2 text-center" },
+  { id: 12, wrapperClass: "right-[5%] bottom-[30%] rotate-[-14deg]", sizeClass: "w-28 sm:w-36 md:w-44", hint: "Sans serif grotesca. Apertura pequena y trazos rectos no geometricos, 1958.", hintClass: "right-0 top-full mt-2 text-right" },
+]
+
+const decorStickers: DecorSticker[] = [
+  { id: 3, className: "left-[1%] top-[4%] rotate-[-18deg] w-14 sm:w-16 md:w-20 opacity-70" },
+  { id: 4, className: "left-[10%] bottom-[10%] rotate-[10deg] w-14 sm:w-16 md:w-20 opacity-70" },
+  { id: 5, className: "left-[28%] top-[2%] rotate-[-8deg] w-16 sm:w-20 md:w-24 opacity-75" },
+  { id: 6, className: "right-[30%] top-[3%] rotate-[8deg] w-14 sm:w-16 md:w-20 opacity-70" },
+  { id: 7, className: "right-[3%] top-[12%] rotate-[-10deg] w-14 sm:w-16 md:w-20 opacity-75" },
+  { id: 8, className: "left-[3%] bottom-[28%] rotate-[10deg] w-14 sm:w-16 md:w-20 opacity-70" },
+  { id: 9, className: "left-[20%] bottom-[2%] rotate-[-10deg] w-14 sm:w-16 md:w-20 opacity-70" },
+  { id: 10, className: "right-[18%] bottom-[3%] rotate-[7deg] w-16 sm:w-20 md:w-24 opacity-75" },
+  { id: 11, className: "right-[6%] bottom-[30%] rotate-[14deg] w-14 sm:w-16 md:w-20 opacity-70" },
+  { id: 12, className: "left-[43%] top-[0.5%] rotate-[-14deg] w-14 sm:w-16 md:w-20 opacity-65" },
 ]
 
 function stickerPath(id: number) {
@@ -161,11 +179,20 @@ function stickerPath(id: number) {
             </p>
           </div>
 
-          <div class="w-full px-1 sm:px-2">
+          <div class="relative w-full px-1 sm:px-2">
+            <img
+              v-for="(d, index) in decorStickers"
+              :key="`decor-${d.id}-${index}`"
+              :src="stickerPath(d.id)"
+              :alt="`Pegatina decorativa ${d.id}`"
+              class="pointer-events-none absolute z-10 object-contain drop-shadow-[0_4px_6px_rgba(0,0,0,0.14)]"
+              :class="d.className"
+              draggable="false"
+            />
             <img
               :src="fruitInfo[activeFruit].photo"
               :alt="fruitInfo[activeFruit].photoAlt"
-              class="w-full h-[84vh] object-contain"
+              class="relative z-20 w-full h-[84vh] object-contain"
               draggable="false"
             />
           </div>
