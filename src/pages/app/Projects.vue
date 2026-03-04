@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, ref } from "vue"
+import { computed, onBeforeUnmount, onMounted, ref } from "vue"
 import { RouterLink, useRoute } from "vue-router"
 import { projects } from "@/data/projects"
 
@@ -17,6 +17,15 @@ const title = computed(() => (activeTab.value === "design" ? "Diseño" : "Ilustr
 const filteredProjects = computed(() =>
   projects.filter((p) => (activeTab.value === "design" ? p.category === "diseño" : p.category === "ilustración"))
 )
+
+type EyesZone = "left" | "center" | "right"
+const eyesZone = ref<EyesZone>("center")
+const eyesImages: Record<EyesZone, string> = {
+  left: "/images/ojos-izquierda.png",
+  center: "/images/ojos-recto.png",
+  right: "/images/ojos-derecha.png",
+}
+const projectsHeroImg = computed(() => eyesImages[eyesZone.value])
 
 const fruitCycleImages = ["/images/manzana-roja.png", "/images/manzana-verde.png", "/images/naranja.png"]
 const fruitCycleIndex = ref(0)
@@ -53,13 +62,44 @@ function stopFruitCycle(slug: string) {
   fruitCycleIndex.value = 0
 }
 
+function onMouseMove(e: MouseEvent) {
+  const width = window.innerWidth || 1
+  const x = e.clientX
+  const leftLimit = width / 3
+  const rightLimit = (width / 3) * 2
+
+  if (x < leftLimit) {
+    eyesZone.value = "left"
+    return
+  }
+  if (x > rightLimit) {
+    eyesZone.value = "right"
+    return
+  }
+  eyesZone.value = "center"
+}
+
+onMounted(() => {
+  window.addEventListener("mousemove", onMouseMove)
+})
+
 onBeforeUnmount(() => {
   if (fruitCycleTimer) clearInterval(fruitCycleTimer)
+  window.removeEventListener("mousemove", onMouseMove)
 })
 </script>
 
 <template>
   <div class="space-y-6">
+    <div class="border overflow-hidden bg-muted/30">
+      <img
+        :src="projectsHeroImg"
+        alt="Portada de proyectos"
+        class="w-full h-52 sm:h-64 md:h-72 object-cover"
+        loading="lazy"
+      />
+    </div>
+
     <div class="flex items-end gap-2">
       <RouterLink
         to="/app/projects/design"
