@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { onBeforeUnmount, ref } from "vue"
-import { RouterLink, RouterView } from "vue-router"
+import { computed, onBeforeUnmount, ref } from "vue"
+import { RouterLink, RouterView, useRoute } from "vue-router"
 
 /**
  * Tools:
@@ -23,6 +23,7 @@ function pad2(n: number) {
 }
 
 const appRoot = ref<HTMLElement | null>(null)
+const route = useRoute()
 
 /**
  * Nombres exactos por ID (según tu lista)
@@ -73,6 +74,35 @@ const toolsGrid = ref<Tool[]>(
 const tool34Icon = "/tools/tools-34.png"
 
 const selectedToolId = ref<number>(4)
+const layersOpen = ref(true)
+
+const layerItems = computed(() => {
+  const seg = route.path.split("/").filter(Boolean)
+  const section = seg[1] ?? "projects"
+  const page = seg[2] ?? "design"
+
+  const sectionLabelByKey: Record<string, string> = {
+    projects: "Proyectos",
+    about: "Sobre mi",
+    contact: "Contacto",
+  }
+
+  const pageLabelByKey: Record<string, string> = {
+    design: "Diseno",
+    illustration: "Ilustracion",
+  }
+
+  const sectionLabel = sectionLabelByKey[section] ?? section
+  const pageLabel = pageLabelByKey[page] ?? page
+  const detailSlug = section === "projects" && page && page !== "design" && page !== "illustration" ? page : ""
+
+  return {
+    root: "Portfolio Candela",
+    group: sectionLabel,
+    layer: detailSlug ? `Detalle - ${detailSlug}` : pageLabel,
+    routeText: route.path,
+  }
+})
 
 function applyCursor(url: string) {
   const cur = `url('${url}') 0 0, auto`
@@ -207,6 +237,45 @@ onBeforeUnmount(() => {
               class="mt-2 h-9 rounded bg-black/10 border border-white/10 flex items-center justify-center text-xs text-white/80"
             >
               {{ toolNameById[selectedToolId] ?? `Tool ${selectedToolId}` }}
+            </div>
+          </div>
+
+          <div class="rounded bg-[#1f1f1f] border border-white/10 overflow-hidden">
+            <button
+              type="button"
+              class="w-full h-9 px-3 flex items-center justify-between bg-[#2a2a2a] border-b border-white/10 text-xs text-white/85"
+              @click="layersOpen = !layersOpen"
+            >
+              <span class="font-semibold">Capas</span>
+              <span class="text-[11px]">{{ layersOpen ? "▾" : "▸" }}</span>
+            </button>
+
+            <div v-show="layersOpen" class="p-2 text-[11px] text-white/80 space-y-1">
+              <div class="h-7 px-2 rounded bg-[#303030] border border-white/10 flex items-center gap-2">
+                <span class="text-white/60">o</span>
+                <span class="text-white/60">[]</span>
+                <span class="font-medium">{{ layerItems.root }}</span>
+              </div>
+
+              <div class="pl-5 space-y-1">
+                <div class="h-7 px-2 rounded bg-[#3a3a3a] border border-white/10 flex items-center gap-2">
+                  <span class="text-white/60">o</span>
+                  <span class="text-white/60">[+]</span>
+                  <span class="font-medium">Grupo 1 - {{ layerItems.group }}</span>
+                </div>
+
+                <div class="pl-5">
+                  <div class="h-7 px-2 rounded bg-[#474747] border border-white/10 flex items-center gap-2">
+                    <span class="text-white/60">o</span>
+                    <span class="text-white/60">▦</span>
+                    <span>{{ layerItems.layer }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pt-1 px-1 text-[10px] text-white/45 break-all">
+                Ruta: {{ layerItems.routeText }}
+              </div>
             </div>
           </div>
         </div>

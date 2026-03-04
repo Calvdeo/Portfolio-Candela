@@ -44,19 +44,21 @@ type StickerPos = {
   id: number
   wrapperClass: string
   sizeClass: string
+  hint: string
+  hintClass: string
 }
 
 const stickerPositions: StickerPos[] = [
-  { id: 3, wrapperClass: "left-[8%] top-[8%] rotate-[-8deg]", sizeClass: "w-32 sm:w-40 md:w-48" },
-  { id: 4, wrapperClass: "left-[20%] top-[22%] rotate-[12deg]", sizeClass: "w-28 sm:w-36 md:w-44" },
-  { id: 5, wrapperClass: "left-[32%] top-[9%] rotate-[-10deg]", sizeClass: "w-32 sm:w-40 md:w-48" },
-  { id: 6, wrapperClass: "right-[28%] top-[8%] rotate-[7deg]", sizeClass: "w-28 sm:w-36 md:w-44" },
-  { id: 7, wrapperClass: "right-[11%] top-[18%] rotate-[-9deg]", sizeClass: "w-32 sm:w-40 md:w-48" },
-  { id: 8, wrapperClass: "left-[12%] bottom-[20%] rotate-[10deg]", sizeClass: "w-32 sm:w-40 md:w-48" },
-  { id: 9, wrapperClass: "left-[36%] bottom-[11%] rotate-[-12deg]", sizeClass: "w-28 sm:w-36 md:w-44" },
-  { id: 10, wrapperClass: "right-[18%] bottom-[8%] rotate-[6deg]", sizeClass: "w-32 sm:w-40 md:w-48" },
-  { id: 11, wrapperClass: "left-[47%] top-[30%] rotate-[14deg]", sizeClass: "w-28 sm:w-36 md:w-44" },
-  { id: 12, wrapperClass: "right-[5%] bottom-[30%] rotate-[-14deg]", sizeClass: "w-28 sm:w-36 md:w-44" },
+  { id: 3, wrapperClass: "left-[8%] top-[8%] rotate-[-8deg]", sizeClass: "w-32 sm:w-40 md:w-48", hint: "Futura Bold Condensed. Sans serif geometrica. Trazos rectos y formas basadas en circulos. 1927.", hintClass: "-left-14 sm:-left-20 top-full mt-2" },
+  { id: 4, wrapperClass: "left-[20%] top-[22%] rotate-[12deg]", sizeClass: "w-28 sm:w-36 md:w-44", hint: "Caligraficas. Tipografia caligrafica. Imitan la escritura hecha a mano con trazos fluidos. Origen historico, usadas desde la Edad Media.", hintClass: "left-1/2 -top-14 sm:-top-16 -translate-x-1/2" },
+  { id: 5, wrapperClass: "left-[32%] top-[9%] rotate-[-10deg]", sizeClass: "w-32 sm:w-40 md:w-48", hint: "Romana con serifa. Serif clasica. Serifas marcadas inspiradas en la caligrafia antigua. 1924.", hintClass: "left-1/2 top-full mt-2 -translate-x-1/2" },
+  { id: 6, wrapperClass: "right-[28%] top-[8%] rotate-[7deg]", sizeClass: "w-28 sm:w-36 md:w-44", hint: "Futura. Sans serif geometrica. Letras simples con construccion geometrica. 1927.", hintClass: "right-0 -top-5 text-right" },
+  { id: 7, wrapperClass: "right-[11%] top-[18%] rotate-[-9deg]", sizeClass: "w-32 sm:w-40 md:w-48", hint: "Incisas. Serif incisa. Serifas en forma de cuna inspiradas en inscripciones en piedra. 1958.", hintClass: "left-1/2 -top-5 -translate-x-1/2" },
+  { id: 8, wrapperClass: "left-[12%] bottom-[20%] rotate-[10deg]", sizeClass: "w-32 sm:w-40 md:w-48", hint: "Hutang. Estilo oriental decorativo. Inspirado en la caligrafia china tradicional. 1673.", hintClass: "left-1 top-full mt-2" },
+  { id: 9, wrapperClass: "left-[36%] bottom-[11%] rotate-[-12deg]", sizeClass: "w-28 sm:w-36 md:w-44", hint: "Rayuela. Tipografia posmoderna. Formas expresivas y experimentales. 2001.", hintClass: "left-1/2 top-full mt-2 -translate-x-1/2" },
+  { id: 10, wrapperClass: "right-[18%] bottom-[8%] rotate-[6deg]", sizeClass: "w-32 sm:w-40 md:w-48", hint: "Display. Tipografia decorativa. Disenada para titulares y tamanos grandes. Siglo XX.", hintClass: "right-full top-1/2 mr-2 -translate-y-1/2 text-right" },
+  { id: 11, wrapperClass: "left-[47%] top-[30%] rotate-[14deg]", sizeClass: "w-28 sm:w-36 md:w-44", hint: "Semiserif (Rotis Semi Serif). Semi-serif. Mezcla rasgos de serif y sans serif, eje vertical. 1988.", hintClass: "left-1/2 -top-14 sm:-top-16 -translate-x-1/2 text-center" },
+  { id: 12, wrapperClass: "right-[5%] bottom-[30%] rotate-[-14deg]", sizeClass: "w-28 sm:w-36 md:w-44", hint: "Sans serif grotesca. Sans serif grotesca. Apertura pequena y trazos rectos no geometricos. 1958.", hintClass: "right-0 top-full mt-2 text-right" },
 ]
 
 function stickerPath(id: number) {
@@ -76,7 +78,7 @@ function stickerPath(id: number) {
     <div v-if="project" class="space-y-4">
       <section
         v-if="is36Days"
-        class="relative min-h-[68vh] sm:min-h-[72vh] overflow-hidden"
+        class="relative min-h-[68vh] sm:min-h-[72vh] overflow-visible"
       >
         <div class="absolute inset-0 flex items-center justify-center px-4">
           <p
@@ -90,7 +92,7 @@ function stickerPath(id: number) {
           v-for="s in stickerPositions"
           :key="s.id"
           type="button"
-          class="absolute transition-transform duration-200 hover:scale-105 focus:outline-none"
+          class="group absolute transition-transform duration-200 hover:scale-105 focus:outline-none"
           :class="[s.wrapperClass, 'z-10']"
           :aria-label="`Sticker fruta ${s.id}`"
         >
@@ -101,20 +103,28 @@ function stickerPath(id: number) {
             :class="s.sizeClass"
             draggable="false"
           />
+          <span
+            class="pointer-events-none absolute z-20 w-44 sm:w-52 text-[10px] sm:text-[11px] leading-snug font-medium text-black/80 opacity-0 transition-opacity duration-150 group-hover:opacity-100"
+            :class="s.hintClass"
+          >
+            {{ s.hint }}
+          </span>
         </button>
       </section>
 
       <div v-if="is36Days" class="max-w-4xl ml-auto space-y-5">
-        <p class="text-right text-base leading-relaxed font-semibold text-black/80">
-          36 Days of Type is a project that invites designers, illustrators and visual artists to
-          express their unique interpretation of the letters and numbers of the Latin alphabet.
-        </p>
-        <p class="text-right text-base leading-relaxed font-semibold text-black/80">
-          A yearly open call that explores the creative boundaries of letterforms by challenging
-          participants to design a letter or number each day for 36 consecutive days. The result is
-          a global and simultaneous act that showcases the ability to represent the same symbols
-          from thousands of different perspectives.
-        </p>
+        <div class="ml-auto max-w-xl space-y-3">
+          <p class="text-right text-sm sm:text-[15px] leading-relaxed font-normal text-black/70">
+            36 Days of Type is a project that invites designers, illustrators and visual artists to
+            express their unique interpretation of the letters and numbers of the Latin alphabet.
+          </p>
+          <p class="text-right text-sm sm:text-[15px] leading-relaxed font-normal text-black/70">
+            A yearly open call that explores the creative boundaries of letterforms by challenging
+            participants to design a letter or number each day for 36 consecutive days. The result is
+            a global and simultaneous act that showcases the ability to represent the same symbols
+            from thousands of different perspectives.
+          </p>
+        </div>
 
         <div class="pt-1 space-y-4">
           <div class="flex flex-wrap items-center justify-center gap-4">
