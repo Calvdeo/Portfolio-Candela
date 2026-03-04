@@ -19,18 +19,24 @@ const mainWord = computed(() => "36 days of type")
 type FruitKey = "apple-red" | "apple-green" | "orange"
 const activeFruit = ref<FruitKey>("apple-red")
 
-const fruitInfo: Record<FruitKey, { title: string; text: string }> = {
+const fruitInfo: Record<FruitKey, { title: string; text: string; photo: string; photoAlt: string }> = {
   "apple-red": {
     title: "Manzana roja - Concepto visual",
     text: "Esta parte explora la idea principal del sistema grafico: contraste alto, composicion directa y simbolos faciles de reconocer.",
+    photo: "/images/i.png",
+    photoAlt: "Foto i - manzana roja",
   },
   "apple-green": {
     title: "Manzana verde - Construccion tipografica",
     text: "Aqui se trabaja el ritmo de las letras, pesos y proporciones para mantener coherencia en toda la serie de 36 piezas.",
+    photo: "/images/t.png",
+    photoAlt: "Foto t - manzana verde",
   },
   orange: {
     title: "Naranja - Aplicacion final",
     text: "En esta fase se prueban variantes finales, jerarquia visual y acabado editorial para cerrar la coleccion completa.",
+    photo: "/images/c.png",
+    photoAlt: "Foto c - naranja",
   },
 }
 
@@ -112,7 +118,7 @@ function stickerPath(id: number) {
         </button>
       </section>
 
-      <div v-if="is36Days" class="max-w-4xl ml-auto space-y-5">
+      <div v-if="is36Days" class="w-full space-y-8">
         <div class="ml-auto max-w-xl space-y-3">
           <p class="text-right text-sm sm:text-[15px] leading-relaxed font-normal text-black/70">
             36 Days of Type is a project that invites designers, illustrators and visual artists to
@@ -127,12 +133,13 @@ function stickerPath(id: number) {
         </div>
 
         <div class="pt-1 space-y-4">
-          <div class="flex flex-wrap items-center justify-center gap-4">
+          <div class="w-full min-h-[42vh] mt-0 flex items-center justify-center">
+            <div class="w-full max-w-[1300px] px-2 sm:px-4 flex items-end justify-center gap-1 sm:gap-2 md:gap-3">
             <button
               v-for="fruit in fruitButtons"
               :key="fruit.key"
               type="button"
-              class="transition-transform duration-200 hover:scale-105"
+              class="shrink-0 transition-transform duration-200 hover:scale-105"
               :class="activeFruit === fruit.key ? 'scale-105' : ''"
               :aria-label="`Abrir info ${fruit.label}`"
               @click="activeFruit = fruit.key"
@@ -140,17 +147,27 @@ function stickerPath(id: number) {
               <img
                 :src="fruit.src"
                 :alt="fruit.label"
-                class="w-20 h-20 sm:w-24 sm:h-24 object-contain"
+                class="w-[clamp(170px,22vw,340px)] h-auto object-contain"
                 draggable="false"
               />
             </button>
+            </div>
           </div>
 
-          <div class="border-r-4 border-black/70 pr-4 py-1 max-w-3xl ml-auto">
-            <h3 class="text-lg font-semibold text-black text-right">{{ fruitInfo[activeFruit].title }}</h3>
-            <p class="mt-1 text-sm sm:text-base text-black/80 leading-relaxed text-right">
+          <div class="py-1 max-w-3xl mx-auto text-center">
+            <h3 class="text-lg font-semibold text-black">{{ fruitInfo[activeFruit].title }}</h3>
+            <p class="mt-1 text-sm sm:text-base text-black/80 leading-relaxed">
               {{ fruitInfo[activeFruit].text }}
             </p>
+          </div>
+
+          <div class="w-full px-1 sm:px-2">
+            <img
+              :src="fruitInfo[activeFruit].photo"
+              :alt="fruitInfo[activeFruit].photoAlt"
+              class="w-full h-[84vh] object-contain"
+              draggable="false"
+            />
           </div>
         </div>
       </div>
