@@ -1,8 +1,12 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="space-y-3">
-    <h2 class="text-2xl font-semibold">Skills & Estudios</h2>
-    <p class="text-muted-foreground">Aqui va la info profesional.</p>
+  <div class="-m-4 sm:-m-6 overflow-hidden min-h-[calc(100svh-48px)]">
+    <img
+      src="/images/yo.png"
+      alt="Portada About me"
+      class="w-[calc(100%+2rem)] sm:w-[calc(100%+3rem)] max-w-none h-[calc(100svh-48px)] object-cover"
+      loading="lazy"
+    />
   </div>
 </template>

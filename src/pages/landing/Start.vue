@@ -6,7 +6,7 @@ import { Search, Folder } from "lucide-vue-next"
 const router = useRouter()
 
 function createNewProject() {
-  router.push("/app/projects")
+  router.push("/app/about")
 }
 function goToExitConfirm() {
   router.push("/exit")

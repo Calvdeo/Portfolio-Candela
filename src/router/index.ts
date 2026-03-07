@@ -19,7 +19,7 @@ export const router = createRouter({
       path: "/app",
       component: IllustratorLayout,
       children: [
-        { path: "", redirect: "/app/projects/design" },
+        { path: "", redirect: "/app/about" },
         { path: "projects", redirect: "/app/projects/design" },
         { path: "projects/design", name: "projects-design", component: Projects },
         { path: "projects/illustration", name: "projects-illustration", component: Projects },

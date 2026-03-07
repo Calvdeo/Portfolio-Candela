@@ -73,7 +73,7 @@ const layerItems = computed(() => {
 
   const sectionLabelByKey: Record<string, string> = {
     projects: "Proyectos",
-    about: "Sobre mi",
+    about: "About me",
     contact: "Contacto",
   }
 
@@ -135,7 +135,7 @@ onBeforeUnmount(() => {
             class="h-8 px-3 rounded-md border border-white/15 bg-white/5 hover:bg-white/15 hover:text-white transition-colors cursor-inherit flex items-center"
             to="/app/about"
           >
-            Skills
+            About me
           </RouterLink>
           <RouterLink
             class="h-8 px-3 rounded-md border border-white/15 bg-white/10 hover:bg-white/20 hover:text-white transition-colors cursor-inherit flex items-center"
