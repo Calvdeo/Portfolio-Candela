@@ -281,7 +281,7 @@ const landscapeIconOn = "/orientation/landscape_azul.png"
             <details class="mt-6">
               <summary class="list-none cursor-pointer">
                 <div class="flex items-center justify-between">
-                  <p class="text-xs text-white/60">Soportes</p>
+                  <p class="text-xs text-white/60">Softwares</p>
                   <span class="text-white/40">▸</span>
                 </div>
               </summary>
