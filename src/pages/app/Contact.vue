@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue"
 import { Button } from "@/components/ui/button"
+import { Instagram, Linkedin, Mail, MapPin, MessageCircle, Phone, X } from "lucide-vue-next"
 
 const submitted = ref(false)
 const DEST_EMAIL = "yonosoyessa.jpg@gmail.com"
@@ -32,73 +33,115 @@ function onSubmit() {
 </script>
 
 <template>
-  <section class="contact-scene">
-    <p class="contact-word" aria-hidden="true">CONTACT</p>
+  <div class="contact-page">
+    <section class="contact-scene">
+      <p class="contact-word" aria-hidden="true">CONTACTO</p>
 
-    <form class="contact-panel" @submit.prevent="onSubmit">
-      <div class="contact-grid">
-        <div class="space-y-5">
-          <div class="field">
-            <label for="nomen">Nombre</label>
-            <input id="nomen" v-model="form.nombre" type="text" required />
+      <form class="contact-panel" @submit.prevent="onSubmit">
+        <div class="contact-grid">
+          <div class="space-y-5">
+            <div class="field">
+              <label for="nomen">Nombre</label>
+              <input id="nomen" v-model="form.nombre" type="text" required />
+            </div>
+
+            <div class="field">
+              <label for="cognomen">Apellidos</label>
+              <input id="cognomen" v-model="form.apellidos" type="text" required />
+            </div>
+
+            <div class="field">
+              <label for="correo">Correo</label>
+              <input
+                id="correo"
+                v-model="form.correo"
+                type="email"
+                placeholder="tucorreo@ejemplo.com"
+                required
+              />
+            </div>
+
+            <div class="field">
+              <label for="fecha-mision">Fechas del proyecto</label>
+              <input id="fecha-mision" v-model="form.fecha" type="date" required />
+            </div>
           </div>
 
-          <div class="field">
-            <label for="cognomen">Apellidos</label>
-            <input id="cognomen" v-model="form.apellidos" type="text" required />
-          </div>
+          <div class="space-y-5">
+            <div class="field">
+              <label for="mision">Proyecto</label>
+              <textarea
+                id="mision"
+                v-model="form.mision"
+                rows="6"
+                placeholder="Escribe tu mensaje"
+                required
+              />
+            </div>
 
-          <div class="field">
-            <label for="correo">Correo</label>
-            <input
-              id="correo"
-              v-model="form.correo"
-              type="email"
-              placeholder="tucorreo@ejemplo.com"
-              required
-            />
-          </div>
+            <div class="pt-2">
+              <Button type="submit" class="send-btn">
+                Enviar proyecto
+              </Button>
+            </div>
 
-          <div class="field">
-            <label for="fecha-mision">Fechas del proyecto</label>
-            <input id="fecha-mision" v-model="form.fecha" type="date" required />
+            <p v-if="submitted" class="ok-msg">
+              Proyecto enviado. Que ganas de trabajar juntos!
+            </p>
+          </div>
+        </div>
+      </form>
+
+      <div class="contact-empty-space" aria-hidden="true"></div>
+    </section>
+
+    <footer class="contact-footer">
+      <div class="contact-footer-inner">
+        <div class="space-y-4 text-center md:text-left">
+          <h3 class="text-xl font-bold text-white">Informacion de Contacto</h3>
+          <div class="space-y-2">
+            <p class="flex items-center gap-2 justify-center md:justify-start">
+              <Phone class="w-5 h-5" />
+              +34 600 123 456
+            </p>
+            <p class="flex items-center gap-2 justify-center md:justify-start">
+              <Mail class="w-5 h-5" />
+              yonosoyessa.jpg@gmail.com
+            </p>
+            <p class="flex items-center gap-2 justify-center md:justify-start">
+              <MapPin class="w-5 h-5" />
+              Valencia, Espana
+            </p>
           </div>
         </div>
 
-        <div class="space-y-5">
-          <div class="field">
-            <label for="mision">Proyecto</label>
-            <textarea
-              id="mision"
-              v-model="form.mision"
-              rows="6"
-              placeholder="Escribe tu mensaje"
-              required
-            />
+        <div class="space-y-4 text-center md:text-left text-gray-400">
+          <h3 class="text-xl font-bold text-white">Sigueme</h3>
+          <div class="flex gap-8 justify-center md:justify-start">
+            <X class="w-8 h-8 hover:text-white" />
+            <Instagram class="w-8 h-8 hover:text-white" />
+            <Linkedin class="w-8 h-8 hover:text-white" />
+            <MessageCircle class="w-8 h-8 hover:text-white" />
           </div>
-
-          <div class="pt-2">
-            <Button type="submit" class="send-btn">
-              Enviar proyecto
-            </Button>
-          </div>
-
-          <p v-if="submitted" class="ok-msg">
-            Proyecto enviado. ¡Qué ganas de trabajar juntos!
-          </p>
         </div>
       </div>
-    </form>
-  </section>
+    </footer>
+  </div>
 </template>
 
 <style scoped>
+.contact-page {
+  width: 100%;
+}
+
 .contact-scene {
   position: relative;
   overflow: hidden;
-  min-height: clamp(580px, 72vh, 860px);
+  min-height: auto;
   background: #070707;
-  padding: 1.5rem 1rem 2rem;
+  padding: 1.5rem 1rem 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .contact-word {
@@ -115,16 +158,23 @@ function onSubmit() {
   position: relative;
   z-index: 2;
   width: min(980px, 100%);
-  margin: clamp(0.9rem, 5vw, 2.2rem) 0 0 auto;
+  margin: clamp(1rem, 3.8vw, 2.2rem) 0 0 auto;
+  min-height: clamp(560px, 68vh, 860px);
   background: #3d3d3d;
   color: #fffdfd;
   padding: clamp(1.2rem, 2.8vw, 2.4rem);
+}
+
+.contact-empty-space {
+  width: 100%;
+  height: 0;
 }
 
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
+  margin-top: clamp(1rem, 3.5vh, 2.4rem);
 }
 
 .field label {
@@ -178,6 +228,21 @@ function onSubmit() {
   font-size: 0.88rem;
 }
 
+.contact-footer {
+  width: 100%;
+  background: #3d3d3d;
+  color: #d1d5db;
+  padding: 1.1rem 1rem 2.4rem;
+}
+
+.contact-footer-inner {
+  width: min(980px, 100%);
+  margin: 0 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
 @media (min-width: 900px) {
   .contact-scene {
     padding-inline: 2rem;
@@ -195,6 +260,16 @@ function onSubmit() {
   .send-btn {
     width: 230px;
     margin-left: auto;
+  }
+
+  .contact-footer {
+    padding-inline: 2rem;
+  }
+
+  .contact-footer-inner {
+    flex-direction: row;
+    justify-content: center;
+    gap: clamp(2rem, 6vw, 6rem);
   }
 }
 </style>
