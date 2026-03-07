@@ -2,14 +2,7 @@
 import { computed, onBeforeUnmount, ref } from "vue"
 import { RouterLink, RouterView, useRoute } from "vue-router"
 
-/**
- * Tools:
- * - grid: tools 04..33 en 2 columnas
- * - tool 34: SOLO imagen, grande, NO botón
- *
- * PNGs en /public/tools:
- * tools-04.png ... tools-33.png y tools-34.png
- */
+
 
 type Tool = {
   id: number
@@ -25,10 +18,7 @@ function pad2(n: number) {
 const appRoot = ref<HTMLElement | null>(null)
 const route = useRoute()
 
-/**
- * Nombres exactos por ID (según tu lista)
- * (puedes corregir tildes/typos cuando quieras)
- */
+
 const toolNameById: Record<number, string> = {
   4: "Selección",
   5: "Selección directa",
@@ -116,7 +106,7 @@ function setCursorFromTool(tool: Tool) {
   applyCursor(tool.cursor)
 }
 
-// cursor por defecto
+
 applyCursor("/tools/tools-04.png")
 
 onBeforeUnmount(() => {
@@ -129,9 +119,9 @@ onBeforeUnmount(() => {
 <template>
   <div
     ref="appRoot"
-    class="min-h-[100svh] bg-[#3d3d3d] text-white overflow-hidden [&_*]:cursor-inherit"
+    class="fixed inset-0 flex flex-col bg-[#3d3d3d] text-white overflow-hidden **:cursor-inherit"
   >
-    <!-- Barra superior app -->
+    
     <header class="h-12 bg-[#2a2a2a] border-b border-white/10 flex items-center px-4">
       <div class="flex items-center gap-3">
         <div
@@ -172,10 +162,10 @@ onBeforeUnmount(() => {
       </div>
     </header>
 
-    <div class="flex h-[calc(100svh-48px)]">
-      <!-- Barra herramientas -->
+    <div class="flex flex-1 min-h-0">
+      
       <aside class="w-23 bg-[#2b2b2b] border-r border-black/30 flex flex-col overflow-hidden">
-        <!-- HEADER (como tu imagen) -->
+        
         <div class="h-10 bg-[#3a3a3a] border-b border-black/30 flex items-center px-2">
           <div class="text-white/80 text-xs select-none">≪</div>
 
@@ -184,7 +174,7 @@ onBeforeUnmount(() => {
           </div>
         </div>
 
-        <!-- Tools 04..33 (sin botones visibles, solo seleccionada marcada) -->
+        
         <div class="p-2">
           <div class="grid grid-cols-2 gap-x-1 gap-y-2">
             <button
@@ -200,31 +190,31 @@ onBeforeUnmount(() => {
             </button>
           </div>
 
-          <!-- Tool 34:  -->
+          
 <div class="mt-3 flex items-center justify-center">
   <img
     :src="tool34Icon"
     alt="Tool 34"
-    class="w-[130px] h-auto"
+    class="w-[170px] h-auto"
     draggable="false"
   />
 </div>
         </div>
       </aside>
 
-      <!-- Centro -->
-      <main class="flex-1 bg-[#3a3a3a] p-2 sm:p-3 overflow-hidden">
-        <div class="h-full w-full rounded-lg bg-[#2f2f2f] border border-white/10 p-2 sm:p-3 overflow-hidden">
-          <div class="h-full w-full">
-            <!-- Lienzo blanco: SOLO aquí scroll -->
-            <div class="bg-white text-black rounded shadow-sm h-full overflow-y-auto p-4 sm:p-6">
+      
+      <main class="flex-1 min-h-0 bg-[#3a3a3a] p-2 sm:p-3 overflow-hidden">
+        <div class="h-full min-h-0 w-full rounded-lg bg-[#2f2f2f] border border-white/10 p-2 sm:p-3 overflow-hidden">
+          <div class="h-full min-h-0 w-full">
+            
+            <div class="work-canvas bg-white text-black rounded shadow-sm h-full min-h-0 max-h-full overflow-y-auto overscroll-contain p-4 sm:p-6">
               <RouterView />
             </div>
           </div>
         </div>
       </main>
 
-      <!-- Panel derecha -->
+      
       <aside class="hidden lg:flex w-[320px] bg-[#2d2d2d] border-l border-white/10 flex-col overflow-hidden">
         <div class="h-10 px-4 flex items-center border-b border-white/10">
           <p class="text-xs font-semibold text-white/60 tracking-wide">Propiedades</p>
@@ -287,3 +277,10 @@ onBeforeUnmount(() => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.work-canvas {
+  container-type: inline-size;
+  overflow-x: hidden;
+}
+</style>

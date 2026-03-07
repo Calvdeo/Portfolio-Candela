@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue"
+import { computed, nextTick, ref } from "vue"
 import { useRoute, RouterLink } from "vue-router"
 import { projects } from "@/data/projects"
 
@@ -18,6 +18,7 @@ const is36Days = computed(() => project.value?.slug === "branding-yonosoyessa")
 const mainWord = computed(() => "36 days of type")
 type FruitKey = "apple-red" | "apple-green" | "orange"
 const activeFruit = ref<FruitKey>("apple-red")
+const fruitPhotoSection = ref<HTMLElement | null>(null)
 
 const fruitInfo: Record<FruitKey, { title: string; text: string; photo: string; photoAlt: string }> = {
   "apple-red": {
@@ -50,6 +51,7 @@ type StickerPos = {
   id: number
   wrapperClass: string
   sizeClass: string
+  sizeType: "lg" | "sm"
   hint: string
   hintClass: string
 }
@@ -60,16 +62,16 @@ type DecorSticker = {
 }
 
 const stickerPositions: StickerPos[] = [
-  { id: 3, wrapperClass: "left-[8%] top-[8%] rotate-[-8deg]", sizeClass: "w-32 sm:w-40 md:w-48", hint: "Sans serif geometrica.Trazos rectos y formas basadas en circulos, 1927. Ejemplo: Futura Bold Condensed.", hintClass: "-left-14 sm:-left-20 top-full mt-2" },
-  { id: 4, wrapperClass: "left-[20%] top-[22%] rotate-[12deg]", sizeClass: "w-28 sm:w-36 md:w-44", hint: "Caligraficas. Imitan la escritura hecha a mano con trazos fluidos. Origen historico.", hintClass: "left-1/2 -top-14 sm:-top-16 -translate-x-1/2" },
-  { id: 5, wrapperClass: "left-[32%] top-[9%] rotate-[-10deg]", sizeClass: "w-32 sm:w-40 md:w-48", hint: "Romana con serifa. Serifas marcadas inspiradas en la caligrafia antigua, 1924.", hintClass: "left-1/2 top-full mt-2 -translate-x-1/2" },
-  { id: 6, wrapperClass: "right-[28%] top-[8%] rotate-[7deg]", sizeClass: "w-28 sm:w-36 md:w-44", hint: "Sans serif geometrica. Letras simples con construccion geometrica, 1927.Ejemplo:Futura.", hintClass: "right-0 -top-5 text-right" },
-  { id: 7, wrapperClass: "right-[11%] top-[18%] rotate-[-9deg]", sizeClass: "w-32 sm:w-40 md:w-48", hint: "Serif incisa. Serifas en forma de cuna inspiradas en inscripciones en piedra, 1958.", hintClass: "left-1/2 -top-5 -translate-x-1/2" },
-  { id: 8, wrapperClass: "left-[12%] bottom-[20%] rotate-[10deg]", sizeClass: "w-32 sm:w-40 md:w-48", hint: "Hutang. Estilo oriental decorativo. Inspirado en la caligrafia china tradicional, 1673.", hintClass: "left-1 top-full mt-2" },
-  { id: 9, wrapperClass: "left-[36%] bottom-[11%] rotate-[-12deg]", sizeClass: "w-28 sm:w-36 md:w-44", hint: "Tipografia posmoderna. Formas expresivas y experimentales. 2001. Ejemplo: Rayuela", hintClass: "left-1/2 top-full mt-2 -translate-x-1/2" },
-  { id: 10, wrapperClass: "right-[18%] bottom-[8%] rotate-[6deg]", sizeClass: "w-32 sm:w-40 md:w-48", hint: "Display. Tipografia decorativa, disenada para titulares y tamanos grandes, siglo XX.", hintClass: "right-full top-1/2 mr-2 -translate-y-1/2 text-right" },
-  { id: 11, wrapperClass: "left-[47%] top-[30%] rotate-[14deg]", sizeClass: "w-28 sm:w-36 md:w-44", hint: "Semi-serif. Mezcla rasgos de serif y sans serif, eje vertical, 1988. Ejemplo: Rotis Semi Serif.", hintClass: "left-1/2 -top-14 sm:-top-16 -translate-x-1/2 text-center" },
-  { id: 12, wrapperClass: "right-[5%] bottom-[30%] rotate-[-14deg]", sizeClass: "w-28 sm:w-36 md:w-44", hint: "Sans serif grotesca. Apertura pequena y trazos rectos no geometricos, 1958.", hintClass: "right-0 top-full mt-2 text-right" },
+  { id: 3, wrapperClass: "left-[8%] top-[8%] rotate-[-8deg]", sizeClass: "w-32 sm:w-40 md:w-48", sizeType: "lg", hint: "Sans serif geometrica.Trazos rectos y formas basadas en circulos, 1927. Ejemplo: Futura Bold Condensed.", hintClass: "-left-14 sm:-left-20 top-full mt-2" },
+  { id: 4, wrapperClass: "left-[20%] top-[22%] rotate-[12deg]", sizeClass: "w-28 sm:w-36 md:w-44", sizeType: "sm", hint: "Caligraficas. Imitan la escritura hecha a mano con trazos fluidos. Origen historico.", hintClass: "left-1/2 -top-14 sm:-top-16 -translate-x-1/2" },
+  { id: 5, wrapperClass: "left-[32%] top-[9%] rotate-[-10deg]", sizeClass: "w-32 sm:w-40 md:w-48", sizeType: "lg", hint: "Romana con serifa. Serifas marcadas inspiradas en la caligrafia antigua, 1924.", hintClass: "left-1/2 top-full mt-2 -translate-x-1/2" },
+  { id: 6, wrapperClass: "right-[28%] top-[8%] rotate-[7deg]", sizeClass: "w-28 sm:w-36 md:w-44", sizeType: "sm", hint: "Sans serif geometrica. Letras simples con construccion geometrica, 1927.Ejemplo:Futura.", hintClass: "right-0 -top-5 text-right" },
+  { id: 7, wrapperClass: "right-[11%] top-[18%] rotate-[-9deg]", sizeClass: "w-32 sm:w-40 md:w-48", sizeType: "lg", hint: "Serif incisa. Serifas en forma de cuna inspiradas en inscripciones en piedra, 1958.", hintClass: "left-1/2 -top-5 -translate-x-1/2" },
+  { id: 8, wrapperClass: "left-[12%] bottom-[20%] rotate-[10deg]", sizeClass: "w-32 sm:w-40 md:w-48", sizeType: "lg", hint: "Hutang. Estilo oriental decorativo. Inspirado en la caligrafia china tradicional, 1673.", hintClass: "left-1 top-full mt-2" },
+  { id: 9, wrapperClass: "left-[36%] bottom-[11%] rotate-[-12deg]", sizeClass: "w-28 sm:w-36 md:w-44", sizeType: "sm", hint: "Tipografia posmoderna. Formas expresivas y experimentales. 2001. Ejemplo: Rayuela", hintClass: "left-1/2 top-full mt-2 -translate-x-1/2" },
+  { id: 10, wrapperClass: "right-[18%] bottom-[8%] rotate-[6deg]", sizeClass: "w-32 sm:w-40 md:w-48", sizeType: "lg", hint: "Display. Tipografia decorativa, disenada para titulares y tamanos grandes, siglo XX.", hintClass: "right-full top-1/2 mr-2 -translate-y-1/2 text-right" },
+  { id: 11, wrapperClass: "left-[47%] top-[30%] rotate-[14deg]", sizeClass: "w-28 sm:w-36 md:w-44", sizeType: "sm", hint: "Semi-serif. Mezcla rasgos de serif y sans serif, eje vertical, 1988. Ejemplo: Rotis Semi Serif.", hintClass: "left-1/2 -top-14 sm:-top-16 -translate-x-1/2 text-center" },
+  { id: 12, wrapperClass: "right-[5%] bottom-[30%] rotate-[-14deg]", sizeClass: "w-28 sm:w-36 md:w-44", sizeType: "sm", hint: "Sans serif grotesca. Apertura pequena y trazos rectos no geometricos, 1958.", hintClass: "right-0 top-full mt-2 text-right" },
 ]
 
 const decorStickers: DecorSticker[] = [
@@ -88,10 +90,16 @@ const decorStickers: DecorSticker[] = [
 function stickerPath(id: number) {
   return `/images/fruta-${String(id).padStart(2, "0")}.png`
 }
+
+async function selectFruit(fruitKey: FruitKey) {
+  activeFruit.value = fruitKey
+  await nextTick()
+  fruitPhotoSection.value?.scrollIntoView({ behavior: "smooth", block: "start" })
+}
 </script>
 
 <template>
-  <div class="space-y-6">
+  <div class="days-detail space-y-6">
     <RouterLink to="/app/projects/design">
       <Button variant="ghost">
         <ArrowLeft class="h-4 w-4 mr-2" />
@@ -102,13 +110,14 @@ function stickerPath(id: number) {
     <div v-if="project" class="space-y-4">
       <section
         v-if="is36Days"
-        class="relative min-h-[68vh] sm:min-h-[72vh] overflow-visible"
+        class="days-hero relative"
       >
         <div class="absolute inset-0 flex items-center justify-center px-4">
           <p
-            class="select-none text-black/90 font-semibold leading-none tracking-tight lowercase whitespace-nowrap text-[clamp(3.2rem,16vw,13rem)]"
+            class="days-hero-title select-none text-black/90 font-semibold leading-none tracking-tight lowercase"
           >
-            {{ mainWord }}
+            <span class="hero-main-word-inline">{{ mainWord }}</span>
+            <span class="hero-main-word-portrait" aria-hidden="true">36 days<br />of type</span>
           </p>
         </div>
 
@@ -116,19 +125,19 @@ function stickerPath(id: number) {
           v-for="s in stickerPositions"
           :key="s.id"
           type="button"
-          class="group absolute transition-transform duration-200 hover:scale-105 focus:outline-none"
+          class="days-sticker group absolute transition-transform duration-200 hover:scale-105 focus:outline-none"
           :class="[s.wrapperClass, 'z-10']"
           :aria-label="`Sticker fruta ${s.id}`"
         >
           <img
             :src="stickerPath(s.id)"
             :alt="`Sticker fruta ${s.id}`"
-            class="object-contain drop-shadow-[0_8px_10px_rgba(0,0,0,0.18)]"
-            :class="s.sizeClass"
+            class="days-sticker-img object-contain drop-shadow-[0_8px_10px_rgba(0,0,0,0.18)]"
+            :class="[s.sizeClass, s.sizeType === 'lg' ? 'days-sticker-img-lg' : 'days-sticker-img-sm']"
             draggable="false"
           />
           <span
-            class="pointer-events-none absolute z-20 w-44 sm:w-52 text-[10px] sm:text-[11px] leading-snug font-medium text-black/80 opacity-0 transition-opacity duration-150 group-hover:opacity-100"
+            class="days-sticker-hint pointer-events-none absolute z-20 w-44 sm:w-52 text-[10px] sm:text-[11px] leading-snug font-medium text-black/80 opacity-0 transition-opacity duration-150 group-hover:opacity-100"
             :class="s.hintClass"
           >
             {{ s.hint }}
@@ -160,7 +169,7 @@ function stickerPath(id: number) {
               class="shrink-0 transition-transform duration-200 hover:scale-105"
               :class="activeFruit === fruit.key ? 'scale-105' : ''"
               :aria-label="`Abrir info ${fruit.label}`"
-              @click="activeFruit = fruit.key"
+              @click="selectFruit(fruit.key)"
             >
               <img
                 :src="fruit.src"
@@ -179,20 +188,20 @@ function stickerPath(id: number) {
             </p>
           </div>
 
-          <div class="relative w-full px-1 sm:px-2">
+          <div ref="fruitPhotoSection" class="relative w-full px-1 sm:px-2">
             <img
               v-for="(d, index) in decorStickers"
               :key="`decor-${d.id}-${index}`"
               :src="stickerPath(d.id)"
               :alt="`Pegatina decorativa ${d.id}`"
-              class="pointer-events-none absolute z-10 object-contain drop-shadow-[0_4px_6px_rgba(0,0,0,0.14)]"
+              class="days-decor-img pointer-events-none absolute z-10 object-contain drop-shadow-[0_4px_6px_rgba(0,0,0,0.14)]"
               :class="d.className"
               draggable="false"
             />
             <img
               :src="fruitInfo[activeFruit].photo"
               :alt="fruitInfo[activeFruit].photoAlt"
-              class="relative z-20 w-full h-[84vh] object-contain"
+              class="relative z-20 mx-auto w-full max-w-[1200px] h-auto object-contain"
               draggable="false"
             />
           </div>
@@ -229,3 +238,120 @@ function stickerPath(id: number) {
     </div>
   </div>
 </template>
+
+<style scoped>
+.days-detail {
+  overflow-x: clip;
+}
+
+.days-hero {
+  min-height: clamp(430px, 50vw, 760px);
+  overflow: visible;
+}
+
+.days-hero-title {
+  white-space: nowrap;
+  font-size: clamp(3.2rem, 16vw, 13rem);
+}
+
+.days-sticker-img,
+.days-decor-img {
+  transform-origin: center center;
+}
+
+.days-sticker-img-lg {
+  width: clamp(5.8rem, 10.2cqw, 12rem) !important;
+}
+
+.days-sticker-img-sm {
+  width: clamp(5rem, 8.9cqw, 10.5rem) !important;
+}
+
+.hero-main-word-portrait {
+  display: none;
+}
+
+@container (max-width: 1200px) {
+  .days-hero {
+    min-height: clamp(420px, 56vw, 720px);
+  }
+
+  .days-hero-title {
+    font-size: clamp(2.7rem, 13.5cqw, 7.8rem);
+  }
+}
+
+@container (max-width: 960px) {
+  .days-hero {
+    min-height: clamp(390px, 60vw, 640px);
+    overflow: hidden;
+  }
+
+  .days-hero-title {
+    font-size: clamp(2.2rem, 13cqw, 6rem);
+  }
+
+  .days-sticker-hint {
+    display: none;
+  }
+
+  .days-sticker-img-lg {
+    width: clamp(5.1rem, 10.5cqw, 8.5rem) !important;
+  }
+
+  .days-sticker-img-sm {
+    width: clamp(4.5rem, 9.2cqw, 7.2rem) !important;
+  }
+}
+
+@container (max-width: 780px) {
+  .days-hero {
+    min-height: clamp(360px, 72vw, 620px);
+    overflow: hidden;
+  }
+
+  .days-hero-title {
+    white-space: normal;
+    text-align: center;
+    line-height: 0.9;
+    font-size: clamp(1.9rem, 12.8cqw, 4.8rem);
+  }
+
+  .hero-main-word-inline {
+    display: none;
+  }
+
+  .hero-main-word-portrait {
+    display: inline-block;
+    text-align: center;
+  }
+}
+
+@container (max-width: 620px) {
+  .days-hero {
+    min-height: clamp(330px, 82vw, 540px);
+  }
+
+  .days-hero-title {
+    font-size: clamp(1.75rem, 12.2cqw, 3.8rem);
+  }
+
+  .days-sticker-img-lg {
+    width: clamp(4.7rem, 10.8cqw, 7.2rem) !important;
+  }
+
+  .days-sticker-img-sm {
+    width: clamp(4.1rem, 9.6cqw, 6.3rem) !important;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 760px) {
+  .days-hero {
+    min-height: clamp(300px, 44vw, 480px);
+  }
+
+  .days-hero-title {
+    font-size: clamp(1.85rem, 10.6cqw, 4.8rem);
+  }
+}
+</style>

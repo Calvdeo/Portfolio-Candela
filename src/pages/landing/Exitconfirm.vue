@@ -25,7 +25,7 @@ function continuePortfolio() {
       <div class="p-6">
         <div class="rounded-md border border-yellow-400/30 bg-yellow-400/10 p-4">
           <div class="flex items-start gap-3">
-            <!-- icono warning (svg simple) -->
+            
             <svg
               class="mt-0.5"
               width="22"

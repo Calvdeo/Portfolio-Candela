@@ -12,26 +12,21 @@ function goToExitConfirm() {
   router.push("/exit")
 }
 
-/** Datos */
 const age = 20
 const city = "Valencia"
+const previewImg = "/images/Portada_essa.png"
 const role = ref("Diseñadora")
 
-/** Hover para cambiar logo */
+
 const isNameHover = ref(false)
 
-/**
- * IMPORTANTE:
- * Estas rutas funcionan SOLO si los archivos están en /public
- * Ej: public/brand/essa.png  -> se usa como "/brand/essa.png"
- */
+
 const essaImg = "/brand/essa.png"
 const yonosoyessaImg = "/brand/yonosoyessa.png"
 
-/** Imagen del recuadro grande (public/images/preview.png) */
-const previewImg = "/images/Portada_essa.png"
 
-/** Proyectos (panel derecho) */
+
+
 const projects = ref([
   { slug: "branding-yonosoyessa", title: "36 days of type" },
   { slug: "cartel-festival", title: "Cartel · Festival" },
@@ -40,7 +35,7 @@ const projects = ref([
 ])
 const projectCount = computed(() => projects.value.length)
 
-/** Soportes */
+
 type SupportKey =
   | "Photoshop"
   | "Illustrator"
@@ -61,7 +56,7 @@ const supports = ref<Record<SupportKey, number>>({
 const instagramUrl = "https://instagram.com/yonosoyessa.tiff"
 const email = "yonosoyessa.jpg@gmail.com"
 
-/** Orientación */
+
 const isPortrait = ref(true)
 function updateOrientation() {
   isPortrait.value = window.innerHeight >= window.innerWidth
@@ -74,7 +69,7 @@ onBeforeUnmount(() => {
   window.removeEventListener("resize", updateOrientation)
 })
 
-/** Iconos (public/orientation) */
+
 const portraitIconOff = "/orientation/portrait.png"
 const portraitIconOn = "/orientation/portrait_azul.png"
 const landscapeIconOff = "/orientation/landscape.png"
@@ -82,14 +77,14 @@ const landscapeIconOn = "/orientation/landscape_azul.png"
 </script>
 
 <template>
-  <!-- Escritorio sin imagen de fondo -->
-  <div class="w-full min-h-[100svh] bg-[#e8e1d6] overflow-hidden relative">
-    <!-- Ventana centrada (responsive) -->
-    <div class="w-full min-h-[100svh] flex items-center justify-center p-3 sm:p-6 lg:p-10 pb-24">
+  
+  <div class="w-full min-h-svh bg-[#e8e1d6] overflow-hidden relative">
+  
+    <div class="w-full min-h-svh flex items-center justify-center p-3 sm:p-6 lg:p-10 pb-24">
       <div
         class="w-[92vw] max-w-[1400px] h-[86svh] sm:h-[88svh] lg:h-[82svh] bg-[#2f2f2f] text-white rounded-xl shadow-2xl overflow-hidden border border-black/10"
       >
-        <!-- Barra superior -->
+        
         <div
           class="h-10 bg-[#2a2a2a] border-b border-white/10 flex items-center justify-between px-4"
         >
@@ -110,13 +105,13 @@ const landscapeIconOn = "/orientation/landscape_azul.png"
           <button class="text-white/60 hover:text-white/90" type="button">✕</button>
         </div>
 
-        <!-- Contenido: móvil apila, escritorio 2 columnas -->
+        
         <div
           class="flex flex-col lg:flex-row h-[calc(86svh-40px)] sm:h-[calc(88svh-40px)] lg:h-[calc(82svh-40px)] overflow-hidden"
         >
-          <!-- panel izquierdo -->
+          
           <div class="flex-1 p-4 sm:p-6 lg:p-8 overflow-hidden lg:overflow-y-auto">
-            <!-- ESTE BLOQUE SE OCULTA EN MÓVIL -->
+            
             <div class="hidden lg:block rounded-md bg-[#242424] border border-white/10 p-6 relative">
               <button
                 class="absolute right-3 top-3 text-white/50 hover:text-white/80"
@@ -131,13 +126,13 @@ const landscapeIconOn = "/orientation/landscape_azul.png"
             </div>
 
             <div class="mt-6 sm:mt-8">
-              <!-- ESTE TITULO SE OCULTA EN MÓVIL -->
+              
               <div class="hidden lg:flex items-center justify-between">
                 <p class="text-sm font-semibold text-white/80">TUS ELEMENTOS RECIENTES</p>
                 <p class="text-xs text-white/50">(5)</p>
               </div>
 
-              <!-- Contenedor de imagen: en móvil tiene alto fijo para que NO genere scroll -->
+              
               <div
                 class="mt-3 rounded-md bg-[#2b2b2b] border border-white/10 p-2 sm:p-4 h-[55svh] lg:h-auto flex items-center justify-center"
               >
@@ -150,11 +145,9 @@ const landscapeIconOn = "/orientation/landscape_azul.png"
               </div>
             </div>
 
-            <!-- ESTA CAJA SE OCULTA EN MÓVIL -->
-            <div class="hidden lg:block mt-6 rounded-md bg-[#2a2a2a] border border-white/10 h-12"></div>
           </div>
 
-          <!-- panel derecho -->
+          
           <aside
             class="w-full lg:w-[380px] border-t lg:border-t-0 lg:border-l border-white/10 p-4 sm:p-6 bg-[#2d2d2d] flex flex-col overflow-y-auto"
           >
@@ -186,7 +179,7 @@ const landscapeIconOn = "/orientation/landscape_azul.png"
               </div>
             </div>
 
-            <!-- Edad + rol -->
+            
             <div class="mt-4">
               <p class="text-xs text-white/60 mb-2">Edad</p>
 
@@ -218,7 +211,7 @@ const landscapeIconOn = "/orientation/landscape_azul.png"
               </div>
             </div>
 
-            <!-- Ciudad + Orientación -->
+            
             <div class="mt-4">
               <p class="text-xs text-white/60 mb-2">Ciudad</p>
 
@@ -253,7 +246,7 @@ const landscapeIconOn = "/orientation/landscape_azul.png"
               </div>
             </div>
 
-            <!-- Mesas de trabajo -->
+            
             <details class="mt-4">
               <summary class="list-none cursor-pointer">
                 <div>
@@ -284,7 +277,7 @@ const landscapeIconOn = "/orientation/landscape_azul.png"
               </div>
             </details>
 
-            <!-- Soportes -->
+            
             <details class="mt-6">
               <summary class="list-none cursor-pointer">
                 <div class="flex items-center justify-between">
@@ -305,7 +298,7 @@ const landscapeIconOn = "/orientation/landscape_azul.png"
               </div>
             </details>
 
-            <!-- Contacto -->
+            
             <details class="mt-4">
               <summary class="list-none cursor-pointer">
                 <div class="flex items-center justify-between">
@@ -330,7 +323,7 @@ const landscapeIconOn = "/orientation/landscape_azul.png"
               </div>
             </details>
 
-            <!-- Botones -->
+            
             <button
               class="mt-4 w-full rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-500"
               type="button"
@@ -351,7 +344,7 @@ const landscapeIconOn = "/orientation/landscape_azul.png"
       </div>
     </div>
 
-    <!-- Dock / barra inferior -->
+    
     <div class="absolute bottom-0 left-0 w-full">
       <div class="h-16 bg-black/80 backdrop-blur border-t border-white/10 flex items-center px-4">
         <div class="mx-auto flex items-center gap-3">
@@ -382,3 +375,4 @@ const landscapeIconOn = "/orientation/landscape_azul.png"
     </div>
   </div>
 </template>
+

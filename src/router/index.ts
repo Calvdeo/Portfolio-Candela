@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router"
 
 import Start from "@/pages/landing/Start.vue"
-import ExitConfirm from "@/pages/landing/Exitconfirm.vue" // 👈 ojo al nombre real
+import ExitConfirm from "@/pages/landing/Exitconfirm.vue" 
 
 import IllustratorLayout from "@/layouts/IllustratorLayout.vue"
 import Projects from "@/pages/app/Projects.vue"
@@ -19,7 +19,7 @@ export const router = createRouter({
       path: "/app",
       component: IllustratorLayout,
       children: [
-        { path: "", redirect: "/app/projects/design" }, // 👈 opcional pero útil
+        { path: "", redirect: "/app/projects/design" },
         { path: "projects", redirect: "/app/projects/design" },
         { path: "projects/design", name: "projects-design", component: Projects },
         { path: "projects/illustration", name: "projects-illustration", component: Projects },
@@ -29,6 +29,6 @@ export const router = createRouter({
       ],
     },
 
-    { path: "/:pathMatch(.*)*", redirect: "/" }, // 👈 catch-all correcto
+    { path: "/:pathMatch(.*)*", redirect: "/" },
   ],
 })
