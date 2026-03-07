@@ -278,6 +278,7 @@ onBeforeUnmount(() => {
   </div>
 </template>
 
+
 <style scoped>
 .work-canvas {
   container-type: inline-size;
