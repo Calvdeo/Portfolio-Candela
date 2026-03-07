@@ -90,8 +90,8 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="space-y-6">
-    <div class="border overflow-hidden bg-muted/30">
+  <div>
+    <div class="mb-6 border overflow-hidden bg-muted/30">
       <img
         :src="projectsHeroImg"
         alt="Portada de proyectos"
@@ -100,39 +100,39 @@ onBeforeUnmount(() => {
       />
     </div>
 
-    <div class="flex items-end gap-2">
+    <div class="flex items-end gap-2 rounded-t-2xl border border-b-0 border-[#3d3d3d] bg-[#2f2f2f] px-4 pt-4">
       <RouterLink
         to="/app/projects/design"
-        class="px-6 py-3 border border-b-0 text-lg font-semibold transition"
+        class="px-6 py-3 border border-b-0 rounded-t-xl text-lg font-semibold transition"
         :class="activeTab === 'design'
-          ? 'bg-background text-foreground border-border'
-          : 'bg-muted/40 text-muted-foreground border-border/60 hover:bg-muted/60'"
+          ? 'bg-[#4a4a4a] text-white border-white/35'
+          : 'bg-[#2f2f2f] text-gray-300 border-white/20 hover:bg-[#353535]'"
       >
         Diseño
       </RouterLink>
 
       <RouterLink
         to="/app/projects/illustration"
-        class="px-6 py-3 border border-b-0 text-lg font-semibold transition"
+        class="px-6 py-3 border border-b-0 rounded-t-xl text-lg font-semibold transition"
         :class="activeTab === 'illustration'
-          ? 'bg-background text-foreground border-border'
-          : 'bg-muted/40 text-muted-foreground border-border/60 hover:bg-muted/60'"
+          ? 'bg-[#4a4a4a] text-white border-white/35'
+          : 'bg-[#2f2f2f] text-gray-300 border-white/20 hover:bg-[#353535]'"
       >
         Ilustración
       </RouterLink>
 
-      <div class="ml-auto pb-2 text-sm text-muted-foreground">
+      <div class="ml-auto pb-2 text-sm text-gray-200">
         {{ filteredProjects.length }} proyectos
       </div>
     </div>
 
-    <section class="border bg-white overflow-hidden">
-      <div class="border-b px-6 py-5">
-        <h3 class="text-5xl font-bold tracking-tight">{{ title }}</h3>
-        <p class="text-sm text-muted-foreground mt-2">Haz click en un proyecto para ver su detalle.</p>
+    <section class="-mt-px rounded-b-2xl border border-[#3d3d3d] bg-[#3d3d3d] overflow-hidden">
+      <div class="border-b border-white/15 bg-[#4a4a4a] px-6 py-5">
+        <h3 class="text-5xl font-bold tracking-tight text-white">{{ title }}</h3>
+        <p class="text-sm text-gray-200 mt-2">Haz click en un proyecto para ver su detalle.</p>
       </div>
 
-      <div class="h-[70vh] overflow-y-auto px-6 py-6 bg-white">
+      <div class="h-[70vh] overflow-y-auto px-6 py-6 bg-[#3d3d3d]">
         <div class="grid gap-10 md:grid-cols-2">
           <RouterLink
             v-for="(p, index) in filteredProjects"
@@ -143,7 +143,7 @@ onBeforeUnmount(() => {
             @mouseleave="stopFruitCycle(p.slug)"
           >
             <Card
-              class="mx-auto w-[94%] overflow-visible border-0 bg-transparent text-black shadow-none transition-transform duration-300"
+              class="mx-auto w-[94%] overflow-visible border-0 bg-transparent text-white shadow-none transition-transform duration-300"
               :class="index % 2 === 0
                 ? 'rotate-[-2.6deg] group-hover:rotate-[-1.2deg]'
                 : 'rotate-[2.6deg] group-hover:rotate-[1.2deg]'"
@@ -156,7 +156,7 @@ onBeforeUnmount(() => {
                   :class="getProjectCardImageClass(p.slug)"
                   loading="lazy"
                 />
-                <div v-else class="w-full h-full flex items-center justify-center text-sm text-black/60">
+                <div v-else class="w-full h-full flex items-center justify-center text-sm text-white/60">
                   Sin portada
                 </div>
               </div>
@@ -165,14 +165,14 @@ onBeforeUnmount(() => {
                 <p class="text-[1.02rem] font-semibold uppercase tracking-[0.03em] line-clamp-1">
                   {{ p.title }}
                 </p>
-                <p class="text-sm leading-snug line-clamp-2 text-black/80">
+                <p class="text-sm leading-snug line-clamp-2 text-white/80">
                   {{ p.description }}
                 </p>
 
                 <div class="pt-1">
                   <Badge
                     variant="secondary"
-                    class="border border-black/35 bg-transparent text-black hover:bg-black/5"
+                    class="border border-white/35 bg-transparent text-white hover:bg-white/10"
                   >
                     {{ p.tags[0] ?? "Proyecto" }}
                   </Badge>
