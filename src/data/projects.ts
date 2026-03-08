@@ -30,12 +30,12 @@ export const projects: Project[] = [
     cover: "/images/páginas detalle/cartel_crefad.png",
   },
   {
-    slug: "identidad-cafe-local",
-    title: "Identidad · Cafe Local",
+    slug: "Packaging",
+    title: "Packaging de chocolates",
     category: "diseño",
-    year: "2025",
+    year: "2023",
     tags: ["branding", "packaging"],
-    description: "Sistema visual para marca local con piezas impresas y digitales.",
+    description: "Identidad para una nueva chocolatería",
     cover: "/images/education.png",
   },
   {
@@ -111,22 +111,5 @@ export const projects: Project[] = [
     description: "Sesion de retrato centrada en la manipulación de la luz",
     cover: "/images/páginas detalle/fotografía/3.2.png",
   },
-  {
-    slug: "producto-texturas",
-    title: "Producto · Texturas",
-    category: "fotografía",
-    year: "2025",
-    tags: ["producto", "estudio"],
-    description: "Fotografia de producto enfocada en materiales y detalle.",
-    cover: "/images/c.png",
-  },
-  {
-    slug: "diario-visual-valencia",
-    title: "Diario Visual · Valencia",
-    category: "fotografía",
-    year: "2024",
-    tags: ["calle", "documental"],
-    description: "Recorrido fotografico por barrios y escenas urbanas de Valencia.",
-    cover: "/images/portada1.png",
-  },
+  
 ]

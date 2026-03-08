@@ -1,5 +1,5 @@
 ﻿<script setup lang="ts">
-import { computed, nextTick, ref } from "vue"
+import { computed, nextTick, onBeforeUnmount, ref, watch } from "vue"
 import { useRoute, RouterLink } from "vue-router"
 import { projects } from "@/data/projects"
 
@@ -23,6 +23,7 @@ const backToProjectsPath = computed(() => {
 
 const is36Days = computed(() => project.value?.slug === "branding-yonosoyessa")
 const isCartelCrefad = computed(() => project.value?.slug === "cartel Crefad")
+const isPackagingProject = computed(() => project.value?.slug === "Packaging")
 const isCreatedHumanProject = computed(() => project.value?.slug === "Creado por inteligencia humana")
 const isIllustrationConceptual = computed(() => project.value?.slug === "Ilustración conceptual")
 const isComicProject = computed(() => {
@@ -55,6 +56,42 @@ const createdHumanStickerCards = [
   { src: createdHumanStickerA, top: 68, left: 44, rotate: -9, width: 24, z: 13 },
   { src: createdHumanStickerB, top: 74, left: 68, rotate: 12, width: 21, z: 2 },
 ]
+const packagingHeroImage = "/images/páginas detalle/LOGO CHOCOLATE negro.png"
+const packagingFeatureImages = [
+  "/images/páginas detalle/121.png",
+  "/images/páginas detalle/122.png",
+  "/images/páginas detalle/61.png",
+  "/images/páginas detalle/92.png",
+]
+const packagingCarouselPhotos = [
+  "/images/páginas detalle/2.png",
+  "/images/páginas detalle/3.png",
+  "/images/páginas detalle/4.png",
+  "/images/páginas detalle/5.png",
+  "/images/páginas detalle/6.png",
+  "/images/páginas detalle/7.png",
+  "/images/páginas detalle/8.png",
+  "/images/páginas detalle/9.png",
+  "/images/páginas detalle/10.png",
+  "/images/páginas detalle/11.png",
+  "/images/páginas detalle/12.png",
+  "/images/páginas detalle/13.png",
+  "/images/páginas detalle/14.png",
+  "/images/páginas detalle/15.png",
+  "/images/páginas detalle/16.png",
+  "/images/páginas detalle/17.png",
+  "/images/páginas detalle/18.png",
+  "/images/páginas detalle/19.png",
+  "/images/páginas detalle/20.png",
+  "/images/páginas detalle/21.png",
+  "/images/páginas detalle/22.png",
+  "/images/páginas detalle/23.png",
+]
+const packagingCarouselIndex = ref(0)
+const activePackagingImage = computed(
+  () => packagingCarouselPhotos[packagingCarouselIndex.value] ?? packagingCarouselPhotos[0] ?? "",
+)
+let packagingCarouselTimer: ReturnType<typeof setInterval> | null = null
 const illustrationConceptualBottomText =
   "Feminismos complejos para una vida digna de ser vivida. Este proyecto traduce en imagen una idea central del feminismo contemporáneo: que la lucha por la igualdad no ocurre solo en las calles, sino también en la vida cotidiana. La ilustración muestra un momento íntimo de descanso junto al símbolo feminista, recordando que lo personal también es político. La obra propone reflexionar sobre las múltiples realidades que atraviesan a las mujeres y sobre la necesidad de construir colectivamente condiciones para una vida digna."
 const illustrationConceptualSecondImage =
@@ -95,10 +132,10 @@ const illustrationNarrativeMosaic = [
 const illustrationNarrativeCharactersImage = "/images/páginas detalle/ilustración/personaje.png"
 const illustrationNarrativeText =
   "Proyecto de ilustración narrativa inspirado en La ladrona de libros. Se encargaro una doble página, dos páginas individuales, portada y contraportada. Como plus y atendiendo a las necesidades del texto decidí ilustrar un libro narrado dentro de la propia historia."
-const comicColorImage = "/images/p%C3%A1ginas%20detalle/ilustraci%C3%B3n/comiccolor.png"
-const comicBlackImage = "/images/p%C3%A1ginas%20detalle/ilustraci%C3%B3n/comicnegro.png"
+const comicColorImage = "/images/p%C3%A1ginas%20detalle/ilustración/comiccolor.png"
+const comicBlackImage = "/images/p%C3%A1ginas%20detalle/ilustracion/comicnegro.png"
 const comicSequentialCharactersImage =
-  "/images/p%C3%A1ginas%20detalle/ilustraci%C3%B3n/personajesecuencial.png"
+  "/images/p%C3%A1ginas%20detalle/ilustración/personajesecuencial.png"
 const comicBottomText =
   "Proyecto de ilustración secuencial de una anécdota, además de la creación de un personaje inicial. Ilustración hecha con tinta china y color digital."
 const cartelGalleryBasePath = "/images/páginas detalle"
@@ -141,6 +178,43 @@ function nextCartelImage() {
 function goToCartelImage(index: number) {
   if (index < 0 || index >= cartelGalleryPhotos.length) return
   cartelCarouselIndex.value = index
+}
+
+function prevPackagingImage() {
+  if (packagingCarouselPhotos.length === 0) return
+  packagingCarouselIndex.value =
+    (packagingCarouselIndex.value - 1 + packagingCarouselPhotos.length) % packagingCarouselPhotos.length
+  resetPackagingAutoplay()
+}
+
+function nextPackagingImage() {
+  if (packagingCarouselPhotos.length === 0) return
+  packagingCarouselIndex.value = (packagingCarouselIndex.value + 1) % packagingCarouselPhotos.length
+  resetPackagingAutoplay()
+}
+
+function goToPackagingImage(index: number) {
+  if (index < 0 || index >= packagingCarouselPhotos.length) return
+  packagingCarouselIndex.value = index
+  resetPackagingAutoplay()
+}
+
+function startPackagingAutoplay() {
+  if (packagingCarouselTimer || packagingCarouselPhotos.length <= 1) return
+  packagingCarouselTimer = setInterval(() => {
+    packagingCarouselIndex.value = (packagingCarouselIndex.value + 1) % packagingCarouselPhotos.length
+  }, 2800)
+}
+
+function stopPackagingAutoplay() {
+  if (!packagingCarouselTimer) return
+  clearInterval(packagingCarouselTimer)
+  packagingCarouselTimer = null
+}
+
+function resetPackagingAutoplay() {
+  stopPackagingAutoplay()
+  if (isPackagingProject.value) startPackagingAutoplay()
 }
 
 function getCreatedHumanStickerStyle(index: number) {
@@ -238,6 +312,22 @@ async function selectFruit(fruitKey: FruitKey) {
   await nextTick()
   fruitPhotoSection.value?.scrollIntoView({ behavior: "smooth", block: "start" })
 }
+
+watch(
+  isPackagingProject,
+  (active) => {
+    if (active) {
+      startPackagingAutoplay()
+      return
+    }
+    stopPackagingAutoplay()
+  },
+  { immediate: true },
+)
+
+onBeforeUnmount(() => {
+  stopPackagingAutoplay()
+})
 </script>
 
 <template>
@@ -400,6 +490,68 @@ async function selectFruit(fruitKey: FruitKey) {
                   :class="index === cartelCarouselIndex ? 'bg-black opacity-100' : 'bg-black/40 opacity-70'"
                   :aria-label="`Ir a imagen ${index + 1}`"
                   @click="goToCartelImage(index)"
+                />
+              </div>
+            </div>
+          </div>
+        </template>
+        <template v-else-if="isPackagingProject">
+          <div class="bg-background p-4 sm:p-6 space-y-6">
+            <img
+              :src="packagingHeroImage"
+              alt="Packaging - imagen principal"
+              class="w-full max-h-[84vh] object-contain bg-muted/20"
+              loading="lazy"
+            />
+
+            <div class="grid grid-cols-4 gap-4">
+              <img
+                v-for="(image, index) in packagingFeatureImages"
+                :key="`packaging-feature-${index}`"
+                :src="image"
+                :alt="`Packaging - imagen destacada ${index + 1}`"
+                class="w-full max-h-[72vh] object-contain bg-muted/20"
+                loading="lazy"
+              />
+            </div>
+
+            <div class="space-y-3">
+              <div class="relative rounded bg-muted/20 p-2 sm:p-3">
+                <img
+                  :src="activePackagingImage"
+                  alt="Packaging - carrusel"
+                  class="w-full max-h-[76vh] object-contain"
+                  loading="lazy"
+                />
+
+                <button
+                  type="button"
+                  class="absolute left-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-black/70 text-white text-2xl leading-none hover:bg-black/85"
+                  aria-label="Imagen anterior"
+                  @click="prevPackagingImage"
+                >
+                  <
+                </button>
+
+                <button
+                  type="button"
+                  class="absolute right-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-black/70 text-white text-2xl leading-none hover:bg-black/85"
+                  aria-label="Imagen siguiente"
+                  @click="nextPackagingImage"
+                >
+                  >
+                </button>
+              </div>
+
+              <div class="flex flex-wrap items-center justify-center gap-2">
+                <button
+                  v-for="(_, index) in packagingCarouselPhotos"
+                  :key="`packaging-dot-${index}`"
+                  type="button"
+                  class="h-2.5 w-2.5 rounded-full transition-opacity"
+                  :class="index === packagingCarouselIndex ? 'bg-black opacity-100' : 'bg-black/40 opacity-70'"
+                  :aria-label="`Ir a imagen ${index + 1}`"
+                  @click="goToPackagingImage(index)"
                 />
               </div>
             </div>
