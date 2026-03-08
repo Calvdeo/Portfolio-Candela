@@ -42,9 +42,9 @@ let fruitCycleTimer: ReturnType<typeof setInterval> | null = null
 
 const createdHumanSlug = "Creado por inteligencia humana"
 const createdHumanCoverDefault =
-  "/images/p%C3%A1ginas%20detalle/ilustraci%C3%B3n/Creado%20por%20inteligencia%20humana%201.1.png"
+  "/images/páginas detalle/ilustración/Creado por inteligencia humana 1.1.png"
 const createdHumanCoverHover =
-  "/images/p%C3%A1ginas%20detalle/ilustraci%C3%B3n/Creado%20por%20inteligencia%20humana%201.2%20.png"
+  "/images/páginas detalle/ilustración/Creado por inteligencia humana 1.2 .png"
 
 function is36DaysProject(slug: string) {
   return slug === "branding-yonosoyessa"

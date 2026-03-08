@@ -63,7 +63,7 @@ export const projects: Project[] = [
     year: "2025",
     tags: ["texto", "serie"],
     description: "Conceptualizar un texto",
-    cover: "/images/páginas detalle/ilustración/conceptual.png",
+    cover: "/images/p%C3%A1ginas%20detalle/ilustraci%C3%B3n/conceptual.png",
   },
   {
     slug: "Ilustración narrativa",
@@ -72,7 +72,7 @@ export const projects: Project[] = [
     year: "2025",
     tags: ["Narrativa", "personajes"],
     description: "Ilustración de la ladrona de libros",
-    cover: "/images/páginas detalle/ilustración/portada.png",
+    cover: "/images/páginas detalle/ilustración/sinfondo1.png",
   },
   
   {
@@ -108,8 +108,8 @@ export const projects: Project[] = [
     category: "fotografía",
     year: "2024",
     tags: ["retrato"],
-    description: "Sesion de retrato centrada en la manipulación e la luz",
-    cover: "/images/i.png",
+    description: "Sesion de retrato centrada en la manipulación de la luz",
+    cover: "/images/páginas detalle/fotografía/3.2.png",
   },
   {
     slug: "producto-texturas",

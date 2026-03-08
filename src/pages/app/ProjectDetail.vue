@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { computed, nextTick, ref } from "vue"
 import { useRoute, RouterLink } from "vue-router"
 import { projects } from "@/data/projects"
@@ -24,13 +24,14 @@ const backToProjectsPath = computed(() => {
 const is36Days = computed(() => project.value?.slug === "branding-yonosoyessa")
 const isCartelCrefad = computed(() => project.value?.slug === "cartel Crefad")
 const isCreatedHumanProject = computed(() => project.value?.slug === "Creado por inteligencia humana")
-const cartelFestivalGif = "/images/p%C3%A1ginas%20detalle/cartel-crefad-detalle.gif"
+const isIllustrationConceptual = computed(() => project.value?.slug === "Ilustración conceptual")
+const cartelFestivalGif = "/images/páginas detalle/cartel-crefad-detalle.gif"
 const cartelCrefadText =
   "Elaboración de un proyecto de comunicación gráfica del I Congreso Iberoamericano de Creación y Fabricación Digital. Se diseñará la imagen de un cartel y un logotipo."
 const createdHumanStickerA =
-  "/images/p%C3%A1ginas%20detalle/ilustraci%C3%B3n/Creado%20por%20inteligencia%20humana%201.1.png"
+  "/images/páginas detalle/ilustración/Creado por inteligencia humana 1.1.png"
 const createdHumanStickerB =
-  "/images/p%C3%A1ginas%20detalle/ilustraci%C3%B3n/Creado%20por%20inteligencia%20humana%201.2%20.png"
+  "/images/páginas detalle/ilustración/Creado por inteligencia humana 1.2 .png"
 const createdHumanStickerCards = [
   { src: createdHumanStickerA, top: 2, left: 4, rotate: -14, width: 24, z: 6 },
   { src: createdHumanStickerB, top: 8, left: 33, rotate: 11, width: 28, z: 9 },
@@ -45,7 +46,12 @@ const createdHumanStickerCards = [
   { src: createdHumanStickerA, top: 68, left: 44, rotate: -9, width: 24, z: 13 },
   { src: createdHumanStickerB, top: 74, left: 68, rotate: 12, width: 21, z: 2 },
 ]
-const cartelGalleryBasePath = "/images/p%C3%A1ginas%20detalle"
+const illustrationConceptualBottomText =
+  "Feminismos complejos para una vida digna de ser vivida. Este proyecto traduce en imagen una idea central del feminismo contemporáneo: que la lucha por la igualdad no ocurre solo en las calles, sino también en la vida cotidiana. La ilustración muestra un momento íntimo de descanso junto al símbolo feminista, recordando que lo personal también es político. La obra propone reflexionar sobre las múltiples realidades que atraviesan a las mujeres y sobre la necesidad de construir colectivamente condiciones para una vida digna."
+const illustrationConceptualSecondImage =
+  "/images/páginas detalle/ilustración/conceptual1.png"
+const illustrationConceptualWatercolorText = "Ilustraciones en acuarela."
+const cartelGalleryBasePath = "/images/páginas detalle"
 const cartelGalleryPhotos = [
   "page_1.png",
   "page_2.png",
@@ -106,19 +112,19 @@ const fruitPhotoSection = ref<HTMLElement | null>(null)
 const fruitInfo: Record<FruitKey, { title: string; text: string; photo: string; photoAlt: string }> = {
   "apple-red": {
     title: "I",
-    text: "La pegatinas de la fruta siempre han sido un ejemplo de microdiseño en nuestro día a día",
+    text: "Las pegatinas de la fruta siempre han sido un ejemplo de microdiseño en nuestro día a día.",
     photo: "/images/i.png",
     photoAlt: "Foto i - manzana roja",
   },
   "apple-green": {
     title: "T",
-    text: "En homenaje a ellas formulé la idea de este reto, cada una está diseñada con un trasfondo tipográfico así se puede ver que en algunas aparecen las grandes categorías tipográficas y algunas de sus características.",
+    text: "En homenaje a ellas formulé la idea de este reto. Cada una está diseñada con un trasfondo tipográfico, así se puede ver que en algunas aparecen las grandes categorías tipográficas y algunas de sus características.",
     photo: "/images/t.png",
     photoAlt: "Foto t - manzana verde",
   },
   orange: {
     title: "C",
-    text: "Para llevar a cabo el proyecto, se imprimieron y se hizo un reportaje fotográfico junto con frutas reales y este ha sido el resultado",
+    text: "Para llevar a cabo el proyecto, se imprimieron y se hizo un reportaje fotográfico junto con frutas reales, y este ha sido el resultado.",
     photo: "/images/c.png",
     photoAlt: "Foto c - naranja",
   },
@@ -346,6 +352,35 @@ async function selectFruit(fruitKey: FruitKey) {
             </div>
           </div>
         </template>
+        <template v-else-if="isIllustrationConceptual">
+          <div class="bg-background p-0 space-y-8">
+            <img
+              v-if="project.cover"
+              :src="project.cover"
+              :alt="`Ilustración conceptual - ${project.title}`"
+              class="w-full h-auto object-contain"
+              loading="lazy"
+            />
+            <div v-else class="h-60 flex items-center justify-center text-sm text-muted-foreground">
+              Sin portada
+            </div>
+
+            <p class="mx-auto px-4 sm:px-6 max-w-4xl text-center text-sm sm:text-base leading-relaxed text-muted-foreground">
+              {{ illustrationConceptualBottomText }}
+            </p>
+
+            <img
+              :src="illustrationConceptualSecondImage"
+              alt="Ilustración conceptual en acuarela"
+              class="w-full h-auto object-contain"
+              loading="lazy"
+            />
+
+            <p class="mx-auto px-4 sm:px-6 max-w-4xl text-center text-sm sm:text-base leading-relaxed text-muted-foreground">
+              {{ illustrationConceptualWatercolorText }}
+            </p>
+          </div>
+        </template>
         <template v-else-if="isCreatedHumanProject">
           <div class="p-0">
             <div class="relative w-full min-h-[62svh] sm:min-h-[72svh] md:min-h-[82svh] overflow-hidden">
@@ -484,11 +519,11 @@ async function selectFruit(fruitKey: FruitKey) {
   }
 
   .days-sticker-img-lg {
-    width: clamp(5.1rem, 10.5cqw, 8.5rem) !important;
+    width: clamp(5.1rem, 10.5cqw, 8.5rem);
   }
 
   .days-sticker-img-sm {
-    width: clamp(4.5rem, 9.2cqw, 7.2rem) !important;
+    width: clamp(4.5rem, 9.2cqw, 7.2rem);
   }
 }
 
@@ -525,11 +560,11 @@ async function selectFruit(fruitKey: FruitKey) {
   }
 
   .days-sticker-img-lg {
-    width: clamp(4.7rem, 10.8cqw, 7.2rem) !important;
+    width: clamp(4.7rem, 10.8cqw, 7.2rem);
   }
 
   .days-sticker-img-sm {
-    width: clamp(4.1rem, 9.6cqw, 6.3rem) !important;
+    width: clamp(4.1rem, 9.6cqw, 6.3rem);
   }
 }
 
@@ -543,4 +578,6 @@ async function selectFruit(fruitKey: FruitKey) {
   }
 }
 </style>
+
+
 
