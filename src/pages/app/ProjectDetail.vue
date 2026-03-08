@@ -25,6 +25,11 @@ const is36Days = computed(() => project.value?.slug === "branding-yonosoyessa")
 const isCartelCrefad = computed(() => project.value?.slug === "cartel Crefad")
 const isCreatedHumanProject = computed(() => project.value?.slug === "Creado por inteligencia humana")
 const isIllustrationConceptual = computed(() => project.value?.slug === "Ilustración conceptual")
+const isIllustrationNarrative = computed(() => {
+  const slug = (project.value?.slug ?? "").toLowerCase()
+  const title = (project.value?.title ?? "").toLowerCase()
+  return slug.includes("narrativa") || title.includes("narrativa") || title.includes("narativa")
+})
 const cartelFestivalGif = "/images/páginas detalle/cartel-crefad-detalle.gif"
 const cartelCrefadText =
   "Elaboración de un proyecto de comunicación gráfica del I Congreso Iberoamericano de Creación y Fabricación Digital. Se diseñará la imagen de un cartel y un logotipo."
@@ -51,6 +56,41 @@ const illustrationConceptualBottomText =
 const illustrationConceptualSecondImage =
   "/images/páginas detalle/ilustración/conceptual1.png"
 const illustrationConceptualWatercolorText = "Ilustraciones en acuarela."
+const illustrationNarrativePalette = [
+  {
+    color: "#8a8d91",
+    text: "Tristeza, rutina, miedo, silencio, cenizas, supervivencia",
+    border: false,
+  },
+  {
+    color: "#8f1016",
+    text: "Sangre, odio, fuego, violencia, destrucción, rabia, humanos",
+    border: false,
+  },
+  {
+    color: "#000000",
+    text: "Muerte, guerra, pérdida, dolor, oscuridad, opresión, muerte",
+    border: false,
+  },
+  {
+    color: "#f6f6f6",
+    text: "Inocencia, esperanza, palabras, amistad, humanidad, luz, Liesel",
+    border: true,
+  },
+]
+const illustrationNarrativeMosaic = [
+  "/images/páginas detalle/ilustración/portada y contraportada.png",
+  "/images/páginas detalle/ilustración/hitler.png",
+  "/images/páginas detalle/ilustración/peque ojo.png",
+  "/images/páginas detalle/ilustración/peque recolectores.png",
+  "/images/páginas detalle/ilustración/peque portada.png",
+  "/images/páginas detalle/ilustración/sinfondo1.png",
+  "/images/páginas detalle/ilustración/sinfondo2.png",
+  "/images/páginas detalle/ilustración/doble página.png",
+]
+const illustrationNarrativeCharactersImage = "/images/páginas detalle/ilustración/personaje.png"
+const illustrationNarrativeText =
+  "Proyecto de ilustración narrativa inspirado en La ladrona de libros. Se encargaro una doble página, dos páginas individuales, portada y contraportada. Como plus y atendiendo a las necesidades del texto decidí ilustrar un libro narrado dentro de la propia historia."
 const cartelGalleryBasePath = "/images/páginas detalle"
 const cartelGalleryPhotos = [
   "page_1.png",
@@ -106,7 +146,9 @@ function getCreatedHumanStickerStyle(index: number) {
 }
 const mainWord = computed(() => "36 days of type")
 type FruitKey = "apple-red" | "apple-green" | "orange"
+type NarrativeTabKey = "color" | "characters"
 const activeFruit = ref<FruitKey>("apple-red")
+const activeNarrativeTab = ref<NarrativeTabKey>("color")
 const fruitPhotoSection = ref<HTMLElement | null>(null)
 
 const fruitInfo: Record<FruitKey, { title: string; text: string; photo: string; photoAlt: string }> = {
@@ -429,6 +471,118 @@ async function selectFruit(fruitKey: FruitKey) {
             </div>
           </div>
         </template>
+        <template v-else-if="isIllustrationNarrative">
+          <div class="bg-background p-4 sm:p-6 space-y-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 auto-rows-[150px] sm:auto-rows-[190px] gap-3 sm:gap-4">
+              <img
+                :src="illustrationNarrativeMosaic[0]"
+                alt="Ilustración narrativa - imagen 1"
+                class="col-span-2 row-span-2 h-full w-full object-cover"
+                loading="lazy"
+              />
+              <img
+                :src="illustrationNarrativeMosaic[1]"
+                alt="Ilustración narrativa - imagen 2"
+                class="h-full w-full object-cover"
+                loading="lazy"
+              />
+              <img
+                :src="illustrationNarrativeMosaic[2]"
+                alt="Ilustración narrativa - imagen 3"
+                class="h-full w-full object-cover"
+                loading="lazy"
+              />
+              <img
+                :src="illustrationNarrativeMosaic[3]"
+                alt="Ilustración narrativa - imagen 4"
+                class="h-full w-full object-cover"
+                loading="lazy"
+              />
+              <img
+                :src="illustrationNarrativeMosaic[4]"
+                alt="Ilustración narrativa - imagen 5"
+                class="h-full w-full object-cover"
+                loading="lazy"
+              />
+              <img
+                :src="illustrationNarrativeMosaic[5]"
+                alt="Ilustración narrativa - imagen 6"
+                class="col-span-2 row-span-2 h-full w-full object-cover md:col-span-2"
+                loading="lazy"
+              />
+              <img
+                :src="illustrationNarrativeMosaic[6]"
+                alt="Ilustración narrativa - imagen 7"
+                class="col-span-2 row-span-2 h-full w-full object-cover md:col-span-2"
+                loading="lazy"
+              />
+            </div>
+
+            <img
+              :src="illustrationNarrativeMosaic[7]"
+              alt="Ilustración narrativa - imagen final"
+              class="mx-auto w-full max-w-4xl h-auto object-contain"
+              loading="lazy"
+            />
+
+            <div class="mx-auto max-w-4xl px-1 sm:px-2 text-center">
+              <p class="text-sm sm:text-base leading-relaxed text-muted-foreground">
+                {{ illustrationNarrativeText }}
+              </p>
+            </div>
+
+            <div class="flex items-end gap-2 rounded-t-2xl border border-b-0 border-[#3d3d3d] bg-[#2f2f2f] px-4 pt-4">
+              <button
+                type="button"
+                class="px-5 py-2.5 border border-b-0 rounded-t-xl text-base font-semibold transition"
+                :class="activeNarrativeTab === 'color'
+                  ? 'bg-[#4a4a4a] text-white border-white/35'
+                  : 'bg-[#2f2f2f] text-gray-300 border-white/20 hover:bg-[#353535]'"
+                @click="activeNarrativeTab = 'color'"
+              >
+                Paleta de color
+              </button>
+              <button
+                type="button"
+                class="px-5 py-2.5 border border-b-0 rounded-t-xl text-base font-semibold transition"
+                :class="activeNarrativeTab === 'characters'
+                  ? 'bg-[#4a4a4a] text-white border-white/35'
+                  : 'bg-[#2f2f2f] text-gray-300 border-white/20 hover:bg-[#353535]'"
+                @click="activeNarrativeTab = 'characters'"
+              >
+                Personajes
+              </button>
+            </div>
+
+            <div class="-mt-2 rounded-2xl border border-[#3d3d3d] bg-[#f1f1f1] p-5 sm:p-7">
+              <div v-if="activeNarrativeTab === 'color'" class="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-10">
+                <div
+                  v-for="(item, index) in illustrationNarrativePalette"
+                  :key="`palette-${index}`"
+                  class="space-y-3"
+                >
+                  <div
+                    class="mx-auto h-28 w-36 sm:h-32 sm:w-40 rounded-2xl"
+                    :class="item.border ? 'border border-black/70' : ''"
+                    :style="{ backgroundColor: item.color }"
+                  />
+                  <p class="text-[28px] leading-tight text-black/85 narrative-palette-text">
+                    {{ item.text }}
+                  </p>
+                </div>
+              </div>
+
+              <div v-else class="flex justify-center">
+                <img
+                  :src="illustrationNarrativeCharactersImage"
+                  alt="Ilustración narrativa - personajes"
+                  class="w-full max-w-4xl h-auto object-contain"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+        </template>
 
         <template v-else>
           <div class="p-4 sm:p-5 space-y-3 border-b bg-background">
@@ -492,6 +646,10 @@ async function selectFruit(fruitKey: FruitKey) {
 
 .hero-main-word-portrait {
   display: none;
+}
+
+.narrative-palette-text {
+  font-family: "Times New Roman", Times, serif;
 }
 
 @container (max-width: 1200px) {
