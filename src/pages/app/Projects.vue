@@ -193,7 +193,7 @@ onBeforeUnmount(() => {
         
       </div>
 
-      <div class="h-[70vh] overflow-y-auto px-6 py-6 bg-[#3d3d3d]">
+      <div class="px-6 py-6 bg-[#3d3d3d]">
         <div class="grid gap-10 md:grid-cols-2">
           <RouterLink
             v-for="(p, index) in filteredProjects"
