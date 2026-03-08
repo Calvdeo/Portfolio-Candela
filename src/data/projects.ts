@@ -27,7 +27,7 @@ export const projects: Project[] = [
     year: "2025",
     tags: ["cartel", "tipografia"],
     description: "Cartel promocional con enfoque tipografico y composicion.",
-    cover: "/images/p%C3%A1ginas%20detalle/cartel_crefad.png",
+    cover: "/images/páginas detalle/cartel_crefad.png",
   },
   {
     slug: "identidad-cafe-local",
@@ -54,7 +54,7 @@ export const projects: Project[] = [
     year: "2025",
     tags: ["Pegatina", "color"],
     description: "Pegatinas por la ilustración humana",
-    cover: "/images/p%C3%A1ginas%20detalle/ilustraci%C3%B3n/Creado%20por%20inteligencia%20humana%201.1.png",
+    cover: "/images/páginas detalle/ilustración/Creado por inteligencia humana 1.1.png",
   },
   {
     slug: "Ilustración conceptual",
@@ -63,7 +63,7 @@ export const projects: Project[] = [
     year: "2025",
     tags: ["texto", "serie"],
     description: "Conceptualizar un texto",
-    cover: "/images/p%C3%A1ginas%20detalle/ilustraci%C3%B3n/conceptual.png",
+    cover: "/images/páginas detalle/ilustración/conceptual.png",
   },
   {
     slug: "Ilustración narrativa",
@@ -72,7 +72,7 @@ export const projects: Project[] = [
     year: "2025",
     tags: ["Narrativa", "personajes"],
     description: "Ilustración de la ladrona de libros",
-    cover: "/images/páginas detalle/ilustración/sinfondo1.png",
+    cover: "/images/páginas detalle/ilustración/sinfondo2.png",
   },
   
   {

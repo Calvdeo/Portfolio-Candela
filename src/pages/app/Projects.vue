@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from "vue"
 import { RouterLink, useRoute } from "vue-router"
 import { projects } from "@/data/projects"
@@ -39,12 +39,14 @@ const fruitCycleImages = ["/images/manzana-roja.png", "/images/manzana-verde.png
 const fruitCycleIndex = ref(0)
 const hoveredProjectSlug = ref<string | null>(null)
 let fruitCycleTimer: ReturnType<typeof setInterval> | null = null
+const narrativeHoverCover = "/images/p%C3%A1ginas%20detalle/ilustraci%C3%B3n/sinfondo1.png"
+const comicHoverCover = "/images/p%C3%A1ginas%20detalle/ilustraci%C3%B3n/comicnegro.png"
 
 const createdHumanSlug = "Creado por inteligencia humana"
 const createdHumanCoverDefault =
-  "/images/páginas detalle/ilustración/Creado por inteligencia humana 1.1.png"
-const createdHumanCoverHover =
   "/images/páginas detalle/ilustración/Creado por inteligencia humana 1.2 .png"
+const createdHumanCoverHover =
+  "/images/páginas detalle/ilustración/Creado por inteligencia humana 1.1.png"
 
 function is36DaysProject(slug: string) {
   return slug === "branding-yonosoyessa"
@@ -54,10 +56,26 @@ function isCreatedHumanProject(slug: string) {
   return slug === createdHumanSlug
 }
 
+function isNarrativeProject(slug: string) {
+  const key = slug.toLowerCase()
+  return key.includes("narrativa") || key.includes("narativa")
+}
+
+function isComicProject(slug: string) {
+  const key = slug.toLowerCase()
+  return key.includes("comic") || (key.includes("mic") && key.startsWith("c"))
+}
+
 function getProjectCardImage(slug: string, cover?: string) {
   if (is36DaysProject(slug)) return fruitCycleImages[fruitCycleIndex.value]
   if (isCreatedHumanProject(slug)) {
     return hoveredProjectSlug.value === slug ? createdHumanCoverHover : createdHumanCoverDefault
+  }
+  if (isNarrativeProject(slug)) {
+    return hoveredProjectSlug.value === slug ? narrativeHoverCover : (cover ?? "")
+  }
+  if (isComicProject(slug)) {
+    return hoveredProjectSlug.value === slug ? comicHoverCover : (cover ?? "")
   }
   return cover ?? ""
 }

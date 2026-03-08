@@ -25,6 +25,10 @@ const is36Days = computed(() => project.value?.slug === "branding-yonosoyessa")
 const isCartelCrefad = computed(() => project.value?.slug === "cartel Crefad")
 const isCreatedHumanProject = computed(() => project.value?.slug === "Creado por inteligencia humana")
 const isIllustrationConceptual = computed(() => project.value?.slug === "Ilustración conceptual")
+const isComicProject = computed(() => {
+  const key = (project.value?.slug ?? "").toLowerCase()
+  return key.includes("comic") || key.includes("cómic") || key.includes("cã³mic")
+})
 const isIllustrationNarrative = computed(() => {
   const slug = (project.value?.slug ?? "").toLowerCase()
   const title = (project.value?.title ?? "").toLowerCase()
@@ -91,6 +95,12 @@ const illustrationNarrativeMosaic = [
 const illustrationNarrativeCharactersImage = "/images/páginas detalle/ilustración/personaje.png"
 const illustrationNarrativeText =
   "Proyecto de ilustración narrativa inspirado en La ladrona de libros. Se encargaro una doble página, dos páginas individuales, portada y contraportada. Como plus y atendiendo a las necesidades del texto decidí ilustrar un libro narrado dentro de la propia historia."
+const comicColorImage = "/images/p%C3%A1ginas%20detalle/ilustraci%C3%B3n/comiccolor.png"
+const comicBlackImage = "/images/p%C3%A1ginas%20detalle/ilustraci%C3%B3n/comicnegro.png"
+const comicSequentialCharactersImage =
+  "/images/p%C3%A1ginas%20detalle/ilustraci%C3%B3n/personajesecuencial.png"
+const comicBottomText =
+  "Proyecto de ilustración secuencial de una anécdota, además de la creación de un personaje inicial. Ilustración hecha con tinta china y color digital."
 const cartelGalleryBasePath = "/images/páginas detalle"
 const cartelGalleryPhotos = [
   "page_1.png",
@@ -149,6 +159,7 @@ type FruitKey = "apple-red" | "apple-green" | "orange"
 type NarrativeTabKey = "color" | "characters"
 const activeFruit = ref<FruitKey>("apple-red")
 const activeNarrativeTab = ref<NarrativeTabKey>("color")
+const comicHover = ref(false)
 const fruitPhotoSection = ref<HTMLElement | null>(null)
 
 const fruitInfo: Record<FruitKey, { title: string; text: string; photo: string; photoAlt: string }> = {
@@ -580,6 +591,35 @@ async function selectFruit(fruitKey: FruitKey) {
                   loading="lazy"
                 />
               </div>
+            </div>
+          </div>
+        </template>
+        <template v-else-if="isComicProject">
+          <div class="bg-background p-0 space-y-6">
+            <div
+              class="w-full"
+              @mouseenter="comicHover = true"
+              @mouseleave="comicHover = false"
+            >
+              <img
+                :src="comicHover ? comicBlackImage : (project.cover || comicColorImage)"
+                :alt="comicHover ? 'Cómic en blanco y negro' : 'Cómic a color'"
+                class="w-full h-auto object-contain"
+                loading="lazy"
+              />
+            </div>
+
+            <p class="mx-auto max-w-4xl px-4 sm:px-6 text-center text-sm sm:text-base leading-relaxed text-muted-foreground">
+              {{ comicBottomText }}
+            </p>
+
+            <div class="mx-auto w-full max-w-5xl h-[60vh] sm:h-[72vh] flex items-center justify-center">
+              <img
+                :src="comicSequentialCharactersImage"
+                alt="Cómic - personajes en secuencia"
+                class="h-full w-auto object-contain -rotate-90"
+                loading="lazy"
+              />
             </div>
           </div>
         </template>
