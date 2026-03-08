@@ -23,9 +23,28 @@ const backToProjectsPath = computed(() => {
 
 const is36Days = computed(() => project.value?.slug === "branding-yonosoyessa")
 const isCartelCrefad = computed(() => project.value?.slug === "cartel Crefad")
+const isCreatedHumanProject = computed(() => project.value?.slug === "Creado por inteligencia humana")
 const cartelFestivalGif = "/images/p%C3%A1ginas%20detalle/cartel-crefad-detalle.gif"
 const cartelCrefadText =
   "Elaboración de un proyecto de comunicación gráfica del I Congreso Iberoamericano de Creación y Fabricación Digital. Se diseñará la imagen de un cartel y un logotipo."
+const createdHumanStickerA =
+  "/images/p%C3%A1ginas%20detalle/ilustraci%C3%B3n/Creado%20por%20inteligencia%20humana%201.1.png"
+const createdHumanStickerB =
+  "/images/p%C3%A1ginas%20detalle/ilustraci%C3%B3n/Creado%20por%20inteligencia%20humana%201.2%20.png"
+const createdHumanStickerCards = [
+  { src: createdHumanStickerA, top: 2, left: 4, rotate: -14, width: 24, z: 6 },
+  { src: createdHumanStickerB, top: 8, left: 33, rotate: 11, width: 28, z: 9 },
+  { src: createdHumanStickerA, top: 4, left: 62, rotate: -7, width: 22, z: 4 },
+  { src: createdHumanStickerB, top: 19, left: 14, rotate: 9, width: 31, z: 10 },
+  { src: createdHumanStickerA, top: 22, left: 47, rotate: -12, width: 27, z: 7 },
+  { src: createdHumanStickerB, top: 31, left: 72, rotate: 13, width: 23, z: 5 },
+  { src: createdHumanStickerA, top: 41, left: 3, rotate: -10, width: 29, z: 12 },
+  { src: createdHumanStickerB, top: 46, left: 28, rotate: 6, width: 25, z: 8 },
+  { src: createdHumanStickerA, top: 49, left: 55, rotate: -16, width: 30, z: 11 },
+  { src: createdHumanStickerB, top: 63, left: 18, rotate: 8, width: 26, z: 3 },
+  { src: createdHumanStickerA, top: 68, left: 44, rotate: -9, width: 24, z: 13 },
+  { src: createdHumanStickerB, top: 74, left: 68, rotate: 12, width: 21, z: 2 },
+]
 const cartelGalleryBasePath = "/images/p%C3%A1ginas%20detalle"
 const cartelGalleryPhotos = [
   "page_1.png",
@@ -66,6 +85,18 @@ function nextCartelImage() {
 function goToCartelImage(index: number) {
   if (index < 0 || index >= cartelGalleryPhotos.length) return
   cartelCarouselIndex.value = index
+}
+
+function getCreatedHumanStickerStyle(index: number) {
+  const sticker = createdHumanStickerCards[index]
+  if (!sticker) return {}
+  return {
+    top: `${sticker.top}%`,
+    left: `${sticker.left}%`,
+    width: `${sticker.width}%`,
+    transform: `rotate(${sticker.rotate}deg)`,
+    zIndex: String(sticker.z),
+  }
 }
 const mainWord = computed(() => "36 days of type")
 type FruitKey = "apple-red" | "apple-green" | "orange"
@@ -312,6 +343,54 @@ async function selectFruit(fruitKey: FruitKey) {
                   @click="goToCartelImage(index)"
                 />
               </div>
+            </div>
+          </div>
+        </template>
+        <template v-else-if="isCreatedHumanProject">
+          <div class="p-0">
+            <div class="relative w-full min-h-[62svh] sm:min-h-[72svh] md:min-h-[82svh] overflow-hidden">
+              <img
+                v-for="(sticker, index) in createdHumanStickerCards"
+                :key="`created-human-stack-${index}`"
+                :src="sticker.src"
+                :alt="`Creado por inteligencia humana ${index + 1}`"
+                class="absolute object-contain pointer-events-none select-none"
+                :style="getCreatedHumanStickerStyle(index)"
+                loading="lazy"
+              />
+            </div>
+
+            <div class="mx-auto max-w-4xl px-4 sm:px-6 py-8 sm:py-10 space-y-5 text-black/85">
+              <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight">
+                Creado por la Inteligencia Humana
+              </h2>
+
+              <p class="text-base sm:text-lg leading-relaxed">
+                En un momento donde los algoritmos escriben, diseñan y producen a una velocidad
+                vertiginosa, este proyecto nace como un recordatorio sencillo pero contundente: la
+                creatividad sigue teniendo pulso humano.
+              </p>
+
+              <p class="text-base sm:text-lg leading-relaxed">
+                Creado por la Inteligencia Humana es una declaración. Un gesto gráfico y conceptual
+                que celebra la imaginación, la intuición y la imperfección que solo las personas
+                pueden aportar. No es una negación de la tecnología, sino una reivindicación del
+                origen de las ideas: la mente curiosa, la experiencia vivida, el humor, el error y
+                la sensibilidad.
+              </p>
+
+              <p class="text-base sm:text-lg leading-relaxed">
+                El símbolo del proyecto funciona como un sello. Una marca que señala aquello que
+                fue pensado, dibujado o concebido desde la mente humana, con todas sus
+                contradicciones y su riqueza. Es un recordatorio de que detrás de cada creación
+                auténtica hay alguien observando el mundo, procesándolo y transformándolo.
+              </p>
+
+              <p class="text-base sm:text-lg leading-relaxed">
+                Más que una etiqueta, Creado por la Inteligencia Humana es una invitación a valorar
+                el proceso creativo y a mantener viva la chispa que nos hace inventar, imaginar y
+                contar historias.
+              </p>
             </div>
           </div>
         </template>

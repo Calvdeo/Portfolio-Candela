@@ -37,14 +37,28 @@ const projectsHeroImg = computed(() => eyesImages[eyesZone.value])
 
 const fruitCycleImages = ["/images/manzana-roja.png", "/images/manzana-verde.png", "/images/naranja.png"]
 const fruitCycleIndex = ref(0)
+const hoveredProjectSlug = ref<string | null>(null)
 let fruitCycleTimer: ReturnType<typeof setInterval> | null = null
+
+const createdHumanSlug = "Creado por inteligencia humana"
+const createdHumanCoverDefault =
+  "/images/p%C3%A1ginas%20detalle/ilustraci%C3%B3n/Creado%20por%20inteligencia%20humana%201.1.png"
+const createdHumanCoverHover =
+  "/images/p%C3%A1ginas%20detalle/ilustraci%C3%B3n/Creado%20por%20inteligencia%20humana%201.2%20.png"
 
 function is36DaysProject(slug: string) {
   return slug === "branding-yonosoyessa"
 }
 
+function isCreatedHumanProject(slug: string) {
+  return slug === createdHumanSlug
+}
+
 function getProjectCardImage(slug: string, cover?: string) {
   if (is36DaysProject(slug)) return fruitCycleImages[fruitCycleIndex.value]
+  if (isCreatedHumanProject(slug)) {
+    return hoveredProjectSlug.value === slug ? createdHumanCoverHover : createdHumanCoverDefault
+  }
   return cover ?? ""
 }
 
@@ -70,6 +84,16 @@ function stopFruitCycle(slug: string) {
   fruitCycleIndex.value = 0
 }
 
+function onProjectEnter(slug: string) {
+  hoveredProjectSlug.value = slug
+  startFruitCycle(slug)
+}
+
+function onProjectLeave(slug: string) {
+  if (hoveredProjectSlug.value === slug) hoveredProjectSlug.value = null
+  stopFruitCycle(slug)
+}
+
 function onMouseMove(e: MouseEvent) {
   const width = window.innerWidth || 1
   const x = e.clientX
@@ -93,6 +117,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   if (fruitCycleTimer) clearInterval(fruitCycleTimer)
+  hoveredProjectSlug.value = null
   window.removeEventListener("mousemove", onMouseMove)
 })
 </script>
@@ -157,8 +182,8 @@ onBeforeUnmount(() => {
             :key="p.slug"
             :to="`/app/projects/${p.slug}`"
             class="block group py-2"
-            @mouseenter="startFruitCycle(p.slug)"
-            @mouseleave="stopFruitCycle(p.slug)"
+            @mouseenter="onProjectEnter(p.slug)"
+            @mouseleave="onProjectLeave(p.slug)"
           >
             <Card
               class="mx-auto w-[94%] overflow-visible border-0 bg-transparent text-white shadow-none transition-transform duration-300"
@@ -180,7 +205,7 @@ onBeforeUnmount(() => {
               </div>
 
               <div class="px-5 pt-4 pb-2 text-center space-y-3">
-                <p class="text-[1.02rem] font-semibold uppercase tracking-[0.03em] line-clamp-1">
+                <p class="text-[1.02rem] font-semibold uppercase tracking-[0.03em] break-words">
                   {{ p.title }}
                 </p>
                 <p class="text-sm leading-snug line-clamp-2 text-white/80">
