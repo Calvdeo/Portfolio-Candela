@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
-import { Search, Folder } from "lucide-vue-next"
 
 const router = useRouter()
 
@@ -15,7 +14,17 @@ function goToExitConfirm() {
 const age = 20
 const city = "Valencia"
 const previewImg = "/images/Portada_essa.png"
+const coverImg = "/images/portada1.png"
 const role = ref("Diseñadora")
+const showCover = ref(true)
+
+function dismissCover() {
+  showCover.value = false
+}
+
+function showCoverAgain() {
+  showCover.value = true
+}
 
 
 const isNameHover = ref(false)
@@ -74,6 +83,7 @@ const portraitIconOff = "/orientation/portrait.png"
 const portraitIconOn = "/orientation/portrait_azul.png"
 const landscapeIconOff = "/orientation/landscape.png"
 const landscapeIconOn = "/orientation/landscape_azul.png"
+const coverInstagram = "@yonosoyessa.tiff"
 </script>
 
 <template>
@@ -82,27 +92,21 @@ const landscapeIconOn = "/orientation/landscape_azul.png"
   
     <div class="w-full min-h-svh flex items-center justify-center p-3 sm:p-6 lg:p-10 pb-24">
       <div
-        class="w-[92vw] max-w-[1400px] h-[86svh] sm:h-[88svh] lg:h-[82svh] bg-[#2f2f2f] text-white rounded-xl shadow-2xl overflow-hidden border border-black/10"
+        class="relative w-[92vw] max-w-[1400px] h-[86svh] sm:h-[88svh] lg:h-[82svh] bg-[#2f2f2f] text-white rounded-xl shadow-2xl overflow-hidden border border-black/10"
       >
         
         <div
           class="h-10 bg-[#2a2a2a] border-b border-white/10 flex items-center justify-between px-4"
         >
-          <div class="flex items-center gap-3">
-            <div class="flex gap-2">
-              <div class="w-3 h-3 rounded-full bg-red-400"></div>
-              <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
-              <div class="w-3 h-3 rounded-full bg-green-400"></div>
-            </div>
-
-            <div
-              class="ml-2 px-3 py-1 rounded-md bg-[#242424] border border-white/10 text-sm text-white/80"
-            >
+          <div class="flex items-center">
+            <div class="px-3 py-1 rounded-md bg-[#242424] border border-white/10 text-sm text-white/80">
               Nuevo documento
             </div>
           </div>
 
-          <button class="text-white/60 hover:text-white/90" type="button">✕</button>
+          <button class="text-white/60 hover:text-white/90" type="button" @click="showCoverAgain">
+            ✕
+          </button>
         </div>
 
         
@@ -149,7 +153,7 @@ const landscapeIconOn = "/orientation/landscape_azul.png"
 
           
           <aside
-            class="w-full lg:w-[380px] border-t lg:border-t-0 lg:border-l border-white/10 p-4 sm:p-6 bg-[#2d2d2d] flex flex-col overflow-y-auto"
+            class="w-full lg:w-95 border-t lg:border-t-0 lg:border-l border-white/10 p-4 sm:p-6 bg-[#2d2d2d] flex flex-col overflow-y-auto"
           >
             <p class="text-xs font-semibold text-white/60 tracking-wide">Sobre mí</p>
 
@@ -341,36 +345,28 @@ const landscapeIconOn = "/orientation/landscape_azul.png"
             </button>
           </aside>
         </div>
-      </div>
-    </div>
 
-    
-    <div class="absolute bottom-0 left-0 w-full">
-      <div class="h-16 bg-black/80 backdrop-blur border-t border-white/10 flex items-center px-4">
-        <div class="mx-auto flex items-center gap-3">
-          <div class="w-10 h-10 rounded-full bg-white/80"></div>
-
-          <div class="h-10 w-[220px] sm:w-[320px] rounded-full bg-white/80 flex items-center px-4 gap-2">
-            <Search class="w-5 h-5 text-black/70" />
-            <div class="text-sm text-black/60 select-none">Buscar</div>
+        <button
+          v-if="showCover"
+          type="button"
+          class="absolute inset-0 z-[200] h-full w-full cursor-pointer"
+          @click="dismissCover"
+          aria-label="Quitar portada"
+        >
+          <img :src="coverImg" alt="Portada" class="h-full w-full object-fill" draggable="false" />
+          <div class="absolute inset-0 flex flex-col items-center justify-center text-[#000000] pointer-events-none">
+            <p class="mb-6 text-sm sm:text-base italic font-bold">{{ coverInstagram }}</p>
+            <h2
+              class="text-[52px] leading-none sm:text-[84px] md:text-[110px] lg:text-[132px] font-black uppercase tracking-tight"
+              style="font-family: 'Inter', sans-serif"
+            >
+              portfolio
+            </h2>
+            <p class="mt-6 text-xl sm:text-2xl md:text-3xl italic font-bold">
+              pulsa aquí para ver más
+            </p>
           </div>
-
-          <button
-            type="button"
-            class="w-10 h-10 rounded-lg bg-white/80 flex items-center justify-center hover:bg-white"
-            title="Archivos"
-          >
-            <Folder class="w-5 h-5 text-black/80" />
-          </button>
-
-          <button
-            type="button"
-            class="w-10 h-10 rounded-lg bg-white/80 flex items-center justify-center font-semibold text-black/80 hover:bg-white"
-            title="Illustrator"
-          >
-            Ai
-          </button>
-        </div>
+        </button>
       </div>
     </div>
   </div>

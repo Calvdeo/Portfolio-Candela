@@ -13,7 +13,7 @@
 
     <section class="px-4 sm:px-8 py-10 text-black">
       <p class="about-text mt-16 sm:mt-24 ml-auto max-w-4xl text-right">
-        Si me preguntan como comence a dibujar, diria que la pintura me ha acompanado desde siempre.<br /><br />
+        Si me preguntan como comencé a dibujar, diría que la pintura me ha acompanado desde siempre.<br /><br />
         Recuerdo unas manitas pequenas buscando el color preciso en un estuche atiborrado que me seguia
         a todas partes. Recuerdo dibujar cuando hacia frio y cuando hacia calor, dibujar en restaurantes
         y esperando para la ortodoncia, en el coche, en el tren... Recuerdo carpetas y cuadernos atiborrados
