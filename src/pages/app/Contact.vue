@@ -139,7 +139,7 @@ function onSubmit() {
   overflow: hidden;
   min-height: auto;
   background: #070707;
-  padding: 1.5rem 1rem 0;
+  padding: 1rem 0.75rem 0;
   display: flex;
   flex-direction: column;
 }
@@ -148,21 +148,24 @@ function onSubmit() {
   margin: 0;
   color: #cfcfcf;
   line-height: 0.8;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.02em;
   font-weight: 900;
-  font-size: clamp(4.3rem, 22vw, 15rem);
+  font-size: clamp(1.8rem, 11vw, 3.6rem);
+  text-align: center;
+  white-space: nowrap;
   user-select: none;
 }
 
 .contact-panel {
   position: relative;
   z-index: 2;
-  width: min(980px, 100%);
-  margin: clamp(1rem, 3.8vw, 2.2rem) 0 0 auto;
-  min-height: clamp(560px, 68vh, 860px);
+  width: 100%;
+  max-width: 980px;
+  margin: clamp(0.9rem, 3.2vw, 2rem) auto 0;
+  min-height: auto;
   background: #3d3d3d;
   color: #fffdfd;
-  padding: clamp(1.2rem, 2.8vw, 2.4rem);
+  padding: clamp(1rem, 2.8vw, 2.2rem);
 }
 
 .contact-empty-space {
@@ -173,13 +176,13 @@ function onSubmit() {
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.5rem;
-  margin-top: clamp(1rem, 3.5vh, 2.4rem);
+  gap: 1.1rem;
+  margin-top: clamp(0.8rem, 2.5vh, 1.8rem);
 }
 
 .field label {
   display: block;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   margin-bottom: 0.15rem;
   color: #ffffff;
 }
@@ -208,7 +211,7 @@ function onSubmit() {
 
 .field textarea {
   resize: vertical;
-  min-height: 160px;
+  min-height: 130px;
 }
 
 .send-btn {
@@ -232,15 +235,21 @@ function onSubmit() {
   width: 100%;
   background: #3d3d3d;
   color: #d1d5db;
-  padding: 1.1rem 1rem 2.4rem;
+  padding: 1.1rem 0.9rem 2rem;
 }
 
 .contact-footer-inner {
   width: min(980px, 100%);
-  margin: 0 0 0 auto;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.6rem;
+}
+
+@media (min-width: 640px) {
+  .contact-word {
+    font-size: clamp(2.6rem, 10vw, 6rem);
+  }
 }
 
 @media (min-width: 900px) {
@@ -250,11 +259,18 @@ function onSubmit() {
 
   .contact-word {
     text-align: left;
+    font-size: clamp(4rem, 9.5vw, 10rem);
   }
 
   .contact-grid {
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
+  }
+
+  .contact-panel {
+    margin-left: auto;
+    margin-right: 0;
+    min-height: clamp(560px, 68vh, 860px);
   }
 
   .send-btn {
@@ -270,6 +286,12 @@ function onSubmit() {
     flex-direction: row;
     justify-content: center;
     gap: clamp(2rem, 6vw, 6rem);
+  }
+}
+
+@media (min-width: 1280px) {
+  .contact-word {
+    font-size: clamp(6rem, 9vw, 14rem);
   }
 }
 </style>
