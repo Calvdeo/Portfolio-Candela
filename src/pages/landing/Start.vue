@@ -38,9 +38,16 @@ const yonosoyessaImg = "/brand/yonosoyessa.png"
 
 const projects = ref([
   { slug: "branding-yonosoyessa", title: "36 days of type" },
-  { slug: "cartel-festival", title: "Cartel · Festival" },
+  { slug: "cartel crefad", title: "Cartel · Festival" },
+  { slug: "identidad-cafe-local", title: "Identidad · Cafe Local" },
+  { slug: "editorial-manifiesto", title: "Editorial · Manifiesto" },
   { slug: "ilustracion-editorial", title: "Ilustración · Editorial" },
   { slug: "personajes-procreate", title: "Personajes · Procreate" },
+  { slug: "stickers-frutales", title: "Stickers · Frutales" },
+  { slug: "escenas-cotidianas", title: "Escenas · Cotidianas" },
+  { slug: "retratos-luz-natural", title: "Retratos · Luz Natural" },
+  { slug: "producto-texturas", title: "Producto · Texturas" },
+  { slug: "diario-visual-valencia", title: "Diario Visual · Valencia" },
 ])
 const projectCount = computed(() => projects.value.length)
 
@@ -133,7 +140,7 @@ const coverInstagram = "@yonosoyessa.tiff"
               
               <div class="hidden lg:flex items-center justify-between">
                 <p class="text-sm font-semibold text-white/80">TUS ELEMENTOS RECIENTES</p>
-                <p class="text-xs text-white/50">(5)</p>
+                <p class="text-xs text-white/50">({{ projectCount }})</p>
               </div>
 
               

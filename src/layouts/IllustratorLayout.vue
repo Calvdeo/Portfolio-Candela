@@ -80,11 +80,15 @@ const layerItems = computed(() => {
   const pageLabelByKey: Record<string, string> = {
     design: "Diseno",
     illustration: "Ilustracion",
+    photography: "Fotografia",
   }
 
   const sectionLabel = sectionLabelByKey[section] ?? section
   const pageLabel = pageLabelByKey[page] ?? page
-  const detailSlug = section === "projects" && page && page !== "design" && page !== "illustration" ? page : ""
+  const detailSlug =
+    section === "projects" && page && page !== "design" && page !== "illustration" && page !== "photography"
+      ? page
+      : ""
 
   return {
     root: "Portfolio Candela",

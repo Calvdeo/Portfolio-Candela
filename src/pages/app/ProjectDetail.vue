@@ -14,7 +14,59 @@ const project = computed(() => {
   return projects.find((p) => p.slug === slug) ?? null
 })
 
+const backToProjectsPath = computed(() => {
+  const category = project.value?.category
+  if (category === "ilustración") return "/app/projects/illustration"
+  if (category === "fotografía") return "/app/projects/photography"
+  return "/app/projects/design"
+})
+
 const is36Days = computed(() => project.value?.slug === "branding-yonosoyessa")
+const isCartelCrefad = computed(() => project.value?.slug === "cartel Crefad")
+const cartelFestivalGif = "/images/p%C3%A1ginas%20detalle/cartel-crefad-detalle.gif"
+const cartelCrefadText =
+  "Elaboración de un proyecto de comunicación gráfica del I Congreso Iberoamericano de Creación y Fabricación Digital. Se diseñará la imagen de un cartel y un logotipo."
+const cartelGalleryBasePath = "/images/p%C3%A1ginas%20detalle"
+const cartelGalleryPhotos = [
+  "page_1.png",
+  "page_2.png",
+  "page_3.png",
+  "page_4.png",
+  "page_5.png",
+  "page_6.png",
+  "page_7.png",
+  "page_8.png",
+  "page_9.png",
+  "page_10.png",
+  "page_11.png",
+  "page_12.png",
+  "page_13.png",
+  "page_14.png",
+  "page_15.png",
+  "page_16.png",
+  "page_17.png",
+]
+const cartelCarouselIndex = ref(0)
+const activeCartelImage = computed(() => {
+  const file = cartelGalleryPhotos[cartelCarouselIndex.value]
+  return file ? `${cartelGalleryBasePath}/${file}` : ""
+})
+
+function prevCartelImage() {
+  if (cartelGalleryPhotos.length === 0) return
+  cartelCarouselIndex.value =
+    (cartelCarouselIndex.value - 1 + cartelGalleryPhotos.length) % cartelGalleryPhotos.length
+}
+
+function nextCartelImage() {
+  if (cartelGalleryPhotos.length === 0) return
+  cartelCarouselIndex.value = (cartelCarouselIndex.value + 1) % cartelGalleryPhotos.length
+}
+
+function goToCartelImage(index: number) {
+  if (index < 0 || index >= cartelGalleryPhotos.length) return
+  cartelCarouselIndex.value = index
+}
 const mainWord = computed(() => "36 days of type")
 type FruitKey = "apple-red" | "apple-green" | "orange"
 const activeFruit = ref<FruitKey>("apple-red")
@@ -100,7 +152,7 @@ async function selectFruit(fruitKey: FruitKey) {
 
 <template>
   <div class="days-detail space-y-6">
-    <RouterLink to="/app/projects/design">
+    <RouterLink :to="backToProjectsPath">
       <Button variant="ghost">
         <ArrowLeft class="h-4 w-4 mr-2" />
         Volver a proyectos
@@ -209,7 +261,63 @@ async function selectFruit(fruitKey: FruitKey) {
       </div>
 
       <div v-else class="border overflow-hidden bg-muted/20">
-        <div class="p-4 sm:p-5 space-y-3 border-b bg-background">
+        <template v-if="isCartelCrefad">
+          <div class="bg-background p-4 sm:p-6 space-y-4">
+            <img
+              :src="cartelFestivalGif"
+              alt="Animacion Cartel Crefad"
+              class="w-full max-h-[80vh] object-contain bg-muted/20"
+              loading="lazy"
+            />
+            <p class="text-sm sm:text-base leading-relaxed text-muted-foreground">
+              {{ cartelCrefadText }}
+            </p>
+
+            <div class="space-y-3">
+              <div class="relative rounded bg-muted/20 p-2 sm:p-3">
+                <img
+                  :src="activeCartelImage"
+                  alt="Galeria Cartel Crefad"
+                  class="w-full max-h-[78vh] object-contain"
+                  loading="lazy"
+                />
+
+                <button
+                  type="button"
+                  class="absolute left-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-black/70 text-white text-2xl leading-none hover:bg-black/85"
+                  aria-label="Imagen anterior"
+                  @click="prevCartelImage"
+                >
+                  <
+                </button>
+
+                <button
+                  type="button"
+                  class="absolute right-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-black/70 text-white text-2xl leading-none hover:bg-black/85"
+                  aria-label="Imagen siguiente"
+                  @click="nextCartelImage"
+                >
+                  >
+                </button>
+              </div>
+
+              <div class="flex flex-wrap items-center justify-center gap-2">
+                <button
+                  v-for="(_, index) in cartelGalleryPhotos"
+                  :key="`cartel-dot-${index}`"
+                  type="button"
+                  class="h-2.5 w-2.5 rounded-full transition-opacity"
+                  :class="index === cartelCarouselIndex ? 'bg-black opacity-100' : 'bg-black/40 opacity-70'"
+                  :aria-label="`Ir a imagen ${index + 1}`"
+                  @click="goToCartelImage(index)"
+                />
+              </div>
+            </div>
+          </div>
+        </template>
+
+        <template v-else>
+          <div class="p-4 sm:p-5 space-y-3 border-b bg-background">
           <div class="space-y-1">
             <h2 class="text-3xl font-semibold">{{ project.title }}</h2>
             <p class="text-sm text-muted-foreground">{{ project.category }} - {{ project.year ?? "-" }}</p>
@@ -223,18 +331,19 @@ async function selectFruit(fruitKey: FruitKey) {
           v-if="project.cover"
           :src="project.cover"
           :alt="`Portada de ${project.title}`"
-          class="w-full h-64 sm:h-72 object-cover"
+          class="w-full h-64 sm:h-72 object-contain bg-muted/20"
           loading="lazy"
         />
         <div v-else class="h-40 flex items-center justify-center text-sm text-muted-foreground">
           Sin portada
         </div>
+        </template>
       </div>
     </div>
 
     <div v-else class="border p-4">
       <p class="text-sm text-muted-foreground">No existe ese proyecto.</p>
-      <RouterLink to="/app/projects/design" class="underline text-sm">Volver</RouterLink>
+      <RouterLink :to="backToProjectsPath" class="underline text-sm">Volver</RouterLink>
     </div>
   </div>
 </template>
@@ -355,3 +464,4 @@ async function selectFruit(fruitKey: FruitKey) {
   }
 }
 </style>
+

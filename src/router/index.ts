@@ -23,6 +23,7 @@ export const router = createRouter({
         { path: "projects", redirect: "/app/projects/design" },
         { path: "projects/design", name: "projects-design", component: Projects },
         { path: "projects/illustration", name: "projects-illustration", component: Projects },
+        { path: "projects/photography", name: "projects-photography", component: Projects },
         { path: "projects/:slug", name: "project-detail", component: ProjectDetail },
         { path: "about", name: "about", component: About },
         { path: "contact", name: "contact", component: Contact },

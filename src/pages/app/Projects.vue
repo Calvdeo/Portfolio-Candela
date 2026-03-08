@@ -8,15 +8,23 @@ import { Badge } from "@/components/ui/badge"
 
 const route = useRoute()
 
-const activeTab = computed<"design" | "illustration">(() => {
-  return route.path.includes("/app/projects/illustration") ? "illustration" : "design"
+const activeTab = computed<"design" | "illustration" | "photography">(() => {
+  if (route.path.includes("/app/projects/illustration")) return "illustration"
+  if (route.path.includes("/app/projects/photography")) return "photography"
+  return "design"
 })
 
-const title = computed(() => (activeTab.value === "design" ? "Diseño" : "Ilustración"))
+const title = computed(() => {
+  if (activeTab.value === "illustration") return "Ilustración"
+  if (activeTab.value === "photography") return "Fotografía"
+  return "Diseño"
+})
 
-const filteredProjects = computed(() =>
-  projects.filter((p) => (activeTab.value === "design" ? p.category === "diseño" : p.category === "ilustración"))
-)
+const filteredProjects = computed(() => {
+  if (activeTab.value === "illustration") return projects.filter((p) => p.category === "ilustración")
+  if (activeTab.value === "photography") return projects.filter((p) => p.category === "fotografía")
+  return projects.filter((p) => p.category === "diseño")
+})
 
 type EyesZone = "left" | "center" | "right"
 const eyesZone = ref<EyesZone>("center")
@@ -43,7 +51,7 @@ function getProjectCardImage(slug: string, cover?: string) {
 function getProjectCardImageClass(slug: string) {
   return is36DaysProject(slug)
     ? "w-full h-full object-contain scale-[1.2]"
-    : "w-full h-full object-cover"
+    : "w-full h-full object-contain"
 }
 
 function startFruitCycle(slug: string) {
@@ -121,6 +129,16 @@ onBeforeUnmount(() => {
         Ilustración
       </RouterLink>
 
+      <RouterLink
+        to="/app/projects/photography"
+        class="px-6 py-3 border border-b-0 rounded-t-xl text-lg font-semibold transition"
+        :class="activeTab === 'photography'
+          ? 'bg-[#4a4a4a] text-white border-white/35'
+          : 'bg-[#2f2f2f] text-gray-300 border-white/20 hover:bg-[#353535]'"
+      >
+        Fotografía
+      </RouterLink>
+
       <div class="ml-auto pb-2 text-sm text-gray-200">
         {{ filteredProjects.length }} proyectos
       </div>
@@ -129,7 +147,7 @@ onBeforeUnmount(() => {
     <section class="-mt-px rounded-b-2xl border border-[#3d3d3d] bg-[#3d3d3d] overflow-hidden">
       <div class="border-b border-white/15 bg-[#4a4a4a] px-6 py-5">
         <h3 class="text-5xl font-bold tracking-tight text-white">{{ title }}</h3>
-        <p class="text-sm text-gray-200 mt-2">Haz click en un proyecto para ver su detalle.</p>
+        
       </div>
 
       <div class="h-[70vh] overflow-y-auto px-6 py-6 bg-[#3d3d3d]">
