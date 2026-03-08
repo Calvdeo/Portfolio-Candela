@@ -1,12 +1,13 @@
 ﻿<script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from "vue"
-import { RouterLink, useRoute } from "vue-router"
+import { computed, nextTick, onBeforeUnmount, onMounted, ref } from "vue"
+import { RouterLink, useRoute, useRouter } from "vue-router"
 import { projects } from "@/data/projects"
 
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 
 const route = useRoute()
+const router = useRouter()
 
 const activeTab = computed<"design" | "illustration" | "photography">(() => {
   if (route.path.includes("/app/projects/illustration")) return "illustration"
@@ -112,6 +113,17 @@ function onProjectLeave(slug: string) {
   stopFruitCycle(slug)
 }
 
+async function goToProjectsStart(path: string) {
+  if (route.path !== path) {
+    await router.push(path)
+  }
+  await nextTick()
+  requestAnimationFrame(() => {
+    const anchor = document.getElementById("projects-home-start")
+    anchor?.scrollIntoView({ behavior: "smooth", block: "start" })
+  })
+}
+
 function onMouseMove(e: MouseEvent) {
   const width = window.innerWidth || 1
   const x = e.clientX
@@ -158,6 +170,7 @@ onBeforeUnmount(() => {
         :class="activeTab === 'design'
           ? 'bg-[#4a4a4a] text-white border-white/35'
           : 'bg-[#2f2f2f] text-gray-300 border-white/20 hover:bg-[#353535]'"
+        @click.prevent="goToProjectsStart('/app/projects/design')"
       >
         Diseño
       </RouterLink>
@@ -168,6 +181,7 @@ onBeforeUnmount(() => {
         :class="activeTab === 'illustration'
           ? 'bg-[#4a4a4a] text-white border-white/35'
           : 'bg-[#2f2f2f] text-gray-300 border-white/20 hover:bg-[#353535]'"
+        @click.prevent="goToProjectsStart('/app/projects/illustration')"
       >
         Ilustración
       </RouterLink>
@@ -178,6 +192,7 @@ onBeforeUnmount(() => {
         :class="activeTab === 'photography'
           ? 'bg-[#4a4a4a] text-white border-white/35'
           : 'bg-[#2f2f2f] text-gray-300 border-white/20 hover:bg-[#353535]'"
+        @click.prevent="goToProjectsStart('/app/projects/photography')"
       >
         Fotografía
       </RouterLink>
@@ -187,7 +202,7 @@ onBeforeUnmount(() => {
       </div>
     </div>
 
-    <section class="-mt-px rounded-b-2xl border border-[#3d3d3d] bg-[#3d3d3d] overflow-hidden">
+    <section id="projects-home-start" class="-mt-px rounded-b-2xl border border-[#3d3d3d] bg-[#3d3d3d] overflow-hidden">
       <div class="border-b border-white/15 bg-[#4a4a4a] px-6 py-5">
         <h3 class="text-5xl font-bold tracking-tight text-white">{{ title }}</h3>
         
