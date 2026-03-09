@@ -22,6 +22,7 @@ const backToProjectsPath = computed(() => {
 })
 
 const is36Days = computed(() => project.value?.slug === "branding-yonosoyessa")
+const isAvariciaProject = computed(() => project.value?.slug === "Avaricia")
 const isCartelCrefad = computed(() => project.value?.slug === "cartel Crefad")
 const isPackagingProject = computed(() => project.value?.slug === "Packaging")
 const isLevisProject = computed(() => project.value?.slug === "Le-vis")
@@ -473,7 +474,21 @@ onBeforeUnmount(() => {
       </div>
 
       <div v-else class="border overflow-hidden bg-muted/20">
-        <template v-if="isCartelCrefad">
+        <template v-if="isAvariciaProject">
+          <div class="bg-background p-4 sm:p-6 space-y-4">
+            <img
+              :src="project.cover || ''"
+              alt="Cartel Avaricia"
+              class="w-full h-auto object-contain bg-muted/20"
+              loading="lazy"
+            />
+
+            <p class="text-sm sm:text-base text-muted-foreground">
+              {{ project.description }}
+            </p>
+          </div>
+        </template>
+        <template v-else-if="isCartelCrefad">
           <div class="bg-background p-4 sm:p-6 space-y-4">
             <img
               :src="cartelFestivalGif"

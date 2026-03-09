@@ -73,7 +73,7 @@ const layerItems = computed(() => {
 
   const sectionLabelByKey: Record<string, string> = {
     projects: "Proyectos",
-    about: "About me",
+    about: "Sobre mi",
     contact: "Contacto",
   }
 
@@ -128,18 +128,20 @@ onBeforeUnmount(() => {
     
     <header class="h-12 bg-[#2a2a2a] border-b border-white/10 flex items-center px-4">
       <div class="flex items-center gap-3">
-        <div
+        <RouterLink
+          to="/"
+          aria-label="Ir a la portada"
           class="h-6 w-6 rounded bg-[#1f1f1f] border border-white/10 flex items-center justify-center text-[11px] font-semibold"
         >
           Ai
-        </div>
+        </RouterLink>
 
         <nav class="flex items-center gap-2 text-[12px] text-white/80">
           <RouterLink
             class="h-8 px-3 rounded-md border border-white/15 bg-white/5 hover:bg-white/15 hover:text-white transition-colors cursor-inherit flex items-center"
             to="/app/about"
           >
-            About me
+            Sobre mi
           </RouterLink>
           <RouterLink
             class="h-8 px-3 rounded-md border border-white/15 bg-white/10 hover:bg-white/20 hover:text-white transition-colors cursor-inherit flex items-center"
@@ -185,12 +187,17 @@ onBeforeUnmount(() => {
               v-for="t in toolsGrid"
               :key="t.id"
               type="button"
-              class="h-9 w-9 rounded-sm flex items-center justify-center overflow-hidden cursor-inherit"
+              class="group h-9 w-9 rounded-sm flex items-center justify-center overflow-hidden cursor-inherit transition-colors"
               :class="selectedToolId === t.id ? 'bg-[#6a6a6a]' : 'bg-transparent'"
               :title="t.name"
               @click="setCursorFromTool(t)"
             >
-              <img :src="t.icon" :alt="t.name" class="h-6 w-6 object-contain" draggable="false" />
+              <img
+                :src="t.icon"
+                :alt="t.name"
+                class="h-6 w-6 object-contain transition duration-150 group-hover:brightness-60"
+                draggable="false"
+              />
             </button>
           </div>
 

@@ -5,7 +5,7 @@
     <div class="-mx-4 sm:-mx-6 overflow-hidden">
       <img
         src="/images/yo.png"
-        alt="Portada About me"
+        alt="Portada Sobre mi"
         class="w-[calc(100%+2rem)] sm:w-[calc(100%+3rem)] max-w-none h-[42svh] sm:h-[58svh] lg:h-[calc(100svh-48px)] object-cover object-center"
         loading="lazy"
       />
