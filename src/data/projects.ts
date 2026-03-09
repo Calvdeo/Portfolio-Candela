@@ -20,6 +20,15 @@ export const projects: Project[] = [
     description: "Exploracion tipografica con palabras grandes y pegatinas interactivas.",
     cover: "/images/Portada_essa.png",
   },
+  {
+    slug: "Avaricia",
+    title: "Avaricia",
+    category: "diseño",
+    year: "2026",
+    tags: ["cartel", "obra de teatro"],
+    description: "Cartel de una obra de teatro",
+    cover: "/images/páginas detalle/avaricia.png",
+  },
    {
     slug: "Packaging",
     title: "Packaging de chocolates",
@@ -38,6 +47,7 @@ export const projects: Project[] = [
     description: "Cartel promocional con enfoque tipografico y composicion.",
     cover: "/images/páginas detalle/cartel_crefad.png",
   },
+   
  
   {
     slug: "Le-vis",

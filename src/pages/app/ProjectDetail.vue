@@ -24,6 +24,7 @@ const backToProjectsPath = computed(() => {
 const is36Days = computed(() => project.value?.slug === "branding-yonosoyessa")
 const isCartelCrefad = computed(() => project.value?.slug === "cartel Crefad")
 const isPackagingProject = computed(() => project.value?.slug === "Packaging")
+const isLevisProject = computed(() => project.value?.slug === "Le-vis")
 const isRetratosProject = computed(() => project.value?.slug === "Retratos")
 const isCreatedHumanProject = computed(() => project.value?.slug === "Creado por inteligencia humana")
 const isIllustrationConceptual = computed(() => project.value?.slug === "Ilustración conceptual")
@@ -92,6 +93,23 @@ const retratosHeroGifs = [
   "/images/páginas detalle/fotografía/1.gif",
   "/images/páginas detalle/fotografía/2.gif",
   "/images/páginas detalle/fotografía/3.gif",
+]
+const levisGridImages = [
+  "/images/páginas detalle/fotografía/levis-38.png",
+  "/images/páginas detalle/fotografía/levis-39.png",
+  "/images/páginas detalle/fotografía/levis-41.png",
+  "/images/páginas detalle/fotografía/levis-42.png",
+  "/images/páginas detalle/fotografía/levis-43.png",
+]
+const levisApplicationImages = [
+  "/images/páginas detalle/fotografía/10.png",
+  "/images/páginas detalle/fotografía/11.png",
+  "/images/páginas detalle/fotografía/12.png",
+  "/images/páginas detalle/fotografía/13.png",
+  "/images/páginas detalle/fotografía/14.png",
+  "/images/páginas detalle/fotografía/15.png",
+  "/images/páginas detalle/fotografía/16.png",
+  "/images/páginas detalle/fotografía/17.png",
 ]
 const retratosScrollImages = [
   "/images/páginas detalle/fotografía/1.png",
@@ -789,6 +807,43 @@ onBeforeUnmount(() => {
             </div>
           </div>
         </template>
+        <template v-else-if="isLevisProject">
+          <div class="bg-background p-4 sm:p-6 space-y-7">
+            <section class="space-y-4">
+              <img
+                :src="levisGridImages[0]"
+                alt="Le-vis portada"
+                class="levis-cover-image mx-auto w-auto h-auto max-w-full object-contain bg-muted/20"
+                loading="lazy"
+              />
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                <img
+                  v-for="(image, index) in levisGridImages.slice(1)"
+                  :key="`levis-grid-${index + 1}`"
+                  :src="image"
+                  :alt="`Le-vis imagen ${index + 2}`"
+                  class="levis-grid-image mx-auto w-auto h-auto max-w-full object-contain bg-muted/20"
+                  loading="lazy"
+                />
+              </div>
+            </section>
+
+            <section class="space-y-3">
+              <h3 class="text-lg sm:text-xl font-semibold text-black">Aplicaciones</h3>
+              <div class="levis-app-scroll flex gap-3 sm:gap-4 overflow-x-auto pb-2 snap-x snap-mandatory">
+                <img
+                  v-for="(image, index) in levisApplicationImages"
+                  :key="`levis-application-${index}`"
+                  :src="image"
+                  :alt="`Le-vis aplicación ${index + 1}`"
+                  class="levis-app-image snap-start shrink-0 w-auto h-auto max-w-full object-contain bg-muted/20"
+                  loading="lazy"
+                />
+              </div>
+            </section>
+          </div>
+        </template>
         <template v-else-if="isRetratosProject">
           <div class="bg-background p-4 sm:p-6 space-y-6">
             <section class="retratos-hero-gifs">
@@ -814,7 +869,7 @@ onBeforeUnmount(() => {
                   :key="`retratos-scroll-${index}`"
                   :src="image"
                   :alt="`Retrato ${index + 1}`"
-                  class="snap-start shrink-0 w-[72vw] sm:w-[44vw] lg:w-[30vw] h-[60vh] sm:h-[68vh] object-cover bg-muted/20"
+                  class="snap-start shrink-0 w-auto h-auto object-contain bg-muted/20"
                   loading="lazy"
                 />
               </div>
@@ -892,6 +947,22 @@ onBeforeUnmount(() => {
 
 .portrait-scroll {
   scrollbar-width: thin;
+}
+
+.levis-app-scroll {
+  scrollbar-width: thin;
+}
+
+.levis-cover-image {
+  max-height: 68vh;
+}
+
+.levis-grid-image {
+  max-height: 42vh;
+}
+
+.levis-app-image {
+  max-height: 38vh;
 }
 
 .retratos-hero-gifs {
