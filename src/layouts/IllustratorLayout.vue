@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { computed, onBeforeUnmount, ref } from "vue"
 import { RouterLink, RouterView, useRoute } from "vue-router"
 
@@ -20,31 +20,31 @@ const route = useRoute()
 
 
 const toolNameById: Record<number, string> = {
-  4: "Selección",
-  5: "Selección directa",
-  6: "Varita mágica",
+  4: "Seleccion",
+  5: "Seleccion directa",
+  6: "Varita magica",
   7: "Lazo",
   8: "Pluma",
   9: "Curvatura",
   10: "Texto",
-  11: "Línea",
-  12: "Rectángulo",
+  11: "Linea",
+  12: "Rectangulo",
   13: "Pincel",
   14: "Shaper",
   15: "Borrador",
   16: "Rotar",
   17: "Escala",
   18: "Ancho",
-  19: "Transformación libre",
+  19: "Transformacion libre",
   20: "Creador de formas",
-  21: "Cuadrícula de perspectiva",
+  21: "Cuadricula de perspectiva",
   22: "Malla",
   23: "Degradado",
-  24: "Dimensión",
+  24: "Dimension",
   25: "Cuentagotas",
-  26: "Fusión",
-  27: "Rociar símbolos",
-  28: "Gráfico de columnas",
+  26: "Fusion",
+  27: "Rociar simbolos",
+  28: "Grafico de columnas",
   29: "Mesa de trabajo",
   30: "Sector",
   31: "Mano",
@@ -173,7 +173,7 @@ onBeforeUnmount(() => {
       <aside class="w-23 bg-[#2b2b2b] border-r border-black/30 flex flex-col overflow-hidden">
         
         <div class="h-10 bg-[#3a3a3a] border-b border-black/30 flex items-center px-2">
-          <div class="text-white/80 text-xs select-none">≪</div>
+          <div class="text-white/80 text-xs select-none">&lt;&lt;</div>
 
           <div class="mx-auto h-6 w-14 rounded bg-[#4a4a4a] border border-black/30 flex items-center justify-center">
             <div class="h-[2px] w-10 bg-white/30"></div>
@@ -248,7 +248,7 @@ onBeforeUnmount(() => {
               @click="layersOpen = !layersOpen"
             >
               <span class="font-semibold">Capas</span>
-              <span class="text-[11px]">{{ layersOpen ? "▾" : "▸" }}</span>
+              <span class="text-[11px]">{{ layersOpen ? "v" : ">" }}</span>
             </button>
 
             <div v-show="layersOpen" class="p-2 text-[11px] text-white/80 space-y-1">
@@ -268,7 +268,7 @@ onBeforeUnmount(() => {
                 <div class="pl-5">
                   <div class="h-7 px-2 rounded bg-[#474747] border border-white/10 flex items-center gap-2">
                     <span class="text-white/60">o</span>
-                    <span class="text-white/60">▦</span>
+                    <span class="text-white/60">*</span>
                     <span>{{ layerItems.layer }}</span>
                   </div>
                 </div>
@@ -296,3 +296,4 @@ onBeforeUnmount(() => {
   overflow-x: hidden;
 }
 </style>
+

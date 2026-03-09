@@ -4,9 +4,22 @@ import { Button } from "@/components/ui/button"
 import { Instagram, Mail, MapPin, Phone } from "lucide-vue-next"
 
 const submitted = ref(false)
+const showTicket = ref(false)
 const DEST_EMAIL = "yonosoyessa.jpg@gmail.com"
 const INSTAGRAM_URL = "https://instagram.com/yonosoyessa.tiff"
 const BEHANCE_URL = "https://www.behance.net/eladeobesso"
+
+type SubmittedTicket = {
+  code: string
+  sentAt: string
+  nombre: string
+  apellidos: string
+  correo: string
+  fecha: string
+  mision: string
+}
+
+const ticket = ref<SubmittedTicket | null>(null)
 
 const form = reactive({
   nombre: "",
@@ -17,20 +30,42 @@ const form = reactive({
 })
 
 function onSubmit() {
-  const subject = `Nuevo proyecto de ${form.nombre} ${form.apellidos}`.trim()
+  const code = `TK-${Date.now().toString().slice(-8)}`
+  const sentAt = new Date().toLocaleString("es-ES")
+  ticket.value = {
+    code,
+    sentAt,
+    nombre: form.nombre,
+    apellidos: form.apellidos,
+    correo: form.correo,
+    fecha: form.fecha,
+    mision: form.mision,
+  }
+  showTicket.value = true
+  submitted.value = true
+}
+
+function buildMailtoUrl(data: SubmittedTicket) {
+  const subject = `Nuevo proyecto de ${data.nombre} ${data.apellidos}`.trim()
   const body = [
-    `Nombre: ${form.nombre}`,
-    `Apellidos: ${form.apellidos}`,
-    `Correo: ${form.correo}`,
-    `Fechas del proyecto: ${form.fecha}`,
+    `Ticket: ${data.code}`,
+    `Fecha de envio: ${data.sentAt}`,
+    "",
+    `Nombre: ${data.nombre}`,
+    `Apellidos: ${data.apellidos}`,
+    `Correo: ${data.correo}`,
+    `Fechas del proyecto: ${data.fecha}`,
     "",
     "Proyecto:",
-    form.mision,
+    data.mision,
   ].join("\n")
 
-  const mailtoUrl = `mailto:${DEST_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-  window.location.href = mailtoUrl
-  submitted.value = true
+  return `mailto:${DEST_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+}
+
+function sendTicketEmail() {
+  if (!ticket.value) return
+  window.location.href = buildMailtoUrl(ticket.value)
 }
 </script>
 
@@ -142,6 +177,36 @@ function onSubmit() {
         </div>
       </div>
     </footer>
+
+    <div v-if="showTicket && ticket" class="ticket-overlay">
+      <div class="ticket-stack" role="dialog" aria-modal="true" aria-label="Ticket de proyecto enviado">
+        <article class="ticket-yellow" aria-hidden="true">
+          <p class="ticket-yellow-kicker">Proyecto registrado</p>
+          <p class="ticket-yellow-main">Gracias por contactar conmigo</p>
+          
+        </article>
+
+        <article class="ticket-white">
+          <p class="ticket-white-kicker">TICKET DE PROYECTO</p>
+          <p class="ticket-white-name">{{ ticket.nombre }} {{ ticket.apellidos }}</p>
+
+          <div class="ticket-white-meta">
+            <p><strong>Codigo:</strong> {{ ticket.code }}</p>
+            <p><strong>Fecha:</strong> {{ ticket.sentAt }}</p>
+            <p><strong>Correo:</strong> {{ ticket.correo }}</p>
+          </div>
+
+          <div class="ticket-white-actions">
+            <Button type="button" class="ticket-btn-primary" @click="sendTicketEmail">
+              Abrir correo
+            </Button>
+            <button type="button" class="ticket-btn-ghost" @click="showTicket = false">
+              Cerrar
+            </button>
+          </div>
+        </article>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -260,6 +325,150 @@ function onSubmit() {
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
+}
+
+.ticket-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  background: rgba(0, 0, 0, 0.58);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.ticket-stack {
+  position: relative;
+  width: min(640px, 100%);
+  min-height: 390px;
+}
+
+.ticket-yellow {
+  position: absolute;
+  top: -0.9rem;
+  left: 0.4rem;
+  width: min(320px, 78%);
+  background: #e7ea53;
+  color: #1a1a1a;
+  border: 1px solid rgba(0, 0, 0, 0.28);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.24);
+  padding: 1rem;
+  transform: rotate(-5deg);
+}
+
+.ticket-yellow-kicker {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+}
+
+.ticket-yellow-main {
+  margin: 0.5rem 0 0;
+  font-size: clamp(1rem, 2.8vw, 1.45rem);
+  font-weight: 800;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.ticket-yellow-sub {
+  margin: 0.55rem 0 0;
+  font-size: 0.82rem;
+  opacity: 0.85;
+}
+
+.ticket-white {
+  position: relative;
+  margin: 5.1rem 0 0 auto;
+  width: min(500px, 88%);
+  background: #f7f6f2;
+  color: #181818;
+  border: 1px solid rgba(0, 0, 0, 0.22);
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.3);
+  padding: 1.15rem 1rem;
+  font-family: "Courier New", Courier, monospace;
+  transform: rotate(2deg);
+}
+
+.ticket-white::after {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 3.5rem;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.42);
+}
+
+.ticket-white-kicker {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.07em;
+  font-weight: 700;
+}
+
+.ticket-white-name {
+  margin: 0.5rem 0 0.8rem;
+  font-size: clamp(1.5rem, 4.9vw, 2.55rem);
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  word-break: break-word;
+}
+
+.ticket-white-meta {
+  font-size: 0.84rem;
+  line-height: 1.45;
+  margin-bottom: 1.3rem;
+}
+
+.ticket-white-meta p {
+  margin: 0.22rem 0;
+}
+
+.ticket-white-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.55rem;
+  margin-top: 0.9rem;
+}
+
+.ticket-btn-primary {
+  border-radius: 9999px;
+  border: 1px solid #111;
+  background: #111;
+  color: #fff;
+}
+
+.ticket-btn-primary:hover {
+  background: #2a2a2a;
+}
+
+.ticket-btn-ghost {
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 0, 0, 0.35);
+  background: transparent;
+  padding: 0.45rem 0.95rem;
+  font-size: 0.88rem;
+}
+
+@media (max-width: 640px) {
+  .ticket-stack {
+    min-height: 350px;
+  }
+
+  .ticket-yellow {
+    top: -0.35rem;
+    left: 0.2rem;
+    width: 86%;
+  }
+
+  .ticket-white {
+    margin-top: 4rem;
+    width: 94%;
+    transform: rotate(1deg);
+  }
 }
 
 .social-link {
