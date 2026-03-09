@@ -36,7 +36,7 @@ export const projects: Project[] = [
     year: "2023",
     tags: ["branding", "packaging"],
     description: "Identidad para una nueva chocolatería",
-    cover: "/images/páginas detalle/61.png",
+    cover: "/images/páginas detalle/LOGO CHOCOLATE blanco.png",
   },
   {
     slug: "cartel Crefad",
@@ -47,6 +47,18 @@ export const projects: Project[] = [
     description: "Cartel promocional con enfoque tipografico y composicion.",
     cover: "/images/páginas detalle/cartel_crefad.png",
   },
+   
+   {
+    slug: "Feminismo",
+    title: "Feminismo",
+    category: "diseño",
+    year: "2023",
+    tags: ["cartel", "tipografia"],
+    description: "Cartel feminista de una filósofa",
+    cover: "/images/páginas detalle/feminism.png",
+  },
+  
+   
    
  
   {
@@ -105,15 +117,35 @@ export const projects: Project[] = [
     cover: "/images/páginas detalle/ilustración/lobolopez1.png",
   },
     {
+    slug: "Cartel filosófico",
+    title: "Cartel filosófico",
+    category: "ilustración",
+    year: "2023",
+    tags: ["ilustración", "diseño"],
+    description: "Ilustración vectorial",
+    cover: "/images/páginas detalle/ilustración/filosofica.png",
+  },
+    {
     slug: "ilustración vectorial",
     title: "ilustración vectorial",
     category: "ilustración",
     year: "2023",
-    tags: ["moda", "vector"],
+    tags: ["Vector"],
     description: "Ilustración vectorial",
     cover: "/images/páginas detalle/ilustración/vectorial.png",
   },
+    
+    {
+    slug: "Ilustración de un relato",
+    title: "Ilustración de un relato",
+    category: "ilustración",
+    year: "2023",
+    tags: ["ilustración", "diseño"],
+    description: "Un relato sobre el cambio de profesión",
+    cover: "/images/páginas detalle/ilustración/pies.png",
+  },
   {
+    
     slug: "Retratos",
     title: "Retratos",
     category: "fotografía",

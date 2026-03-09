@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import ContactStrip from "@/components/ContactStrip.vue"
+</script>
 
 <template>
   <div class="about-page">
@@ -31,6 +33,8 @@
         />
       </div>
     </section>
+
+    <ContactStrip class="mt-6" />
   </div>
 </template>
 

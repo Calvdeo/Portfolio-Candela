@@ -5,7 +5,7 @@ import { projects } from "@/data/projects"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft } from "lucide-vue-next"
+import { ArrowLeft, ExternalLink, Pause, SkipBack, SkipForward, Volume2 } from "lucide-vue-next"
 
 const route = useRoute()
 
@@ -29,6 +29,21 @@ const isLevisProject = computed(() => project.value?.slug === "Le-vis")
 const isRetratosProject = computed(() => project.value?.slug === "Retratos")
 const isCreatedHumanProject = computed(() => project.value?.slug === "Creado por inteligencia humana")
 const isIllustrationConceptual = computed(() => project.value?.slug === "Ilustración conceptual")
+const isFeminismoProject = computed(() => project.value?.slug === "Feminismo")
+const isOlimpiadaFilosoficaProject = computed(() => {
+  const slug = (project.value?.slug ?? "").toLowerCase()
+  return slug.includes("olimpiada") && (slug.includes("filosófica") || slug.includes("filosofica"))
+})
+const isCartelFilosoficoProject = computed(() => {
+  const slug = (project.value?.slug ?? "").toLowerCase()
+  const title = (project.value?.title ?? "").toLowerCase()
+  return (
+    slug.includes("cartel filosófico") ||
+    slug.includes("cartel filosofico") ||
+    title.includes("cartel filosófico") ||
+    title.includes("cartel filosofico")
+  )
+})
 const isComicProject = computed(() => {
   const key = (project.value?.slug ?? "").toLowerCase()
   return key.includes("comic") || key.includes("cómic") || key.includes("cã³mic")
@@ -38,6 +53,17 @@ const isIllustrationNarrative = computed(() => {
   const title = (project.value?.title ?? "").toLowerCase()
   return slug.includes("narrativa") || title.includes("narrativa") || title.includes("narativa")
 })
+const isLoboLopezProject = computed(() => {
+  const slug = (project.value?.slug ?? "").toLowerCase()
+  const title = (project.value?.title ?? "").toLowerCase()
+  return slug.includes("lobo") || title.includes("lobo")
+})
+const hasFullGrayBackground = computed(() =>
+  isIllustrationConceptual.value ||
+  isIllustrationNarrative.value ||
+  isComicProject.value ||
+  isLoboLopezProject.value,
+)
 const cartelFestivalGif = "/images/páginas detalle/cartel-crefad-detalle.gif"
 const cartelCrefadText =
   "Elaboración de un proyecto de comunicación gráfica del I Congreso Iberoamericano de Creación y Fabricación Digital. Se diseñará la imagen de un cartel y un logotipo."
@@ -166,11 +192,17 @@ const illustrationNarrativeCharactersImage = "/images/páginas detalle/ilustraci
 const illustrationNarrativeText =
   "Proyecto de ilustración narrativa inspirado en La ladrona de libros. Se encargaro una doble página, dos páginas individuales, portada y contraportada. Como plus y atendiendo a las necesidades del texto decidí ilustrar un libro narrado dentro de la propia historia."
 const comicColorImage = "/images/p%C3%A1ginas%20detalle/ilustración/comiccolor.png"
-const comicBlackImage = "/images/p%C3%A1ginas%20detalle/ilustracion/comicnegro.png"
+const comicBlackImage = "/images/p%C3%A1ginas%20detalle/ilustración/comicnegro.png"
 const comicSequentialCharactersImage =
   "/images/p%C3%A1ginas%20detalle/ilustración/personajesecuencial.png"
 const comicBottomText =
   "Proyecto de ilustración secuencial de una anécdota, además de la creación de un personaje inicial. Ilustración hecha con tinta china y color digital."
+const loboSpotifyUrl = "https://open.spotify.com/track/6LtcpZ71tEHTsnR4GEHsSR"
+const loboPlayerCover = "/images/páginas detalle/ilustración/kikoveneno.png"
+const loboPlayerCoverHover = "/images/páginas detalle/ilustración/lobolopez2.png"
+const loboBottomText =
+  "Ilustración por amor a una canción, al igual que el Lobo López, yo también tenía que decir que echaba de emnos hacer ilustraciones solo para mí"
+const olimpiadaGanadoraImage = "/images/páginas detalle/ganadora.png"
 const cartelGalleryBasePath = "/images/páginas detalle"
 const cartelGalleryPhotos = [
   "page_1.png",
@@ -267,6 +299,7 @@ type NarrativeTabKey = "color" | "characters"
 const activeFruit = ref<FruitKey>("apple-red")
 const activeNarrativeTab = ref<NarrativeTabKey>("color")
 const comicHover = ref(false)
+const loboCoverHover = ref(false)
 const fruitPhotoSection = ref<HTMLElement | null>(null)
 
 const fruitInfo: Record<FruitKey, { title: string; text: string; photo: string; photoAlt: string }> = {
@@ -364,7 +397,10 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="days-detail space-y-6">
+  <div
+    class="days-detail space-y-6"
+    :class="hasFullGrayBackground ? 'detail-gray-surface' : ''"
+  >
     <RouterLink :to="backToProjectsPath">
       <Button variant="ghost">
         <ArrowLeft class="h-4 w-4 mr-2" />
@@ -488,17 +524,57 @@ onBeforeUnmount(() => {
             </p>
           </div>
         </template>
-        <template v-else-if="isCartelCrefad">
+        <template v-else-if="isFeminismoProject">
           <div class="bg-background p-4 sm:p-6 space-y-4">
             <img
-              :src="cartelFestivalGif"
-              alt="Animacion Cartel Crefad"
-              class="w-full max-h-[80vh] object-contain bg-muted/20"
+              :src="project?.cover || ''"
+              :alt="project ? `Portada ${project.title}` : 'Portada Feminismo'"
+              class="w-full max-h-[86vh] object-contain bg-muted/20"
               loading="lazy"
             />
-            <p class="text-sm sm:text-base leading-relaxed text-muted-foreground">
-              {{ cartelCrefadText }}
+
+            <p class="mx-auto max-w-4xl text-sm sm:text-base text-muted-foreground leading-relaxed">
+              {{ project?.description }}
             </p>
+          </div>
+        </template>
+        <template v-else-if="isOlimpiadaFilosoficaProject">
+          <div class="bg-background p-4 sm:p-6">
+            <img
+              :src="olimpiadaGanadoraImage"
+              alt="Olimpiada filosófica - imagen ganadora"
+              class="w-full max-h-[86vh] object-contain bg-muted/20"
+              loading="lazy"
+            />
+          </div>
+        </template>
+        <template v-else-if="isCartelFilosoficoProject">
+          <div class="bg-background p-4 sm:p-6 space-y-4">
+            <img
+              :src="project?.cover || ''"
+              :alt="project ? `Portada ${project.title}` : 'Portada cartel filosófico'"
+              class="w-full max-h-[86vh] object-contain bg-muted/20"
+              loading="lazy"
+            />
+
+            <p class="mx-auto max-w-4xl text-sm sm:text-base text-muted-foreground leading-relaxed">
+              {{ project?.description }}
+            </p>
+          </div>
+        </template>
+        <template v-else-if="isCartelCrefad">
+          <div class="bg-background p-4 sm:p-6 space-y-4">
+            <div class="flex flex-col md:flex-row gap-4 md:gap-5">
+              <img
+                :src="cartelFestivalGif"
+                alt="Animacion Cartel Crefad"
+                class="w-full md:flex-1 max-h-[80vh] object-contain bg-muted/20"
+                loading="lazy"
+              />
+              <p class="md:w-[34%] md:min-w-[220px] text-xs sm:text-sm leading-relaxed text-muted-foreground">
+                {{ cartelCrefadText }}
+              </p>
+            </div>
 
             <div class="space-y-3">
               <div class="relative rounded bg-muted/20 p-2 sm:p-3">
@@ -605,7 +681,7 @@ onBeforeUnmount(() => {
           </div>
         </template>
         <template v-else-if="isIllustrationConceptual">
-          <div class="bg-background p-0 space-y-8">
+          <div class="p-0 space-y-8">
             <img
               v-if="project.cover"
               :src="project.cover"
@@ -682,7 +758,7 @@ onBeforeUnmount(() => {
           </div>
         </template>
         <template v-else-if="isIllustrationNarrative">
-          <div class="bg-background p-4 sm:p-6 space-y-6">
+          <div class="p-4 sm:p-6 space-y-6">
             <div class="grid grid-cols-2 md:grid-cols-4 auto-rows-[150px] sm:auto-rows-[190px] gap-3 sm:gap-4">
               <img
                 :src="illustrationNarrativeMosaic[0]"
@@ -794,7 +870,7 @@ onBeforeUnmount(() => {
           </div>
         </template>
         <template v-else-if="isComicProject">
-          <div class="bg-background p-0 space-y-6">
+          <div class="p-0 space-y-6">
             <div
               class="w-full"
               @mouseenter="comicHover = true"
@@ -820,6 +896,87 @@ onBeforeUnmount(() => {
                 loading="lazy"
               />
             </div>
+          </div>
+        </template>
+        <template v-else-if="isLoboLopezProject">
+          <div class="p-4 sm:p-6 space-y-6">
+            <img
+              :src="project.cover || '/images/páginas detalle/ilustración/lobolopez1.png'"
+              alt="Lobo López portada"
+              class="w-full max-h-[86vh] object-contain"
+              loading="lazy"
+            />
+
+            <div class="mx-auto w-full max-w-4xl rounded-[32px] bg-[#8f8f8f] p-4 sm:p-6 text-white shadow-[0_12px_30px_rgba(0,0,0,0.2)]">
+              <div class="flex flex-col md:flex-row gap-4 sm:gap-6 items-stretch">
+                <div
+                  class="mx-auto w-full max-w-[240px] md:mx-0 md:w-[190px] md:max-w-none shrink-0 aspect-square overflow-hidden rounded-3xl bg-white/20"
+                  @mouseenter="loboCoverHover = true"
+                  @mouseleave="loboCoverHover = false"
+                >
+                  <img
+                    :src="loboCoverHover ? loboPlayerCoverHover : loboPlayerCover"
+                    :alt="loboCoverHover ? 'Portada alternativa Lobo López' : 'Portada Lobo López'"
+                    class="h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="flex-1 flex flex-col justify-between min-h-[110px] sm:min-h-[190px]">
+                  <div class="flex items-start justify-between gap-3">
+                    <div>
+                      <p class="text-sm sm:text-base font-semibold leading-tight">Lobo López</p>
+                      <p class="text-xs sm:text-sm text-white/85">Kiko Veneno</p>
+                      <p class="text-[11px] sm:text-xs text-white/70">Échate un cantecito</p>
+                    </div>
+                    <a
+                      :href="loboSpotifyUrl"
+                      target="_blank"
+                      rel="noreferrer"
+                      class="inline-flex items-center gap-1 rounded-full bg-black/25 px-3 py-1.5 text-[11px] sm:text-xs font-medium hover:bg-black/35 transition"
+                    >
+                      Spotify
+                      <ExternalLink class="h-3.5 w-3.5" />
+                    </a>
+                  </div>
+
+                  <div class="space-y-3 sm:space-y-4">
+                    <div class="space-y-1">
+                      <div class="h-[3px] rounded-full bg-white/35 overflow-hidden">
+                        <div class="h-full w-[48%] bg-white rounded-full" />
+                      </div>
+                      <div class="flex items-center justify-between text-[10px] sm:text-[11px] text-white/80">
+                        <span>1:03</span>
+                        <span>2:22</span>
+                      </div>
+                    </div>
+
+                    <div class="flex items-center justify-center gap-4 sm:gap-5">
+                      <button type="button" class="h-8 w-8 rounded-full bg-white/20 flex items-center justify-center">
+                        <SkipBack class="h-4 w-4" />
+                      </button>
+                      <button type="button" class="h-10 w-10 rounded-full bg-white text-[#5d5d5d] flex items-center justify-center">
+                        <Pause class="h-5 w-5" />
+                      </button>
+                      <button type="button" class="h-8 w-8 rounded-full bg-white/20 flex items-center justify-center">
+                        <SkipForward class="h-4 w-4" />
+                      </button>
+                    </div>
+
+                    <div class="flex items-center gap-2 text-white/90">
+                      <Volume2 class="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                      <div class="h-[3px] flex-1 rounded-full bg-white/35 overflow-hidden">
+                        <div class="h-full w-[72%] bg-white rounded-full" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p class="mx-auto max-w-4xl text-center text-sm sm:text-base leading-relaxed text-black/75">
+              {{ loboBottomText }}
+            </p>
           </div>
         </template>
         <template v-else-if="isLevisProject">
@@ -927,6 +1084,21 @@ onBeforeUnmount(() => {
 <style scoped>
 .days-detail {
   overflow-x: clip;
+}
+
+.detail-gray-surface {
+  background: #d8d8d8;
+  margin: -1rem;
+  padding: 1rem;
+  min-height: calc(100% + 2rem);
+}
+
+@media (min-width: 640px) {
+  .detail-gray-surface {
+    margin: -1.5rem;
+    padding: 1.5rem;
+    min-height: calc(100% + 3rem);
+  }
 }
 
 .days-hero {

@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue"
 import { Button } from "@/components/ui/button"
-import { Instagram, Linkedin, Mail, MapPin, MessageCircle, Phone, X } from "lucide-vue-next"
+import { Instagram, Mail, MapPin, Phone } from "lucide-vue-next"
 
 const submitted = ref(false)
 const DEST_EMAIL = "yonosoyessa.jpg@gmail.com"
+const INSTAGRAM_URL = "https://instagram.com/yonosoyessa.tiff"
+const BEHANCE_URL = "https://www.behance.net/eladeobesso"
 
 const form = reactive({
   nombre: "",
@@ -118,10 +120,24 @@ function onSubmit() {
         <div class="space-y-4 text-center md:text-left text-gray-400">
           <h3 class="text-xl font-bold text-white">Sigueme</h3>
           <div class="flex gap-8 justify-center md:justify-start">
-            <X class="w-8 h-8 hover:text-white" />
-            <Instagram class="w-8 h-8 hover:text-white" />
-            <Linkedin class="w-8 h-8 hover:text-white" />
-            <MessageCircle class="w-8 h-8 hover:text-white" />
+            <a
+              :href="INSTAGRAM_URL"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Instagram"
+              class="social-link"
+            >
+              <Instagram class="w-8 h-8" />
+            </a>
+            <a
+              :href="BEHANCE_URL"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Behance"
+              class="social-link behance-link"
+            >
+              <span class="behance-mark">Be</span>
+            </a>
           </div>
         </div>
       </div>
@@ -244,6 +260,32 @@ function onSubmit() {
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.social-link:hover {
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.behance-link {
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 0.45rem;
+}
+
+.behance-mark {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
 }
 
 @media (min-width: 640px) {

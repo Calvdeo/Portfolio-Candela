@@ -5,6 +5,7 @@ import { projects } from "@/data/projects"
 
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import ContactStrip from "@/components/ContactStrip.vue"
 
 const route = useRoute()
 const router = useRouter()
@@ -42,6 +43,8 @@ const hoveredProjectSlug = ref<string | null>(null)
 let fruitCycleTimer: ReturnType<typeof setInterval> | null = null
 const narrativeHoverCover = "/images/p%C3%A1ginas%20detalle/ilustraci%C3%B3n/sinfondo1.png"
 const comicHoverCover = "/images/p%C3%A1ginas%20detalle/ilustraci%C3%B3n/comicnegro.png"
+const feminismoSlug = "Feminismo"
+const feminismoHoverCover = "/images/páginas detalle/feminism1.png"
 
 const createdHumanSlug = "Creado por inteligencia humana"
 const createdHumanCoverDefault =
@@ -67,6 +70,10 @@ function isComicProject(slug: string) {
   return key.includes("comic") || (key.includes("mic") && key.startsWith("c"))
 }
 
+function isFeminismoProject(slug: string) {
+  return slug === feminismoSlug
+}
+
 function getProjectCardImage(slug: string, cover?: string) {
   if (is36DaysProject(slug)) return fruitCycleImages[fruitCycleIndex.value]
   if (isCreatedHumanProject(slug)) {
@@ -77,6 +84,9 @@ function getProjectCardImage(slug: string, cover?: string) {
   }
   if (isComicProject(slug)) {
     return hoveredProjectSlug.value === slug ? comicHoverCover : (cover ?? "")
+  }
+  if (isFeminismoProject(slug)) {
+    return hoveredProjectSlug.value === slug ? feminismoHoverCover : (cover ?? "")
   }
   return cover ?? ""
 }
@@ -259,5 +269,7 @@ onBeforeUnmount(() => {
         </div>
       </div>
     </section>
+
+    <ContactStrip class="mt-7" />
   </div>
 </template>
