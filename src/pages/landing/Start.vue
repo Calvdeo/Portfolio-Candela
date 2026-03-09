@@ -14,7 +14,16 @@ function goToExitConfirm() {
 const age = 20
 const city = "Valencia"
 const previewImg = "/images/Portada_essa.png"
-const coverImg = "/images/portada1.png"
+const coverImg = "/images/illustrator.png"
+const coverBackdropOptions = [
+  "/images/páginas detalle/fotografía/3.png",
+  "/images/páginas detalle/t.png",
+  "/images/páginas detalle/fotografía/levis-38.png",
+  "/images/páginas detalle/ilustración/lobolopez2",
+  "/images/páginas detalle/ilustración/comiccolor.png",
+]
+const coverBackdropImg =
+  coverBackdropOptions[Math.floor(Math.random() * coverBackdropOptions.length)]
 const role = ref("Diseñadora")
 const showCover = ref(true)
 
@@ -37,17 +46,17 @@ const yonosoyessaImg = "/brand/yonosoyessa.png"
 
 
 const projects = ref([
-  { slug: "branding-yonosoyessa", title: "36 days of type" },
-  { slug: "cartel crefad", title: "Cartel · Festival" },
-  { slug: "identidad-cafe-local", title: "Identidad · Cafe Local" },
-  { slug: "editorial-manifiesto", title: "Editorial · Manifiesto" },
-  { slug: "ilustracion-editorial", title: "Ilustración · Editorial" },
-  { slug: "personajes-procreate", title: "Personajes · Procreate" },
-  { slug: "stickers-frutales", title: "Stickers · Frutales" },
-  { slug: "escenas-cotidianas", title: "Escenas · Cotidianas" },
-  { slug: "retratos-luz-natural", title: "Retratos · Luz Natural" },
-  { slug: "producto-texturas", title: "Producto · Texturas" },
-  { slug: "diario-visual-valencia", title: "Diario Visual · Valencia" },
+  { slug: "36 days of type", title: "36 days of type" },
+  { slug: "Bloom", title: "Bloom" },
+  { slug: "Cartel crefad", title: "Cartel crefad" },
+  { slug: "le-vi´s", title: "le-vi´s" },
+  { slug: "Creado por inteligencia humana", title: "Creado por inteligencia humana" },
+  { slug: "Ilustración conceptual", title: "Ilustración conceptual" },
+  { slug: "Ilustración narrativa", title: "Ilustración narrativa" },
+  { slug: "Cómic", title: "Cómic" },
+  { slug: "Lobo lópez", title: "Lobo lópez" },
+  { slug: "Ilustración vectorial", title: "Ilustración vectorial" },
+ 
 ])
 const projectCount = computed(() => projects.value.length)
 
@@ -90,18 +99,23 @@ const portraitIconOff = "/orientation/portrait.png"
 const portraitIconOn = "/orientation/portrait_azul.png"
 const landscapeIconOff = "/orientation/landscape.png"
 const landscapeIconOn = "/orientation/landscape_azul.png"
-const coverInstagram = "@yonosoyessa.tiff"
 </script>
 
 <template>
   
-  <div class="w-full min-h-svh bg-[#e8e1d6] overflow-hidden relative">
+  <div class="w-full min-h-svh bg-[#2f2f2f] overflow-hidden relative">
   
     <div class="w-full min-h-svh flex items-center justify-center p-3 sm:p-6 lg:p-10 pb-24">
       <div
-        class="relative w-[92vw] max-w-[1400px] h-[86svh] sm:h-[88svh] lg:h-[82svh] bg-[#2f2f2f] text-white rounded-xl shadow-2xl overflow-hidden border border-black/10"
+        :class="[
+          'relative w-[92vw] max-w-[1400px] h-[86svh] sm:h-[88svh] lg:h-[82svh] text-white overflow-hidden',
+          showCover
+            ? 'bg-transparent rounded-none border-0 shadow-none'
+            : 'bg-[#2f2f2f] rounded-xl border border-black/10 shadow-2xl',
+        ]"
       >
         
+        <template v-if="!showCover">
         <div
           class="h-10 bg-[#2a2a2a] border-b border-white/10 flex items-center justify-between px-4"
         >
@@ -352,30 +366,40 @@ const coverInstagram = "@yonosoyessa.tiff"
             </button>
           </aside>
         </div>
+        </template>
 
         <button
           v-if="showCover"
           type="button"
-          class="absolute inset-0 z-[200] h-full w-full cursor-pointer"
+          class="absolute inset-0 z-[200] relative flex items-center justify-center cursor-pointer"
           @click="dismissCover"
           aria-label="Quitar portada"
         >
-          <img :src="coverImg" alt="Portada" class="h-full w-full object-fill" draggable="false" />
-          <div class="absolute inset-0 flex flex-col items-center justify-center text-[#000000] pointer-events-none">
-            <p class="mb-6 text-sm sm:text-base italic font-bold">{{ coverInstagram }}</p>
-            <h2
-              class="text-[52px] leading-none sm:text-[84px] md:text-[110px] lg:text-[132px] font-black uppercase tracking-tight"
-              style="font-family: 'Inter', sans-serif"
-            >
-              portfolio
-            </h2>
-            <p class="mt-6 text-xl sm:text-2xl md:text-3xl italic font-bold">
-              pulsa aquí para ver más
-            </p>
+          <div
+            class="absolute right-3 top-10 bottom-[4.25rem] w-[68%] sm:w-[62%] md:w-[56%] max-w-[520px] rounded-xl overflow-hidden"
+          >
+            <img
+              v-for="img in coverBackdropOptions"
+              :key="img"
+              :src="img"
+              alt="Fondo portada"
+              class="absolute inset-0 h-full w-full object-cover transition-opacity duration-200"
+              :class="img === coverBackdropImg ? 'opacity-100' : 'opacity-0'"
+              draggable="false"
+            />
           </div>
+          <img
+            :src="coverImg"
+            alt="Portada"
+            class="relative z-10 block h-auto w-auto max-h-full max-w-full object-contain"
+            draggable="false"
+          />
         </button>
       </div>
     </div>
   </div>
 </template>
+
+
+
 
