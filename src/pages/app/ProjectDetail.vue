@@ -24,6 +24,7 @@ const backToProjectsPath = computed(() => {
 const is36Days = computed(() => project.value?.slug === "branding-yonosoyessa")
 const isCartelCrefad = computed(() => project.value?.slug === "cartel Crefad")
 const isPackagingProject = computed(() => project.value?.slug === "Packaging")
+const isRetratosProject = computed(() => project.value?.slug === "Retratos")
 const isCreatedHumanProject = computed(() => project.value?.slug === "Creado por inteligencia humana")
 const isIllustrationConceptual = computed(() => project.value?.slug === "Ilustración conceptual")
 const isComicProject = computed(() => {
@@ -86,6 +87,19 @@ const packagingCarouselPhotos = [
   "/images/páginas detalle/21.png",
   "/images/páginas detalle/22.png",
   "/images/páginas detalle/23.png",
+]
+const retratosHeroGifs = [
+  "/images/páginas detalle/fotografía/1.gif",
+  "/images/páginas detalle/fotografía/2.gif",
+  "/images/páginas detalle/fotografía/3.gif",
+]
+const retratosScrollImages = [
+  "/images/páginas detalle/fotografía/1.png",
+  "/images/páginas detalle/fotografía/1.1.png",
+  "/images/páginas detalle/fotografía/2.png",
+  "/images/páginas detalle/fotografía/2.2.png",
+  "/images/páginas detalle/fotografía/3.png",
+  "/images/páginas detalle/fotografía/3.2.png",
 ]
 const packagingCarouselIndex = ref(0)
 const activePackagingImage = computed(
@@ -775,11 +789,43 @@ onBeforeUnmount(() => {
             </div>
           </div>
         </template>
+        <template v-else-if="isRetratosProject">
+          <div class="bg-background p-4 sm:p-6 space-y-6">
+            <section class="retratos-hero-gifs">
+              <img
+                v-for="(gif, index) in retratosHeroGifs"
+                :key="`retratos-gif-${index}`"
+                :src="gif"
+                :alt="`Retratos animados ${index + 1}`"
+                class="retratos-hero-gif object-contain bg-muted/20"
+                :class="`retratos-hero-gif-${index + 1}`"
+                loading="lazy"
+              />
+            </section>
+
+            <section class="space-y-3">
+              <p class="text-sm sm:text-base text-muted-foreground">
+                {{ project.description }}
+              </p>
+
+              <div class="portrait-scroll flex gap-3 sm:gap-4 overflow-x-auto pb-2 snap-x snap-mandatory">
+                <img
+                  v-for="(image, index) in retratosScrollImages"
+                  :key="`retratos-scroll-${index}`"
+                  :src="image"
+                  :alt="`Retrato ${index + 1}`"
+                  class="snap-start shrink-0 w-[72vw] sm:w-[44vw] lg:w-[30vw] h-[60vh] sm:h-[68vh] object-cover bg-muted/20"
+                  loading="lazy"
+                />
+              </div>
+            </section>
+          </div>
+        </template>
 
         <template v-else>
           <div class="p-4 sm:p-5 space-y-3 border-b bg-background">
-          <div class="space-y-1">
-            <h2 class="text-3xl font-semibold">{{ project.title }}</h2>
+            <div class="space-y-1">
+              <h2 class="text-3xl font-semibold">{{ project.title }}</h2>
             <p class="text-sm text-muted-foreground">{{ project.category }} - {{ project.year ?? "-" }}</p>
           </div>
           <div class="flex flex-wrap gap-2">
@@ -842,6 +888,72 @@ onBeforeUnmount(() => {
 
 .narrative-palette-text {
   font-family: "Times New Roman", Times, serif;
+}
+
+.portrait-scroll {
+  scrollbar-width: thin;
+}
+
+.retratos-hero-gifs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1rem;
+  overflow-x: visible;
+  overflow-y: visible;
+  padding-bottom: 0.35rem;
+}
+
+.retratos-hero-gif {
+  flex: 0 0 auto;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+}
+
+@media (max-width: 1180px) {
+  .retratos-hero-gifs {
+    flex-wrap: wrap;
+  }
+
+  .retratos-hero-gif-1 {
+    order: 2;
+    margin-top: 42px;
+  }
+
+  .retratos-hero-gif-2 {
+    order: 1;
+    margin-top: 0;
+  }
+
+  .retratos-hero-gif-3 {
+    order: 3;
+    margin-top: 82px;
+  }
+}
+
+@media (max-width: 860px) {
+  .retratos-hero-gifs {
+    flex-direction: column;
+    align-items: center;
+    overflow: visible;
+  }
+
+  .retratos-hero-gif-1 {
+    order: 3;
+    margin-top: 190px;
+  }
+
+  .retratos-hero-gif-2 {
+    order: 1;
+    margin-top: 0;
+  }
+
+  .retratos-hero-gif-3 {
+    order: 2;
+    margin-top: 96px;
+  }
 }
 
 @container (max-width: 1200px) {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from "vue"
+import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue"
 import { useRouter } from "vue-router"
 
 const router = useRouter()
@@ -17,13 +17,25 @@ const previewImg = "/images/Portada_essa.png"
 const coverImg = "/images/illustrator.png"
 const coverBackdropOptions = [
   "/images/páginas detalle/fotografía/3.png",
-  "/images/páginas detalle/t.png",
+  "/images/t.png",
   "/images/páginas detalle/fotografía/levis-38.png",
-  "/images/páginas detalle/ilustración/lobolopez2",
+  "/images/páginas detalle/fotografía/2.png",
+  "/images/páginas detalle/i.png",
   "/images/páginas detalle/ilustración/comiccolor.png",
+  "/images/c.png",
+  "/images/páginas detalle/fotografía/levis-42.png",
+  "/images/páginas detalle/17.png",
+  "/images/páginas detalle/ilustración/mockup página única 1.png",
+  "/images/páginas detalle/1.1.png",
+  "/images/páginas detalle/cartel_crefad.png",
+  "/images/páginas detalle/ilustración/conceptual.png",
 ]
-const coverBackdropImg =
-  coverBackdropOptions[Math.floor(Math.random() * coverBackdropOptions.length)]
+const coverBackdropIndex = ref(0)
+const coverBackdropImg = computed(
+  () => coverBackdropOptions[coverBackdropIndex.value] ?? "",
+)
+const coverBackdropIntervalMs = 5000
+let coverBackdropTimer: ReturnType<typeof setInterval> | null = null
 const role = ref("Diseñadora")
 const showCover = ref(true)
 
@@ -32,7 +44,36 @@ function dismissCover() {
 }
 
 function showCoverAgain() {
+  resetCoverBackdrop()
   showCover.value = true
+}
+
+function resetCoverBackdrop() {
+  coverBackdropIndex.value = 0
+}
+
+function setNextCoverBackdrop() {
+  if (!coverBackdropOptions.length) return
+  coverBackdropIndex.value = (coverBackdropIndex.value + 1) % coverBackdropOptions.length
+}
+
+function handleCoverBackdropError() {
+  setNextCoverBackdrop()
+}
+
+function stopCoverBackdropCycle() {
+  if (coverBackdropTimer) {
+    clearInterval(coverBackdropTimer)
+    coverBackdropTimer = null
+  }
+}
+
+function startCoverBackdropCycle() {
+  stopCoverBackdropCycle()
+  if (!coverBackdropOptions.length) return
+  coverBackdropTimer = setInterval(() => {
+    setNextCoverBackdrop()
+  }, coverBackdropIntervalMs)
 }
 
 
@@ -87,11 +128,22 @@ function updateOrientation() {
   isPortrait.value = window.innerHeight >= window.innerWidth
 }
 onMounted(() => {
+  startCoverBackdropCycle()
+  showCover.value = true
   updateOrientation()
   window.addEventListener("resize", updateOrientation)
 })
 onBeforeUnmount(() => {
+  stopCoverBackdropCycle()
   window.removeEventListener("resize", updateOrientation)
+})
+
+watch(showCover, (isVisible) => {
+  if (isVisible) {
+    startCoverBackdropCycle()
+    return
+  }
+  stopCoverBackdropCycle()
 })
 
 
@@ -105,7 +157,12 @@ const landscapeIconOn = "/orientation/landscape_azul.png"
   
   <div class="w-full min-h-svh bg-[#2f2f2f] overflow-hidden relative">
   
-    <div class="w-full min-h-svh flex items-center justify-center p-3 sm:p-6 lg:p-10 pb-24">
+    <div
+      :class="[
+        'w-full min-h-svh flex items-center justify-center',
+        showCover ? 'p-3 sm:p-6 lg:p-10' : 'p-3 sm:p-6 lg:p-10 pb-24',
+      ]"
+    >
       <div
         :class="[
           'relative w-[92vw] max-w-[1400px] h-[86svh] sm:h-[88svh] lg:h-[82svh] text-white overflow-hidden',
@@ -132,10 +189,10 @@ const landscapeIconOn = "/orientation/landscape_azul.png"
 
         
         <div
-          class="flex flex-col lg:flex-row h-[calc(86svh-40px)] sm:h-[calc(88svh-40px)] lg:h-[calc(82svh-40px)] overflow-hidden"
+          class="flex flex-col lg:flex-row h-[calc(86svh-40px)] sm:h-[calc(88svh-40px)] lg:h-[calc(82svh-40px)] overflow-y-auto lg:overflow-hidden"
         >
           
-          <div class="flex-1 p-4 sm:p-6 lg:p-8 overflow-hidden lg:overflow-y-auto">
+          <div class="flex-1 min-h-0 p-4 sm:p-6 lg:p-8 overflow-y-auto">
             
             <div class="hidden lg:block rounded-md bg-[#242424] border border-white/10 p-6 relative">
               <button
@@ -159,12 +216,12 @@ const landscapeIconOn = "/orientation/landscape_azul.png"
 
               
               <div
-                class="mt-3 rounded-md bg-[#2b2b2b] border border-white/10 p-2 sm:p-4 h-[55svh] lg:h-auto flex items-center justify-center"
+                class="mt-3 rounded-md bg-[#2b2b2b] border border-white/10 p-2 sm:p-4 flex items-center justify-center"
               >
                 <img
                   :src="previewImg"
                   alt="Preview"
-                  class="max-h-full w-full h-full object-contain"
+                  class="block h-auto w-full max-h-[48svh] sm:max-h-[54svh] lg:max-h-[70svh] object-contain"
                   draggable="false"
                 />
               </div>
@@ -371,29 +428,29 @@ const landscapeIconOn = "/orientation/landscape_azul.png"
         <button
           v-if="showCover"
           type="button"
-          class="absolute inset-0 z-[200] relative flex items-center justify-center cursor-pointer"
+          class="fixed inset-0 z-300 flex items-center justify-center cursor-pointer"
           @click="dismissCover"
           aria-label="Quitar portada"
         >
-          <div
-            class="absolute right-3 top-10 bottom-[4.25rem] w-[68%] sm:w-[62%] md:w-[56%] max-w-[520px] rounded-xl overflow-hidden"
-          >
+          <div class="relative inline-block">
+            <div
+              class="pointer-events-none absolute right-[2%] top-[7%] bottom-[8.5%] w-[64%] rounded-xl overflow-hidden"
+            >
+              <img
+                :src="coverBackdropImg"
+                alt="Fondo portada"
+                class="absolute inset-0 h-full w-full object-cover"
+                @error="handleCoverBackdropError"
+                draggable="false"
+              />
+            </div>
             <img
-              v-for="img in coverBackdropOptions"
-              :key="img"
-              :src="img"
-              alt="Fondo portada"
-              class="absolute inset-0 h-full w-full object-cover transition-opacity duration-200"
-              :class="img === coverBackdropImg ? 'opacity-100' : 'opacity-0'"
+              :src="coverImg"
+              alt="Portada"
+              class="relative z-10 block h-auto w-auto max-h-[86svh] max-w-[92vw] object-contain"
               draggable="false"
             />
           </div>
-          <img
-            :src="coverImg"
-            alt="Portada"
-            class="relative z-10 block h-auto w-auto max-h-full max-w-full object-contain"
-            draggable="false"
-          />
         </button>
       </div>
     </div>
