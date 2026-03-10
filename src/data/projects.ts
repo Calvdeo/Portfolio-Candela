@@ -20,15 +20,16 @@ export const projects: Project[] = [
     description: "Exploracion tipografica con palabras grandes y pegatinas interactivas.",
     cover: "/images/Portada_essa.png",
   },
-  {
-    slug: "Avaricia",
-    title: "Avaricia",
+   {
+    slug: "Esto no son postales",
+    title: "Esto no son postales",
     category: "diseño",
-    year: "2026",
-    tags: ["cartel", "obra de teatro"],
-    description: "Cartel de una obra de teatro",
-    cover: "/images/páginas detalle/avaricia.png",
+    year: "2025",
+    tags: ["cartel", "recorte"],
+    description: "Postales de arte conquense",
+    cover: "/images/páginas detalle/saura.png",
   },
+  
    {
     slug: "Packaging",
     title: "Packaging de chocolates",
@@ -47,6 +48,15 @@ export const projects: Project[] = [
     description: "Cartel promocional con enfoque tipografico y composicion.",
     cover: "/images/páginas detalle/cartel_crefad.png",
   },
+  {
+    slug: "Avaricia",
+    title: "Avaricia",
+    category: "diseño",
+    year: "2026",
+    tags: ["cartel", "obra de teatro"],
+    description: "Cartel de una obra de teatro",
+    cover: "/images/páginas detalle/avaricia.png",
+  },
    
    {
     slug: "Feminismo",
@@ -57,6 +67,7 @@ export const projects: Project[] = [
     description: "Cartel feminista de una filósofa",
     cover: "/images/páginas detalle/feminism.png",
   },
+  
   
    
    

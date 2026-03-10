@@ -3,6 +3,8 @@ import { Instagram, Mail, MapPin, Phone } from "lucide-vue-next"
 
 const INSTAGRAM_URL = "https://instagram.com/yonosoyessa.tiff"
 const BEHANCE_URL = "https://www.behance.net/eladeobesso"
+const PHONE_NUMBER = "686275626"
+const EMAIL_ADDRESS = "yonosoyessa.jpg@gmail.com"
 </script>
 
 <template>
@@ -11,14 +13,22 @@ const BEHANCE_URL = "https://www.behance.net/eladeobesso"
       <div class="space-y-4 text-center md:text-left">
         <h3 class="text-xl font-bold text-white">Informacion de Contacto</h3>
         <div class="space-y-2">
-          <p class="flex items-center gap-2 justify-center md:justify-start">
+          <a
+            :href="`tel:${PHONE_NUMBER}`"
+            class="contact-link flex items-center gap-2 justify-center md:justify-start"
+            aria-label="Llamar por teléfono"
+          >
             <Phone class="w-5 h-5" />
-            +34 600 123 456
-          </p>
-          <p class="flex items-center gap-2 justify-center md:justify-start">
+            {{ PHONE_NUMBER }}
+          </a>
+          <a
+            :href="`mailto:${EMAIL_ADDRESS}`"
+            class="contact-link flex items-center gap-2 justify-center md:justify-start"
+            aria-label="Enviar correo electrónico"
+          >
             <Mail class="w-5 h-5" />
-            yonosoyessa.jpg@gmail.com
-          </p>
+            {{ EMAIL_ADDRESS }}
+          </a>
           <p class="flex items-center gap-2 justify-center md:justify-start">
             <MapPin class="w-5 h-5" />
             Valencia, Espana
@@ -75,6 +85,16 @@ const BEHANCE_URL = "https://www.behance.net/eladeobesso"
   justify-content: center;
   color: #9ca3af;
   transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.contact-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.contact-link:hover {
+  color: #ffffff;
 }
 
 .social-link:hover {

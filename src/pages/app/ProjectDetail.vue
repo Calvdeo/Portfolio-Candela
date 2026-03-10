@@ -24,11 +24,22 @@ const backToProjectsPath = computed(() => {
 const is36Days = computed(() => project.value?.slug === "branding-yonosoyessa")
 const isAvariciaProject = computed(() => project.value?.slug === "Avaricia")
 const isCartelCrefad = computed(() => project.value?.slug === "cartel Crefad")
+const isPostalesProject = computed(() => project.value?.slug === "Esto no son postales")
+const isIllustrationVectorialProject = computed(() => {
+  const slug = (project.value?.slug ?? "").toLowerCase()
+  const title = (project.value?.title ?? "").toLowerCase()
+  return slug.includes("vectorial") || title.includes("vectorial")
+})
 const isPackagingProject = computed(() => project.value?.slug === "Packaging")
 const isLevisProject = computed(() => project.value?.slug === "Le-vis")
 const isRetratosProject = computed(() => project.value?.slug === "Retratos")
 const isCreatedHumanProject = computed(() => project.value?.slug === "Creado por inteligencia humana")
 const isIllustrationConceptual = computed(() => project.value?.slug === "Ilustración conceptual")
+const isIllustrationRelatoProject = computed(() => {
+  const slug = (project.value?.slug ?? "").toLowerCase()
+  const title = (project.value?.title ?? "").toLowerCase()
+  return slug.includes("relato") || title.includes("relato") || title.includes("tus pies")
+})
 const isFeminismoProject = computed(() => project.value?.slug === "Feminismo")
 const isOlimpiadaFilosoficaProject = computed(() => {
   const slug = (project.value?.slug ?? "").toLowerCase()
@@ -59,13 +70,12 @@ const isLoboLopezProject = computed(() => {
   return slug.includes("lobo") || title.includes("lobo")
 })
 const hasFullGrayBackground = computed(() =>
-  isIllustrationConceptual.value ||
   isIllustrationNarrative.value ||
   isComicProject.value ||
   isLoboLopezProject.value,
 )
 const avariciaProcessText =
-  "Iniciamos con el concepto de las joyas, como variación utilizamos el escaner que nos dejaba jugar con la forma, así fuimos construyendo composiciones hasta llegar a al indicada, estos son algunos ejemplos de las pruebas que se hicieron."
+  "Iniciamos con el concepto de las joyas, como variación utilizamos el escaner que nos dejaba jugar con la forma, así fuimos construyendo composiciones hasta llegar a la indicada, estos son algunos ejemplos de las pruebas que se hicieron:"
 const avariciaProcessImages = [
   { src: "/images/páginas detalle/edicion.png", alt: "Proceso Avaricia 1", position: "left top" },
   { src: "/images/páginas detalle/avaricia1.png", alt: "Proceso Avaricia 1", position: "left top" },
@@ -164,6 +174,46 @@ const illustrationConceptualBottomText =
 const illustrationConceptualSecondImage =
   "/images/páginas detalle/ilustración/conceptual1.png"
 const illustrationConceptualWatercolorText = "Ilustraciones en acuarela."
+const relatoTusPiesTitle = "Tus pies"
+const relatoTusPiesText = `Eran las fiestas del pueblo, Don Cebrián, el rico del pueblo se preparaba para sermonearnos sobre moral y patria. Las fuerzas vivas se habían situado al lado del escenario, el cura, los guardias y padre, el maestro. El médico no había podido asistir que andaba atendiendo un parto de gemelos en una aldea cercana. El Don siempre sudoroso, llevaba un papel manoseado con el discurso que le habría confeccionado su hija, él no sería capaz de hilar dos frases seguidas. Un cuerpo desagradable, una cara de torta manteca y que hablar de sus pies y de sus andares, me contó padre que le apodaban el diez pero eso era antes de la guerra, ahora ya nadie se atreve, es muy poderoso y miserable. De los presentes en la plaza contaría con los dedos de una sola mano los que le guardan fidelidad, que no simpatía. Los demás sólo miedo.
+Dicen que maltrató sin piedad a los que pensaban distinto al régimen y esos eran la mitad del pueblo, yo creo que disfruta amedrentando a todos. Le observé cómo se echaba un puñado de chufas al gaznate, el muy bestia y comenzó a subir al escenario. Permaneció inmóvil un buen rato en el primer escalón, cuando se giró hacia nosotros, el rostro ya había tornado hacia un extraño color, era obvio que le faltaba el aire, nadie movía un dedo, la plaza entera también aguantaba el aliento. En la cara de muchos podía entreverse gozo al presenciar su sufrimiento. Se le deseaba mal, el cura se santiguó, el guardia se echó las manos a la cabeza, sólo padre, como siempre intachable, venció su antipatía y corrió a socorrerle, le apretó por la espalda y le propinó un golpe seco bajo las costillas, el fruto homicida dibujó un parábola desde la boca y cayó sobre la cabeza de su señora que no sonreía aliviada. El rostro recobró su color natural, aún con restos de una papilla blanquecina miró incrédulo creerlo a padre y se abalanzó hacia él en un tremendo abrazo. Todos fuimos testigos de su promesa:
+Pídeme lo que quieras y te lo daré.
+Padre improvisó la demanda, en un instante sopesó las repercusiones que podría tener cualquier favor de bien material, el mezquino faltaría sin duda a su palabra, por no hablar de las envidias que levantaría en estos tiempos de tanta necesidad. Replicó astuto y veloz:
+Desearía que donara a la escuela los ejemplares de su biblioteca que ya no usen y que tengamos mi hijo y yo acceso a todos los libros que necesitemos consultar en la casa grande.
+Madre que habría fantaseado una renta de por vida, tornó los párpados consciente que habían dejado pasar la única oportunidad que la vida les había puesto de poseer algo, al mismo tiempo dibujó una sonrisa de orgullo y respeto para con el hombre que adoraba. Yo me froté las manos porque leería algo distinto a los cuatro maltrechos ejemplares que me conocía de cabo a rabo. En aquel instante no podía imaginar el alcance que esa prebenda aportaría a mi vida en muy poco tiempo. El avaro lo concedió de inmediato, frotándose las manos y pensando lo necio que era padre y el buen trato que había hecho a cambio de su vida. Recién vuelto a la vida, subió al escenario y embriagado por la alegría y el poco gasto que había hecho padre, aplaudió a todo el pueblo y ordenó traer vino a discreción para todos los presentes. La concesión inesperada y la pobre recompensa que mi padre conseguía por la hazaña, aminoraron los recelos por haber salvado a semejante figura de un trance seguro.
+
+Así fue como consiguió, cuando nadie tenía acceso a nada y muchos casi ni para comer, alimento para la mente como él lo llamaba, lectura infinita, que el amantísimo padre aprovisionaba cómo fuera menester para satisfacer los gustos de la tímida y bella Aurora, rara avis, única descendencia y heredera de tal fortuna, que consumía sus días encerrada y entregada al estudio y la lectura. La única persona del pueblo a la que jamás vi los pies.
+
+El destino quiso que no tardara ni dos años en cambiar la escuela por las ovejas. Padre nos dejó por una tuberculosis y madre cuatro meses tardó en reunirse con él, ella por brucelosis, dijeron que era por estar rodeada de animales, nunca lo creí, se fue con padre porque lo echábamos tanto de menos. Yo decidí quedarme, tenía la esperanza de vivir algo de lo que leía en los libros. Los meses que estuve solo con madre sobrevivimos por la caridad, en el pueblo padre era muy querido y respetado, todos le debían algún favor. Yo para entonces gastaba once años, abandoné mi último año de escuela. Cuando se fueron los dos quedé a cuidado de un tío, aunque yo no necesitaba a nadie porque ya era todo un hombre, fuerte y además bien parecido, aunque me esté mal decirlo. Las mozas se fijaban en mí y de vez en cuando conseguía sus favores en la era. Mi mayor ocupación eran las ovejas y los libros que iba a buscar una vez por semana a la casa grande. Aunque me esmeré en el encuentro nunca logré acceder a Aurora.
+Absorbía todo lo que caía en mis manos y aprendía términos y conceptos que en el pueblo nadie conocía, la gente empezó a consultarme cuando tenía que hacer gestiones, que hasta el cura me pidió le ayudara con una redacción para la diócesis. Tardé tres meses en leerme el diccionario enciclopédico hispanoaméricano de literatura, ciencias y arte. Memorizaba y hacia resúmenes, sabía que esta sería la única educación a la que tendría acceso. Ni loco me quedaría en el pueblo, padre y madre estarían orgullosos de mí.
+En largas horas de pastoreo repasaba los apuntes, también tenía tiempo para quedar absorto en mis pensamientos, observaba los dedos gordos de los pies, tumbado a la fresca mientras las ovejas rumiaban a mi alrededor, podía permanecer fijo en ellos durante mucho tiempo, siempre han sido la parte de mi cuerpo de la que he estado más orgullosos. Es una pena que no los llevemos siempre al aire, no se conoce bien a una persona hasta que no se le ven los pies, en verano cuando por fin salen a la luz, constato el motivo de mis aversiones y también de mis simpatías. Cogía los libros que imaginaba que Aurora habría leído y acariciado, en esa selección conocí Nada, La familia de Pascual Duarte, La sombra del ciprés es alargada, Las inquietudes de Santi Andía. Leí aventuras de Robinson Crusoe, La isla del tesoro, los viajes de Gulliver y otras consideradas obras maestras de la literatura como la Iliada, la Odisea, el Quijote, la divina comedia.
+
+Al campo no llevaba los libros, demasiado preciosos para que ocurriera algún percance, los criados me los hacían forrar antes de llevármelos y los mimaba porque no quería que el gañán encontrara ninguna falta para anular mis privilegios. En las siestas paladeaba gustosamente las páginas aprendidas, soñándome Odiseo cegando al cíclope o luchando en el país de los cícones o disfrutando de la bella Calipso. La búsqueda de mi dama siempre fue una tarea prioritaria, madre así lo hubiera deseado.
+Me fui generando buena prensa, así que unos años más tarde mi tío y otro señor que tenía en gran estima a padre, me consiguieron un empleo en la capital, así me planté en la ciudad, mozo de una clínica de cuidados del pie, el trabajo estaba hecho a mi medida. Un sueño realizado, nunca encontré en la gran casa y mira que busqué, libros que se refirieran a los pies, cuando accedía a la clínica y observé todas aquellas láminas y fotografías dedicadas a nuestros miembros podales supe que había logrado algo importante en la vida, pero aún quería más, eso sólo sería el comienzo y también estaba lo de buscar esposa. Memoricé sin ningún esfuerzo todo lo que allí se presentaba. Veintiséis huesos, diecinueve músculos, treinta y tres articulaciones, más de cien tendones conforman esas máquinas perfectas que nos llevan a cuestas toda una vida.
+Mis tareas eran de lo más variado, lo mismo recogía encargos en correos, que desatascaba cañerías, arreglaba grifos, podaba árboles, limpiaba material, mi buena disposición y mi buen arreglo hizo que me cogieran cariño la mayoría de los que allí trabajaban. Me invitaban a sus casas, a las celebraciones, bodas, bautizos, días de navidad, volví a convertirme en obra de caridad, no me importaba, nunca fui orgulloso, acompañaba a todos, observaba, escuchaba y callaba, todo iba bien. Cada vez me permitieron permanecer más cerca de las consultas y de los pacientes, siempre he sido muy buen escuchante, se aprende más que hablando y a la gente le agrada que le prestes oídos. En poco tiempo, me ascendieron de rango, un ayudante del practicante se rompió el brazo, en el descenso de la cucaña de las fiestas de su pueblo, cuando ya estaba casi abajo perdió el equilibrio y aterrizó sobre la mano, con tan mala fortuna que se le quebró el radio y le atravesó la carne, mala cosa, no se sabe si volverá a moverlo. Lo que es una desgracia para unos se convierte en la suerte para otros, así es la vida.
+
+Llevo más de tres años en la clínica, he leído todos los libros que hay aquí, voy a la biblioteca pública que no queda lejos cada mediodía. Aún pienso en Aurora, en sus libros, en que nunca le vi los pies. Si progreso quizá pudiera ir a visitarla con cualquier excusa. Nunca pregunté por ella, un pastor no podría pensar ni siquiera en hablar con la señorita. Por la noche cuando se cierra la clínica y me retiro a la habitación que han habilitado para mí leo, leo y leo aún más. Aún no tengo dinero para comprarme mis propios ejemplares, tendría que dejar de comer para ello, recuerdo a madre y me nutro lo mejor que puedo, ya tendré mi propia colección cuando progrese. Hoy Gutiérrez, el contable de la clínica, me ha regalado unos zapatos, dice que son carísimos, de piel de vacuno, no aguanta llevarlos porque se los compró pequeños, eran una ganga. Es mi primer par de zapatos y aunque llevo los dedos un tanto apretados, tengo la esperanza que cedan y sienta menos dolor.
+Desde que trabajo aquí mi teoría sobre la categorización de los pies está tomando cuerpo. En cuanto los veo acceder a la salita, imagino sus dedos, existe una conexión nariz-pie, lo sé, la forma de su nariz, rara vez me equivoco, en ningún libro he encontrado algo que demuestre mi teoría, pero para mí es un hecho que se constata día tras día. Los de aguileña suelen tener unos dedos finos y delgados que pareciera que la naturaleza compensara lo que lucen en el rostro, sin embargo, las personas más bellas y atractivas en las que la nariz luce en armonía con el resto de su ser, suelen padecer juanetes o durezas o dolencias aún peores, en las féminas entiendo que puede ser de calzar tacón, pero en los caballeros no llego a comprender la razón. Las narices respingonas siempre me generan duda, el setenta por ciento de las veces corresponden a pies de horma ancha y dedos rechonchos, pero hay un treinta por ciento que tiene unos pies propios de modelo, no supe que esa profesión existía hasta que vi un cartel en el tablón de anuncios de la clínica. En cuanto a las personas que tienen pies griegos, a mí personalmente nunca me gustaron, como la Venus de Milo, nunca he comprendido que fuera un ideal de belleza, no me parece gran cosa, poco pecho, poca cadera, aspecto lánguido y pies horribles, con el segundo dedo más largo que el pulgar, poca hembra para mí.
+El cabello nada tiene que ver con los pies, en ese aspecto nada que aportar, sobre el color poco puedo analizar, pocos clientes rubios y pelirrojos se arriman aquí, pero sí he constatado que el rizo, o el encrespamiento no guarda ninguna relación con la morfología de nuestras andanzas.
+Mi vida estos dos años en la clínica ha sido buena, he aprendido un oficio, los practicantes ya confían en mí y cada vez me encargan trabajos más delicados, conozco el trabajo y soy bastante ducho en cumplirlo, pero necesito sacarme un título si quiero progresar y ejercer como practicante, mis elucubraciones sobre la nariz y los pies no creo que me ayuden, pero todos los libros leídos y los apuntes que me he podido confeccionar me vendrán de perlas para los exámenes. He ahorrado lo suficiente, para esto sí tuve que comer pan y patatas más de un mes seguido.
+Entre tanto también he dedicado tiempo a otros placeres, que la vida es algo más que arcos plantares y uñas encarnadas. Pasaron por mi vida numerosas muchachas, en ninguna de ellas encontré la perfección podal que busco, así que sigo yendo de flor en flor sin comprometer mi futuro.
+Por fin tengo el título que me permite ejercer como practicante, voy a pedir un crédito que emplearé en hacerme unas tarjetas y vestimenta elegantes: Don Ceferino Gutiérrez. Practicante y callista. Lo de pinchar no me seduce mucho, los traseros no son de mi agrado, pero no le voy a hacer ascos a nada por el momento, más adelante ya veremos.
+Tras unos meses de paciencia el negocio de callista a domicilio fue cogiendo ritmo, recorro la calle Serrano y aledañas disponiendo mis servicios. El boca a boca hace crecer mi agenda de clientes y calculo que en un año habré saldado mi crédito y podré empezar a ahorrar. Fue buena idea encargar las tarjetas en la imprenta García, las tarjetas más caras de todo Madrid. El traje fue también una gran inversión, me lo dijo José Yusty, un chico, que conocí como paciente, y que ha empezado a hacer trajes en un pequeño local de la calle Campoamor, un negociante. Hicimos un trueque, un traje por visitas para él y su familia, creo que a la larga he salido ganando, estoy hecho un señor, aunque sé que es de la tela más barata de la tienda, me ha dejado como un pincel, este Yusty sabe lo que se hace, llegará lejos.
+Va para siete años que visito a domicilio. Tengo una sustanciosa cuenta en el banco y dos trajes de telas un poco menos baratas. Esta tarde será mi última visita, he alquilado un pisito y dedicaré una habitación a recibir. Habré de darme prisa que una joven me espera en el piso esta noche y aunque ambos sabemos para qué es nuestra cita, soy un caballero y la puntualidad no debe faltar. Accedo al portal de la casa de un médico, me ha llamado por su hija, parece que la niña se queja de un dolor tremendo al calzarse y dice que no puede casi caminar. Un portero con cara remilgada me interroga por el objeto de mi visita y el piso al que me dirijo, al conocer los datos de mi cita parece cambiar a un tono más amable y me indica donde se encuentra el ascensor, supongo que el cambio de actitud se debe a quien voy a visitar y por supuesto es ajeno a mi persona. Mi traje no le ha impresionado, gasta malas pulgas, seguro que tiene dedos en garra, como si lo viera, con la de tiempo que tendrá ahí sentado que podría leerse un libro al día. Elijo subir a pie, son tres pisos y debo hacer algún ejercicio que estoy cogiendo peso y el pantalón me está cada vez más ajustado, no quiero tener que llevarlo a arreglar y tampoco dejar de gustar a las féminas, qué caray, que uno también tiene su punto coqueto.
+En la puerta una sirvienta me hace pasar a la sala, en la que parece voy a ejecutar mi visita, pido acceder al baño con el fin de lavar mis manos, acción que sé que gusta mucho a todos los pacientes, me visto la bata blanca por la misma razón y espero que alguien venga a la sala con la niña. Me están haciendo esperar, empiezo a impacientarme, dedico mi tiempo a recorrer este saloncito decorado con muebles de nogal oscuros y presidido por dos retratos medianos, uno en el que reconozco al doctor y en el segundo una bella mujer, debe tratarse de su esposa, ¿cómo serán los pies de esta delicada dama? En esto me entretengo cuando al fin se abre la puerta y aparece ella. Me ha sorprendido estudiando fijamente el retrato, tiene su mismo semblante, casi logro balbucear dos palabras, no la escucho, me transporto a mis tiempos de pastor, soñando bajo las encinas con doncellas imaginarias, Calipso, Odiseo, felices ovejas saltando alrededor de una higuera.
+Buenos días, ¿mi padre le ha puesto al día del dolor que padezco al calzarme?
+Vuelvo en sí y caigo en que además de poder admirar la delicada faz que tengo ante mí, podré ver sus pies en unos instantes lo que me resulta aún más excitante, podré tocarlos. Un fuego atraviesa mis partes pudendas y colorea mis mejillas de rojo bermellón, me recompongo y logro despegar mis labios.
+Por supuesto señorita, acomódese, veremos cuál es su problema y buscaremos una solución.
+Hablo en mayestático que parezca que soy importante y puedo complacerle en todo lo que disponga. Sé que eso les gusta a las damas.
+Me noto nervioso, debo calmarme o seré incapaz de sujetar el instrumental. Se está descalzando y ha colocado su divino pie sobre la toalla blanca del soporte que siempre dispongo para estos menesteres. Voy a desfallecer ante tanto deleite, me giro para coger aliento y hago como si ordenara algo en el maletín en el que aparecen mis iniciales, en realidad intento sujetar mi inquietud por tocar esos primorosos dedos y mostrarle que uno tiene posibles. No cumple ninguna de las reglas que yo había formado en mi cabeza en cuanto a conjunción de nariz y pie. Unos pies sin mácula, ausencia de alteraciones en la piel, altura plantar media, equilibrio metatarsal, dedos alineados, arcos medial y lateral bien conformados, diría que hasta coincide su eje longitudinal con el de la tibia y el peroné.
+No miro sus ojos, quién quiere sus pupilas si ha confiado su mayor belleza a mis manos, me centro en examinar el dedo que parece magullado por algún zapato que ha osado maltratarlo. Detengo el tiempo todo lo puedo examinando cada detalle del delicado tesoro que sostengo. Intento explicarle que el pie está bien, que la dolencia es puntual y que algún calzado ha debido causarle mal. Me gustaría recitarle Tus pies de Neruda o directamente pedirle matrimonio. La doncella me dijo que la señorita se llama Dulce, yo imaginaba que entraría una pequeña risueña y he encontrado a mi Dulcinea personificada. Me invento la necesidad de una pomada que puedo acercarle en el momento que ella desee.
+Continúo embelesado, insisto en no cobrarle mis servicios, será mi futura esposa, no quiero dinero sino una cita, me mira con rubor, creo que también le gusto. Ojalá vuelva a ponerse esos malditos zapatos para que necesite de una segunda visita y una tercera. Me veo desfilando ante el altar. Me ruborizo de nuevo rememorando el tacto de sus pies.
+A mi pesar no puedo demorar más mi marcha. La cita, tengo que llamar a Carmencita, he de anular lo de esta noche, mis manos han tocado el cielo y no quiero volver a tocar a ninguna mujer que no sea ella. Mi vida ha encontrado lo que me faltaba para completarme. Tantos años buscando esos pies. Ya no me importa no haberle visto los pies a Aurora, no pueden existir unos más bellos que los que hoy he descubierto. Mamá es ella, la buena mujer que decías encontraría cómo tú encontraste a padre.
+He de encargar mañana una fórmula magistral para la mujer de mi vida, será una compañera ideal, debo trazar un plan para cortejarla y también aprovechar la cercanía que tengo con el doctor para hablarle de mis intenciones para con ella, debo seducirla con elegancia, quizá deba enviar la pomada con algún muchacho y una nota, pero si es así no la volveré a ver, anhelo tanto ese momento, decidido llevaré en persona la pomada y cuando pasen unos días le enviaré una nota con algún mensajero preguntándole si ha notado mejoría y estableciendo una segunda consulta, con su inteligencia entenderá que esto nada tiene que ver con enfermedades sino con nosotros dos. Estoy seguro de que ella también se ha fijado en mí, tanta timidez y recato, ella siente lo mismo que yo. Tendré que dejar que el tiempo haga el resto, aunque no querría demorar mucho la boda, pediré un crédito y recorreremos el mundo.
+Voy a comprarme un bocadillo y disfrutaré de una copa de vino mientras hojeo el periódico del día en casa y perfilo la estrategia para los próximos días.
+Un poco menos alterado y con el estómago lleno, termino en el sofá de mi escueto apartamento mientras abro el periódico, me gusta comenzarlo por las últimas páginas, es una manía, los grandes titulares los dejo para el final y me entretengo con la crónica social y los chismes de sociedad que aparecen en las últimas páginas. Me quedo de piedra, una noticia y una fotografía acompañándola, el joven heredero de la fortuna de los Cantahueso se promete con la señorita Dulce Marañón Cifuentes, hija del reputado doctor Don Gerardo Marañón, hace unos días se celebró la pedida de mano en...
+Mi vida ya no tiene sentido.
+Debo buscar a Aurora.`
 const illustrationNarrativePalette = [
   {
     color: "#8a8d91",
@@ -201,6 +251,9 @@ const illustrationNarrativeText =
   "Proyecto de ilustración narrativa inspirado en La ladrona de libros. Se encargaro una doble página, dos páginas individuales, portada y contraportada. Como plus y atendiendo a las necesidades del texto decidí ilustrar un libro narrado dentro de la propia historia."
 const comicColorImage = "/images/p%C3%A1ginas%20detalle/ilustración/comiccolor.png"
 const comicBlackImage = "/images/p%C3%A1ginas%20detalle/ilustración/comicnegro.png"
+const feminismoHoverImage = "/images/páginas detalle/feminism1.png"
+const relatoPiesImage = "/images/páginas detalle/ilustración/pies.png"
+const relatoOvejaImage = "/images/páginas detalle/ilustración/oveja.png"
 const comicSequentialCharactersImage =
   "/images/p%C3%A1ginas%20detalle/ilustración/personajesecuencial.png"
 const comicBottomText =
@@ -210,6 +263,67 @@ const loboPlayerCover = "/images/páginas detalle/ilustración/kikoveneno.png"
 const loboPlayerCoverHover = "/images/páginas detalle/ilustración/lobolopez2.png"
 const loboBottomText =
   "Ilustración por amor a una canción, al igual que el Lobo López, yo también tenía que decir que echaba de emnos hacer ilustraciones solo para mí"
+const postalesCoverArtwork = "/images/páginas detalle/saura.png"
+const postalesCoverPostcard = "/images/páginas detalle/saura2.png"
+const postalesIntroText = `Colección de robos, reinterpretación de las reinterpretaciones de las
+interpretaciones del arte de mi ciudad, Cuenca, la ciudad donde prima el arte
+abstracto de la mano del grupo El paso, entre otros y la gran figura de
+Fernando Zóbel en el Museo de Arte Abstracto Español. O donde el arte casual
+se esfuerza en subir las cuestas hasta la fundación Antonio Pérez.
+Esta colección es aquello que define nuestro arte.
+Es una visión de Cuenca.
+Es mi visión de Cuenca.`
+const vectorialSpotifyUrl = "https://www.youtube.com/watch?v=h6k5qbt72Os&t=1s"
+const vectorialPlayerCover = "/images/páginas detalle/ilustración/yosoycani.png"
+
+type PostalesGalleryPiece = {
+  id: string
+  title: string
+  subtitle: string
+  front: string
+  hover: string
+  layoutClass: string
+  tiltClass: string
+}
+
+const postalesGalleryPieces: PostalesGalleryPiece[] = [
+  {
+    id: "fundacion",
+    title: "Fundación Antonio Pérez",
+    subtitle: "Logotipo reinterpretado",
+    front: "/images/páginas detalle/fundación1.png",
+    hover: "/images/páginas detalle/fundación2.png",
+    layoutClass: "md:col-span-2",
+    tiltClass: "rotate-[2deg]",
+  },
+  {
+    id: "chillida",
+    title: "Eduardo Chillida",
+    subtitle: "Abesti gogorra IV",
+    front: "/images/páginas detalle/silla.png",
+    hover: "/images/páginas detalle/silla2.png",
+    layoutClass: "md:col-span-2",
+    tiltClass: "rotate-[1.6deg]",
+  },
+  {
+    id: "zobel",
+    title: "Fernando Zóbel",
+    subtitle: "Ornitóptero (1962)",
+    front: "/images/páginas detalle/zobel.png",
+    hover: "/images/páginas detalle/zobel2.png",
+    layoutClass: "md:col-span-2",
+    tiltClass: "rotate-[-1.8deg]",
+  },
+  {
+    id: "objeto",
+    title: "Objeto encontrado",
+    subtitle: "Colección de objetos encontrados",
+    front: "/images/páginas detalle/piedra2.png",
+    hover: "/images/páginas detalle/piedra2.png",
+    layoutClass: "md:col-span-2",
+    tiltClass: "rotate-[1.2deg]",
+  },
+]
 const olimpiadaGanadoraImage = "/images/páginas detalle/ganadora.png"
 const cartelGalleryBasePath = "/images/páginas detalle"
 const cartelGalleryPhotos = [
@@ -307,6 +421,8 @@ type NarrativeTabKey = "color" | "characters"
 const activeFruit = ref<FruitKey>("apple-red")
 const activeNarrativeTab = ref<NarrativeTabKey>("color")
 const comicHover = ref(false)
+const feminismoCoverHover = ref(false)
+const relatoCoverHover = ref(false)
 const loboCoverHover = ref(false)
 const fruitPhotoSection = ref<HTMLElement | null>(null)
 
@@ -517,7 +633,11 @@ onBeforeUnmount(() => {
         </div>
       </div>
 
-      <div v-else class="border overflow-hidden bg-muted/20">
+      <div
+        v-else
+        class="border overflow-visible"
+        :class="isIllustrationConceptual ? 'bg-white' : 'bg-muted/20'"
+      >
         <template v-if="isAvariciaProject">
           <div class="bg-background px-4 sm:px-6 pt-0 pb-4 sm:pb-6 -mt-12 sm:-mt-16 lg:-mt-20">
             <div class="min-h-[86svh] flex flex-col gap-6 lg:flex-row lg:items-end">
@@ -575,17 +695,30 @@ onBeforeUnmount(() => {
           </div>
         </template>
         <template v-else-if="isFeminismoProject">
-          <div class="bg-background p-4 sm:p-6 space-y-4">
-            <img
-              :src="project?.cover || ''"
-              :alt="project ? `Portada ${project.title}` : 'Portada Feminismo'"
-              class="w-full max-h-[86vh] object-contain bg-muted/20"
-              loading="lazy"
-            />
+          <div class="bg-background p-4 sm:p-6">
+            <div class="flex flex-col md:flex-row gap-4 md:gap-5">
+              <div
+                class="w-full md:flex-1"
+                @mouseenter="feminismoCoverHover = true"
+                @mouseleave="feminismoCoverHover = false"
+              >
+                <img
+                  :src="feminismoCoverHover ? feminismoHoverImage : (project?.cover || '')"
+                  :alt="feminismoCoverHover ? 'Portada alternativa Feminismo' : (project ? `Portada ${project.title}` : 'Portada Feminismo')"
+                  class="w-full max-h-[86vh] object-contain object-left md:mr-auto bg-muted/20"
+                  loading="lazy"
+                />
+              </div>
 
-            <p class="mx-auto max-w-4xl text-sm sm:text-base text-muted-foreground leading-relaxed">
-              {{ project?.description }}
-            </p>
+              <div class="md:w-[34%] md:min-w-[220px] md:flex md:flex-col md:items-end">
+                <p class="crefad-copy text-xs sm:text-sm leading-relaxed text-muted-foreground md:text-right">
+                  Mary Wollstonecraft fue una escritora y filósofa inglesa. Considerada una figura destacada del mundo moderno. luego, su hija, Mary Shelley debutó con Frankestein.
+                </p>
+                <h3 class="mt-4 md:mt-auto avaricia-title text-right text-[clamp(3.6rem,9.2vw,7.8rem)] leading-[0.82] text-black/90">
+                  {{ project?.title ?? "Feminismo" }}
+                </h3>
+              </div>
+            </div>
           </div>
         </template>
         <template v-else-if="isOlimpiadaFilosoficaProject">
@@ -625,9 +758,14 @@ onBeforeUnmount(() => {
                 preload="metadata"
                 aria-label="Animacion Cartel Crefad"
               />
-              <p class="md:w-[34%] md:min-w-[220px] text-xs sm:text-sm leading-relaxed text-muted-foreground">
-                {{ cartelCrefadText }}
-              </p>
+              <div class="md:w-[34%] md:min-w-[220px] md:flex md:flex-col md:items-end">
+                <p class="crefad-copy text-xs sm:text-sm leading-relaxed text-muted-foreground md:text-right">
+                  {{ cartelCrefadText }}
+                </p>
+                <h3 class="mt-4 md:mt-auto avaricia-title text-right text-[clamp(4.8rem,12vw,10.8rem)] leading-[0.8] text-black/90">
+                  {{ project?.title ?? "Cartel Crefad" }}
+                </h3>
+              </div>
             </div>
 
             <div class="space-y-3">
@@ -668,6 +806,150 @@ onBeforeUnmount(() => {
                   :aria-label="`Ir a imagen ${index + 1}`"
                   @click="goToCartelImage(index)"
                 />
+              </div>
+            </div>
+          </div>
+        </template>
+        <template v-else-if="isPostalesProject">
+          <div class="bg-background p-4 sm:p-6 space-y-6">
+            <section class="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-5 sm:gap-6 items-end">
+              <div class="space-y-3 max-w-2xl">
+                <p class="text-sm sm:text-base text-black/75 leading-relaxed whitespace-pre-line">
+                  {{ postalesIntroText }}
+                </p>
+                <h2 class="avaricia-title text-[clamp(3rem,8vw,6.4rem)] leading-[0.86] tracking-tight">
+                  Esto no son postales
+                </h2>
+              </div>
+
+              <div class="group relative mx-auto w-full max-w-[360px] sm:max-w-[430px]">
+                <div class="postales-cover-frame">
+                  <img
+                    :src="postalesCoverArtwork"
+                    alt="Obra de Saura"
+                    class="postales-switch-front"
+                    loading="lazy"
+                  />
+                  <img
+                    :src="postalesCoverPostcard"
+                    alt="Postal de Saura"
+                    class="postales-switch-hover"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </section>
+
+            <section class="rounded-2xl border border-black/15 bg-[#ececec] p-4 sm:p-6">
+              <p class="text-xs sm:text-sm text-black/70">
+               
+              </p>
+
+              <div class="mt-5 grid grid-cols-1 md:grid-cols-4 gap-4 sm:gap-5">
+                <article
+                  v-for="piece in postalesGalleryPieces"
+                  :key="piece.id"
+                  class="postales-piece group relative rounded-2xl border border-black/20 bg-white p-3 sm:p-4 shadow-[0_10px_22px_rgba(0,0,0,0.1)] transition-transform duration-300 hover:-translate-y-1 hover:rotate-0 md:self-start"
+                  :class="[piece.layoutClass, piece.tiltClass]"
+                >
+                  <span class="postales-pin" aria-hidden="true" />
+
+                  <div class="postales-piece-frame">
+                    <img
+                      :src="piece.front"
+                      :alt="`${piece.title} - postal`"
+                      class="postales-piece-front"
+                      loading="lazy"
+                    />
+                    <img
+                      :src="piece.hover"
+                      :alt="`${piece.title} - imagen hover`"
+                      class="postales-piece-hover"
+                      :class="piece.front === piece.hover ? 'postales-piece-hover-same' : ''"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  <div class="mt-2 px-1">
+                    <h3 class="text-sm sm:text-base font-semibold text-black">{{ piece.title }}</h3>
+                    <p class="text-xs sm:text-sm text-black/70">{{ piece.subtitle }}</p>
+                  </div>
+                </article>
+              </div>
+            </section>
+          </div>
+        </template>
+        <template v-else-if="isIllustrationVectorialProject">
+          <div class="bg-background p-4 sm:p-6 space-y-6">
+            <img
+              :src="project?.cover || vectorialPlayerCover"
+              :alt="project ? `Portada ${project.title}` : 'Ilustración vectorial portada'"
+              class="w-full max-h-[86vh] object-contain bg-muted/20"
+              loading="lazy"
+            />
+
+            <div class="mx-auto w-full max-w-4xl rounded-[32px] bg-[#8f8f8f] p-4 sm:p-6 text-white shadow-[0_12px_30px_rgba(0,0,0,0.2)]">
+              <div class="flex flex-col md:flex-row gap-4 sm:gap-6 items-stretch">
+                <div
+                  class="mx-auto w-full max-w-[240px] md:mx-0 md:w-[190px] md:max-w-none shrink-0 aspect-square overflow-hidden rounded-3xl bg-white/20"
+                >
+                  <img
+                    :src="vectorialPlayerCover"
+                    alt="Portada Ilustración vectorial"
+                    class="h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="flex-1 flex flex-col justify-between min-h-[110px] sm:min-h-[190px]">
+                  <div class="flex items-start justify-between gap-3">
+                    <div>
+                      <p class="text-sm sm:text-base font-semibold leading-tight">Yo soy cani cani cani</p>
+                      <p class="text-xs sm:text-sm text-white/85">Su_morenito_19</p>
+                      
+                    </div>
+                    <a
+                      :href="vectorialSpotifyUrl"
+                      target="_blank"
+                      rel="noreferrer"
+                      class="inline-flex items-center gap-1 rounded-full bg-black/25 px-3 py-1.5 text-[11px] sm:text-xs font-medium hover:bg-black/35 transition"
+                    >
+                      YouTube
+                      <ExternalLink class="h-3.5 w-3.5" />
+                    </a>
+                  </div>
+
+                  <div class="space-y-3 sm:space-y-4">
+                    <div class="space-y-1">
+                      <div class="h-[3px] rounded-full bg-white/35 overflow-hidden">
+                        <div class="h-full w-[56%] bg-white rounded-full" />
+                      </div>
+                      <div class="flex items-center justify-between text-[10px] sm:text-[11px] text-white/80">
+                        <span>1:12</span>
+                        <span>2:36</span>
+                      </div>
+                    </div>
+
+                    <div class="flex items-center justify-center gap-4 sm:gap-5">
+                      <button type="button" class="h-8 w-8 rounded-full bg-white/20 flex items-center justify-center">
+                        <SkipBack class="h-4 w-4" />
+                      </button>
+                      <button type="button" class="h-10 w-10 rounded-full bg-white text-[#5d5d5d] flex items-center justify-center">
+                        <Pause class="h-5 w-5" />
+                      </button>
+                      <button type="button" class="h-8 w-8 rounded-full bg-white/20 flex items-center justify-center">
+                        <SkipForward class="h-4 w-4" />
+                      </button>
+                    </div>
+
+                    <div class="flex items-center gap-2 text-white/90">
+                      <Volume2 class="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                      <div class="h-[3px] flex-1 rounded-full bg-white/35 overflow-hidden">
+                        <div class="h-full w-[72%] bg-white rounded-full" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -735,50 +1017,91 @@ onBeforeUnmount(() => {
           </div>
         </template>
         <template v-else-if="isIllustrationConceptual">
-          <div class="p-0 space-y-8">
-            <img
-              v-if="project.cover"
-              :src="project.cover"
-              :alt="`Ilustración conceptual - ${project.title}`"
-              class="w-full h-auto object-contain"
-              loading="lazy"
-            />
-            <div v-else class="h-60 flex items-center justify-center text-sm text-muted-foreground">
-              Sin portada
-            </div>
+          <div class="p-0 space-y-8 min-h-[100svh] bg-white">
+            <section class="px-4 sm:px-6 pt-6 sm:pt-8 min-h-[86svh] sm:min-h-[90svh]">
+              <div class="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-6 lg:gap-10 items-start">
+                <div class="order-2 lg:order-1">
+                  <img
+                    v-if="project.cover"
+                    :src="project.cover"
+                    :alt="`Ilustración conceptual - ${project.title}`"
+                    class="w-full max-w-[1160px] max-h-[82vh] object-contain bg-white"
+                    loading="lazy"
+                  />
+                  <div v-else class="h-60 flex items-center justify-center text-sm text-muted-foreground">
+                    Sin portada
+                  </div>
+                </div>
 
-            <p class="mx-auto px-4 sm:px-6 max-w-4xl text-center text-sm sm:text-base leading-relaxed text-muted-foreground">
+                <div class="order-1 lg:order-2 space-y-4 lg:pt-12 text-right">
+                  <h2 class="avaricia-title inline-block text-right text-[clamp(3rem,8.8vw,6.8rem)] leading-[0.84] tracking-tight -rotate-[6deg] origin-right">
+                    Ilustracion conceptual
+                  </h2>
+                </div>
+              </div>
+            </section>
+
+            <p class="ml-auto -mt-10 sm:-mt-55 px-4 sm:px-6 max-w-4xl text-right text-sm sm:text-base leading-relaxed text-muted-foreground">
               {{ illustrationConceptualBottomText }}
             </p>
 
             <img
               :src="illustrationConceptualSecondImage"
               alt="Ilustración conceptual en acuarela"
-              class="w-full h-auto object-contain"
+              class="mx-auto -mt-16 sm:-mt-5 w-full max-w-[760px] max-h-[56vh] object-contain"
               loading="lazy"
             />
 
-            <p class="mx-auto px-4 sm:px-6 max-w-4xl text-center text-sm sm:text-base leading-relaxed text-muted-foreground">
+            <p class="ml-auto px-4 sm:px-6 max-w-4xl text-right text-sm sm:text-base leading-relaxed text-muted-foreground">
               {{ illustrationConceptualWatercolorText }}
             </p>
           </div>
         </template>
+        <template v-else-if="isIllustrationRelatoProject">
+          <div class="bg-white p-4 sm:p-6">
+            <div class="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-4 sm:gap-6 items-start">
+              <div
+                @mouseenter="relatoCoverHover = true"
+                @mouseleave="relatoCoverHover = false"
+              >
+                <img
+                  :src="relatoCoverHover ? relatoOvejaImage : (project?.cover || relatoPiesImage)"
+                  :alt="project ? `Ilustración de relato - ${project.title}` : 'Ilustración de relato'"
+                  class="w-full max-h-[88vh] object-contain bg-muted/20"
+                  loading="lazy"
+                />
+              </div>
+
+              <section class="min-h-[58vh] lg:min-h-[88vh] flex flex-col">
+                <h2 class="avaricia-title text-left text-[clamp(3.2rem,8.4vw,6.6rem)] leading-[0.86] tracking-tight">
+                  {{ relatoTusPiesTitle }}
+                </h2>
+
+                <div class="mt-4 flex-1 max-h-[64vh] lg:max-h-[80vh] overflow-y-auto pr-2 sm:pr-3">
+                  <p class="whitespace-pre-line text-sm sm:text-base leading-relaxed text-black/80">
+                    {{ relatoTusPiesText }}
+                  </p>
+                </div>
+              </section>
+            </div>
+          </div>
+        </template>
         <template v-else-if="isCreatedHumanProject">
           <div class="p-0">
-            <div class="relative w-full min-h-[62svh] sm:min-h-[72svh] md:min-h-[82svh] overflow-hidden">
+            <div class="relative w-full min-h-[68svh] sm:min-h-[78svh] md:min-h-[88svh] overflow-visible px-2 sm:px-4 md:px-6">
               <img
                 v-for="(sticker, index) in createdHumanStickerCards"
                 :key="`created-human-stack-${index}`"
                 :src="sticker.src"
                 :alt="`Creado por inteligencia humana ${index + 1}`"
-                class="absolute object-contain pointer-events-none select-none"
+                class="absolute object-contain pointer-events-none select-none drop-shadow-[0_12px_18px_rgba(0,0,0,0.18)]"
                 :style="getCreatedHumanStickerStyle(index)"
                 loading="lazy"
               />
             </div>
 
-            <div class="mx-auto max-w-4xl px-4 sm:px-6 py-8 sm:py-10 space-y-5 text-black/85">
-              <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight">
+            <div class="mr-auto w-full max-w-4xl px-4 sm:px-6 py-8 sm:py-10 space-y-5 text-black/85">
+              <h2 class="avaricia-title text-[clamp(3.6rem,8vw,6.6rem)] leading-[0.86] tracking-tight text-left">
                 Creado por la Inteligencia Humana
               </h2>
 
@@ -946,7 +1269,7 @@ onBeforeUnmount(() => {
               <img
                 :src="comicSequentialCharactersImage"
                 alt="Cómic - personajes en secuencia"
-                class="h-full w-auto object-contain -rotate-90"
+                class="h-full w-full object-contain"
                 loading="lazy"
               />
             </div>
@@ -1152,6 +1475,79 @@ onBeforeUnmount(() => {
 .process-title {
   font-family: "Inter", sans-serif;
   font-weight: 800;
+}
+
+.crefad-copy {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+}
+
+.postales-cover-frame,
+.postales-piece-frame {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.28);
+  background: #dfdfdf;
+}
+
+.postales-cover-frame {
+  aspect-ratio: 4 / 5;
+}
+
+.postales-piece-frame {
+  aspect-ratio: 4 / 5;
+}
+
+.postales-switch-front,
+.postales-switch-hover,
+.postales-piece-front,
+.postales-piece-hover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: opacity 280ms ease, transform 320ms ease;
+}
+
+.postales-switch-front,
+.postales-piece-front {
+  opacity: 1;
+}
+
+.postales-switch-hover,
+.postales-piece-hover {
+  opacity: 0;
+  transform: scale(1.04);
+}
+
+.group:hover .postales-switch-front,
+.group:hover .postales-piece-front {
+  opacity: 0;
+  transform: scale(0.97);
+}
+
+.group:hover .postales-switch-hover,
+.group:hover .postales-piece-hover {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.group:hover .postales-piece-hover-same {
+  transform: scale(1.09);
+}
+
+.postales-pin {
+  position: absolute;
+  top: 0.45rem;
+  left: 50%;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 999px;
+  background: #3f3f3f;
+  transform: translateX(-50%);
+  z-index: 10;
+  box-shadow: 0 0 0 2px #f6f6f6;
 }
 
 .detail-gray-surface {

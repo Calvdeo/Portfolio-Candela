@@ -45,6 +45,10 @@ const narrativeHoverCover = "/images/p%C3%A1ginas%20detalle/ilustraci%C3%B3n/sin
 const comicHoverCover = "/images/p%C3%A1ginas%20detalle/ilustraci%C3%B3n/comicnegro.png"
 const feminismoSlug = "Feminismo"
 const feminismoHoverCover = "/images/páginas detalle/feminism1.png"
+const relatoSlug = "Ilustración de un relato"
+const relatoHoverCover = "/images/páginas detalle/ilustración/oveja.png"
+const postalesSlug = "Esto no son postales"
+const postalesHoverCover = "/images/páginas detalle/saura2.png"
 
 const createdHumanSlug = "Creado por inteligencia humana"
 const createdHumanCoverDefault =
@@ -74,6 +78,14 @@ function isFeminismoProject(slug: string) {
   return slug === feminismoSlug
 }
 
+function isRelatoProject(slug: string) {
+  return slug === relatoSlug
+}
+
+function isPostalesProject(slug: string) {
+  return slug === postalesSlug
+}
+
 function getProjectCardImage(slug: string, cover?: string) {
   if (is36DaysProject(slug)) return fruitCycleImages[fruitCycleIndex.value]
   if (isCreatedHumanProject(slug)) {
@@ -87,6 +99,12 @@ function getProjectCardImage(slug: string, cover?: string) {
   }
   if (isFeminismoProject(slug)) {
     return hoveredProjectSlug.value === slug ? feminismoHoverCover : (cover ?? "")
+  }
+  if (isRelatoProject(slug)) {
+    return hoveredProjectSlug.value === slug ? relatoHoverCover : (cover ?? "")
+  }
+  if (isPostalesProject(slug)) {
+    return hoveredProjectSlug.value === slug ? postalesHoverCover : (cover ?? "")
   }
   return cover ?? ""
 }
@@ -182,7 +200,7 @@ onBeforeUnmount(() => {
           : 'bg-[#2f2f2f] text-gray-300 border-white/20 hover:bg-[#353535]'"
         @click.prevent="goToProjectsStart('/app/projects/design')"
       >
-        Diseño
+        <span class="projects-tab-word">Diseño</span>
       </RouterLink>
 
       <RouterLink
@@ -193,7 +211,7 @@ onBeforeUnmount(() => {
           : 'bg-[#2f2f2f] text-gray-300 border-white/20 hover:bg-[#353535]'"
         @click.prevent="goToProjectsStart('/app/projects/illustration')"
       >
-        Ilustración
+        <span class="projects-tab-word">Ilustración</span>
       </RouterLink>
 
       <RouterLink
@@ -204,7 +222,7 @@ onBeforeUnmount(() => {
           : 'bg-[#2f2f2f] text-gray-300 border-white/20 hover:bg-[#353535]'"
         @click.prevent="goToProjectsStart('/app/projects/photography')"
       >
-        Fotografía
+        <span class="projects-tab-word">Fotografía</span>
       </RouterLink>
 
       <div class="ml-auto pb-2 text-sm text-gray-200">
@@ -214,7 +232,9 @@ onBeforeUnmount(() => {
 
     <section id="projects-home-start" class="-mt-px rounded-b-2xl border border-[#3d3d3d] bg-[#3d3d3d] overflow-hidden">
       <div class="border-b border-white/15 bg-[#4a4a4a] px-6 py-5">
-        <h3 class="text-5xl font-bold tracking-tight text-white">{{ title }}</h3>
+        <h3 class="text-5xl font-bold tracking-tight text-white projects-heading-word">
+          {{ title }}
+        </h3>
         
       </div>
 
@@ -273,3 +293,19 @@ onBeforeUnmount(() => {
     <ContactStrip class="mt-7" />
   </div>
 </template>
+
+<style scoped>
+.projects-tab-word {
+  font-family: "Inter", sans-serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.projects-heading-word {
+  font-family: "Inter", sans-serif;
+  font-weight: 800;
+  font-size: clamp(3.2rem, 7.2vw, 6.2rem);
+  line-height: 0.9;
+}
+</style>
