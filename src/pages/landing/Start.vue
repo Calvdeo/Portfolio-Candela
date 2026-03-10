@@ -2,6 +2,7 @@
 import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue"
 import { useRouter } from "vue-router"
 import { useOrientation } from "@/composables/useOrientation"
+import { projects as portfolioProjects } from "@/data/projects"
 
 const router = useRouter()
 
@@ -10,6 +11,10 @@ function createNewProject() {
 }
 function goToExitConfirm() {
   router.push("/exit")
+}
+
+function goToArtboard(slug: string) {
+  router.push({ name: "project-detail", params: { slug } })
 }
 
 const age = 20
@@ -101,6 +106,10 @@ const projects = ref([
  
 ])
 const projectCount = computed(() => projects.value.length)
+projects.value = portfolioProjects.map((project) => ({
+  slug: project.slug,
+  title: project.title,
+}))
 
 
 type SupportKey =
@@ -342,14 +351,16 @@ const landscapeIconOn = "/orientation/landscape_azul.png"
                 <p class="text-[11px] text-white/50">Páginas de detalle</p>
 
                 <div class="space-y-2">
-                  <div
-                    v-for="p in projects"
+                  <button
+                    v-for="(p, index) in projects"
                     :key="p.slug"
-                    class="flex items-center justify-between rounded bg-black/10 px-2 py-2"
+                    type="button"
+                    class="w-full flex items-center justify-between rounded bg-black/10 px-2 py-2 text-left hover:bg-black/20 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40 transition-colors"
+                    @click="goToArtboard(p.slug)"
                   >
-                    <span class="text-xs text-white/80">{{ p.title }}</span>
+                    <span class="text-xs text-white/80">{{ index + 1 }}. {{ p.title }}</span>
                     <span class="text-[11px] text-white/45">/{{ p.slug }}</span>
-                  </div>
+                  </button>
                 </div>
               </div>
             </details>

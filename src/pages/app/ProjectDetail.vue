@@ -64,7 +64,15 @@ const hasFullGrayBackground = computed(() =>
   isComicProject.value ||
   isLoboLopezProject.value,
 )
-const cartelFestivalGif = "/images/páginas detalle/cartel-crefad-detalle.gif"
+const avariciaProcessText =
+  "Iniciamos con el concepto de las joyas, como variación utilizamos el escaner que nos dejaba jugar con la forma, así fuimos construyendo composiciones hasta llegar a al indicada, estos son algunos ejemplos de las pruebas que se hicieron."
+const avariciaProcessImages = [
+  { src: "/images/páginas detalle/edicion.png", alt: "Proceso Avaricia 1", position: "left top" },
+  { src: "/images/páginas detalle/avaricia1.png", alt: "Proceso Avaricia 1", position: "left top" },
+ 
+]
+const avariciaCoinImage = "/images/páginas detalle/moneda1.png"
+const cartelFestivalVideo = "/images/páginas detalle/cartel-crefad-detalle.mp4"
 const cartelCrefadText =
   "Elaboración de un proyecto de comunicación gráfica del I Congreso Iberoamericano de Creación y Fabricación Digital. Se diseñará la imagen de un cartel y un logotipo."
 const createdHumanStickerA =
@@ -116,10 +124,10 @@ const packagingCarouselPhotos = [
   "/images/páginas detalle/22.png",
   "/images/páginas detalle/23.png",
 ]
-const retratosHeroGifs = [
-  "/images/páginas detalle/fotografía/1.gif",
-  "/images/páginas detalle/fotografía/2.gif",
-  "/images/páginas detalle/fotografía/3.gif",
+const retratosHeroVideos = [
+  "/images/páginas detalle/fotografía/finale q.mp4",
+  "/images/páginas detalle/fotografía/por detrás.mp4",
+  "/images/páginas detalle/fotografía/rosario.mp4",
 ]
 const levisGridImages = [
   "/images/páginas detalle/fotografía/levis-38.png",
@@ -511,17 +519,59 @@ onBeforeUnmount(() => {
 
       <div v-else class="border overflow-hidden bg-muted/20">
         <template v-if="isAvariciaProject">
-          <div class="bg-background p-4 sm:p-6 space-y-4">
-            <img
-              :src="project.cover || ''"
-              alt="Cartel Avaricia"
-              class="w-full h-auto object-contain bg-muted/20"
-              loading="lazy"
-            />
+          <div class="bg-background px-4 sm:px-6 pt-0 pb-4 sm:pb-6 -mt-12 sm:-mt-16 lg:-mt-20">
+            <div class="min-h-[86svh] flex flex-col gap-6 lg:flex-row lg:items-end">
+              <img
+                :src="project.cover || ''"
+                alt="Cartel Avaricia"
+                class="order-2 lg:order-1 w-full lg:w-[42%] lg:max-w-[520px] max-h-[78vh] object-contain bg-muted/20"
+                loading="lazy"
+              />
 
-            <p class="text-sm sm:text-base text-muted-foreground">
-              {{ project.description }}
-            </p>
+              <section class="order-1 lg:order-2 relative overflow-hidden flex-1 min-h-[72vh] sm:min-h-[76vh] lg:min-h-[78vh] bg-white text-black px-4 sm:px-8 pt-0 pb-1 sm:pb-2 flex flex-col">
+                <div class="relative z-10 w-full max-w-[300px] sm:max-w-[340px]">
+                  <p class="mt-3 sm:mt-4 max-w-[260px] text-[11px] sm:text-xs leading-snug">
+                    Afán desmedido de poseer y adquirir riquezas para atesorarlas. y es un vicio capital porque ese afán por el dinero, o por cualquier cosa que se desea desmedidamente, lleva a la persona a tratar de conseguirlo mediante cualuier medio y acto.
+                  </p>
+                </div>
+
+                <h2 class="relative z-10 avaricia-title mt-auto text-[clamp(3.6rem,12.4vw,9.6rem)] tracking-tight leading-[0.84]">
+                  Avaricia
+                </h2>
+
+                <img
+                  :src="avariciaCoinImage"
+                  alt="Moneda"
+                  class="pointer-events-none select-none absolute right-0 top-0 translate-x-[32%] -translate-y-[42%] w-[300px] sm:w-[420px] md:w-[560px] lg:w-[660px] rotate-[20deg] opacity-95"
+                  loading="lazy"
+                />
+              </section>
+            </div>
+
+            <section class="mt-10 sm:mt-14 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+              <div class="space-y-3">
+                <h3 class="process-title text-3xl sm:text-4xl text-black">Proceso</h3>
+                <p class="text-sm sm:text-base text-black/70 max-w-[44ch]">
+                  {{ avariciaProcessText }}
+                </p>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div
+                  v-for="(photo, index) in avariciaProcessImages"
+                  :key="`avaricia-process-${index}`"
+                  class="min-h-[240px] sm:min-h-[300px] rounded bg-muted/20 p-2 flex items-center justify-center"
+                >
+                  <img
+                    :src="photo.src"
+                    :alt="photo.alt"
+                    class="h-full w-full object-contain"
+                    :style="{ objectPosition: photo.position }"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </section>
           </div>
         </template>
         <template v-else-if="isFeminismoProject">
@@ -565,11 +615,15 @@ onBeforeUnmount(() => {
         <template v-else-if="isCartelCrefad">
           <div class="bg-background p-4 sm:p-6 space-y-4">
             <div class="flex flex-col md:flex-row gap-4 md:gap-5">
-              <img
-                :src="cartelFestivalGif"
-                alt="Animacion Cartel Crefad"
+              <video
+                :src="cartelFestivalVideo"
                 class="w-full md:flex-1 max-h-[80vh] object-contain bg-muted/20"
-                loading="lazy"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                aria-label="Animacion Cartel Crefad"
               />
               <p class="md:w-[34%] md:min-w-[220px] text-xs sm:text-sm leading-relaxed text-muted-foreground">
                 {{ cartelCrefadText }}
@@ -1019,14 +1073,18 @@ onBeforeUnmount(() => {
         <template v-else-if="isRetratosProject">
           <div class="bg-background p-4 sm:p-6 space-y-6">
             <section class="retratos-hero-gifs">
-              <img
-                v-for="(gif, index) in retratosHeroGifs"
-                :key="`retratos-gif-${index}`"
-                :src="gif"
-                :alt="`Retratos animados ${index + 1}`"
+              <video
+                v-for="(video, index) in retratosHeroVideos"
+                :key="`retratos-video-${index}`"
+                :src="video"
+                :aria-label="`Retratos en video ${index + 1}`"
                 class="retratos-hero-gif object-contain bg-muted/20"
                 :class="`retratos-hero-gif-${index + 1}`"
-                loading="lazy"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
               />
             </section>
 
@@ -1084,6 +1142,16 @@ onBeforeUnmount(() => {
 <style scoped>
 .days-detail {
   overflow-x: clip;
+}
+
+.avaricia-title {
+  font-family: "Inter", sans-serif;
+  font-weight: 800;
+}
+
+.process-title {
+  font-family: "Inter", sans-serif;
+  font-weight: 800;
 }
 
 .detail-gray-surface {

@@ -89,11 +89,27 @@ const layerItems = computed(() => {
     section === "projects" && page && page !== "design" && page !== "illustration" && page !== "photography"
       ? page
       : ""
+  const rootPath = "/app/about"
+  const groupPathBySection: Record<string, string> = {
+    projects: "/app/projects/design",
+    about: "/app/about",
+    contact: "/app/contact",
+  }
+  const groupPath = groupPathBySection[section] ?? route.path
+  const layerPath =
+    section === "projects"
+      ? detailSlug
+        ? `/app/projects/${detailSlug}`
+        : `/app/projects/${page}`
+      : route.path
 
   return {
     root: "Portfolio Candela",
     group: sectionLabel,
     layer: detailSlug ? `Detalle - ${detailSlug}` : pageLabel,
+    rootPath,
+    groupPath,
+    layerPath,
     routeText: route.path,
   }
 })
@@ -252,30 +268,42 @@ onBeforeUnmount(() => {
             </button>
 
             <div v-show="layersOpen" class="p-2 text-[11px] text-white/80 space-y-1">
-              <div class="h-7 px-2 rounded bg-[#303030] border border-white/10 flex items-center gap-2">
+              <RouterLink
+                :to="layerItems.rootPath"
+                class="h-7 px-2 rounded bg-[#303030] border border-white/10 flex items-center gap-2 hover:bg-[#383838] transition-colors"
+              >
                 <span class="text-white/60">o</span>
                 <span class="text-white/60">[]</span>
                 <span class="font-medium">{{ layerItems.root }}</span>
-              </div>
+              </RouterLink>
 
               <div class="pl-5 space-y-1">
-                <div class="h-7 px-2 rounded bg-[#3a3a3a] border border-white/10 flex items-center gap-2">
+                <RouterLink
+                  :to="layerItems.groupPath"
+                  class="h-7 px-2 rounded bg-[#3a3a3a] border border-white/10 flex items-center gap-2 hover:bg-[#434343] transition-colors"
+                >
                   <span class="text-white/60">o</span>
                   <span class="text-white/60">[+]</span>
                   <span class="font-medium">Grupo 1 - {{ layerItems.group }}</span>
-                </div>
+                </RouterLink>
 
                 <div class="pl-5">
-                  <div class="h-7 px-2 rounded bg-[#474747] border border-white/10 flex items-center gap-2">
+                  <RouterLink
+                    :to="layerItems.layerPath"
+                    class="h-7 px-2 rounded bg-[#474747] border border-white/10 flex items-center gap-2 hover:bg-[#505050] transition-colors"
+                  >
                     <span class="text-white/60">o</span>
                     <span class="text-white/60">*</span>
                     <span>{{ layerItems.layer }}</span>
-                  </div>
+                  </RouterLink>
                 </div>
               </div>
 
               <div class="pt-1 px-1 text-[10px] text-white/45 break-all">
-                Ruta: {{ layerItems.routeText }}
+                Ruta:
+                <RouterLink :to="layerItems.routeText" class="underline hover:text-white/70 transition-colors">
+                  {{ layerItems.routeText }}
+                </RouterLink>
               </div>
             </div>
           </div>
