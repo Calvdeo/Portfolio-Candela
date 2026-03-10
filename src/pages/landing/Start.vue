@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue"
 import { useRouter } from "vue-router"
+import { useOrientation } from "@/composables/useOrientation"
 
 const router = useRouter()
 
@@ -123,19 +124,13 @@ const instagramUrl = "https://instagram.com/yonosoyessa.tiff"
 const email = "yonosoyessa.jpg@gmail.com"
 
 
-const isPortrait = ref(true)
-function updateOrientation() {
-  isPortrait.value = window.innerHeight >= window.innerWidth
-}
+const { isPortrait } = useOrientation()
 onMounted(() => {
   startCoverBackdropCycle()
   showCover.value = true
-  updateOrientation()
-  window.addEventListener("resize", updateOrientation)
 })
 onBeforeUnmount(() => {
   stopCoverBackdropCycle()
-  window.removeEventListener("resize", updateOrientation)
 })
 
 watch(showCover, (isVisible) => {
